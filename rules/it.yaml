@@ -1,0 +1,129 @@
+country_code: IT
+country_name: Italia
+status: draft
+last_verified_by_human: null
+
+register:
+  name: CONAI (non è un registro pubblico; è un consorzio privato ad adesione obbligatoria)
+  authority: >
+    Ministero dell'Ambiente e della Sicurezza Energetica (vigilanza);
+    CONAI + 7 Consorzi di filiera (gestione). Registro Nazionale Produttori (RENAP)
+    previsto ma non ancora operativo (art. 178-ter c.8 D.Lgs. 152/2006)
+  portal_url: https://dichiarazioni.conai.org
+  languages: [it, en]
+  cost_registration: 5.16   # quota fissa una tantum in euro; più eventuale quota variabile in base ai ricavi (imprese con ricavi > 500k €)
+
+scope:
+  who_is_obligated: >
+    I "produttori" (fornitori di materiali, fabbricanti, trasformatori, importatori
+    di imballaggi vuoti) e gli "utilizzatori" (chi confeziona/importa merci imballate)
+    che per primi immettono l'imballaggio sul mercato nazionale (art. 221 D.Lgs.
+    152/2006). Il Contributo Ambientale (CAC) si applica alla "prima cessione".
+    Gli utenti finali sono esclusi salvo quando importano direttamente merce imballata
+    o svolgono attività commerciale con la merce imballata acquistata.
+  de_minimis: >
+    Nessuna soglia esonera dall'ADESIONE (obbligatoria entro 30 gg dall'inizio attività).
+    Esiste una soglia di ESENZIONE dal versamento del contributo: fino a 200 €/materiale
+    (procedura ordinaria) e 300 €/materiale (procedura semplificata) di CAC nell'anno
+    solare precedente. NB: fonti storiche riportano soglie diverse (50/100 €) —
+    usare i valori della Guida al Contributo Ambientale CONAI 2025/2026.
+  marketplace_enforcement: >
+    Amazon per l'Italia non applicava lo stesso blocco pre-vendita di DE/FR; se il
+    venditore non fornisce il numero EPR, Amazon può iscriverlo d'ufficio al servizio
+    "Pay on Behalf" con costi aggiuntivi. TODO-VERIFY stato attuale 2026 su Seller Central IT.
+
+requirements:
+  - id: join_conai
+    label: Adesione a CONAI (domanda + versamento quota)
+    when: entro 30 giorni dall'inizio dell'attività
+    note: L'adesione ai singoli Consorzi di filiera avviene in rapporto ai materiali immessi.
+  - id: foreign_domicile
+    label: Elezione di domicilio speciale in Italia (per imprese estere che aderiscono)
+    when: all'adesione
+    note: >
+      Impresa estera UE che vende via piattaforma e-commerce è soggetta (art. 178-quater,
+      con modalità semplificate previste dagli accordi piattaforma-EPR); altrimenti può
+      aderire volontariamente eleggendo domicilio speciale in Italia (aziendaestera@conai.org).
+      Impresa extra-UE senza sede secondaria deve prestare garanzie a copertura del CAC
+      dovuto nei 12 mesi successivi. San Marino: condizioni pari alle imprese italiane.
+  - id: cac_invoice_wording
+    label: Indicazione in fattura "Contributo ambientale CONAI assolto"
+    when: alla prima cessione
+  - id: periodic_declaration
+    label: Dichiarazione periodica dei quantitativi e versamento CAC
+    when: vedi reporting
+
+reporting:
+  frequency: variable   # annuale / trimestrale / mensile in base al CAC dell'anno precedente per materiale
+  period_format: "periodo (mese / trimestre / anno)"
+  deadlines:
+    - kind: annual
+      rule: entro il 20 gennaio dell'anno successivo (se CAC anno precedente <= 3.000 €/materiale)
+    - kind: quarterly
+      rule: entro il 20 del mese successivo al trimestre (se CAC > 3.000 e <= 31.000 €/materiale)
+    - kind: monthly
+      rule: entro il 20 del mese successivo (se CAC > 31.000 €/materiale)
+  method: servizio "Dichiarazioni online" su https://dichiarazioni.conai.org (obbligatorio); versamento al ricevimento delle fatture CONAI
+
+material_categories:           # tassonomia canonica -> materiali CONAI (7) e Consorzi di filiera
+  - canonical: paper_cardboard
+    local_name: "Carta"          # Consorzio COMIECO
+  - canonical: plastic
+    local_name: "Plastica"       # Consorzio COREPLA
+  - canonical: glass
+    local_name: "Vetro"          # Consorzio COREVE
+  - canonical: ferrous_metal
+    local_name: "Acciaio"        # Consorzio RICREA
+  - canonical: aluminium
+    local_name: "Alluminio"      # Consorzio CIAL
+  - canonical: wood
+    local_name: "Legno"          # Consorzio RILEGNO
+  - canonical: composite_beverage
+    local_name: "Imballaggi compositi a base carta / contenitori per liquidi (CAC carta)"   # attribuiti a COMIECO; diversificazione contributiva per tipologie A/B/C/D
+  - canonical: composite_other
+    local_name: "Imballaggi compositi (attribuiti al materiale prevalente)"   # CONAI non ha una categoria dichiarativa separata per i compositi non-carta
+  - canonical: other
+    local_name: "Bioplastica (plastica biodegradabile e compostabile)"   # Consorzio Biorepack — 7° materiale/consorzio
+
+penalties:
+  summary: >
+    Art. 261 D.Lgs. 152/2006: 5.000 € per produttori/utilizzatori che non aderiscono
+    a CONAI; da 15.500 € a 46.500 € per i produttori che non aderiscono ai Consorzi di
+    filiera (importi da Abstract Guida CONAI 2025). Restano dovuti la quota di adesione
+    e i contributi pregressi. NB: alcune fonti secondarie riportano 10.000-60.000 € —
+    CONFLITTO da verificare sul testo di legge aggiornato (art. 261 c.1 richiama 5.000 €
+    per la mancata raccolta ex art. 221 c.2).
+  detail_url: https://www.brocardi.it/codice-dell-ambiente/parte-quarta/titolo-vi/capo-i/art261.html
+
+authorised_representative:
+  required_for_non_established: uncertain
+  note: >
+    Oggi non esiste un "rappresentante autorizzato EPR" in senso PPWR per gli imballaggi
+    in Italia; l'impresa estera che aderisce a CONAI elegge un domicilio speciale in Italia
+    (o presta garanzie se extra-UE). Con il PPWR art. 45(3) dal 12/08/2026 l'AR diverrebbe
+    requisito UE, ma COM/2025/982 lo sospenderebbe per i produttori UE fino al 1/1/2035
+    (pendente a luglio 2026). Il RENAP (registro nazionale produttori) è previsto ma non
+    ancora operativo. Trattare come INCERTO, monitorare.
+
+sources:
+  - title: CONAI — Soggetti obbligati e modalità di adesione (incl. art. 178-quater, imprese estere)
+    url: https://www.conai.org/imprese/servizi-gestione-adempimenti-consortili-e-opportunita-imprese/soggetti-obbligati-e-modalita-di-adesione/
+    accessed: 2026-07-06
+  - title: CONAI (EN) — Declaration and payment (periodicità e scadenze)
+    url: https://www.conai.org/en/companies/services-for-managing-consortium-obligations-and-business-opportunities/epr-fee/declaration-and-payment/
+    accessed: 2026-07-06
+  - title: CONAI — Consorzi di filiera del Sistema CONAI (7 materiali)
+    url: https://www.conai.org/consorzi-di-filiera-del-sistema-conai/
+    accessed: 2026-07-06
+  - title: CONAI — Abstract Guida al Contributo Ambientale 2025 (sanzioni art. 261)
+    url: https://www.conai.org/wp-content/uploads/2025/01/ABSTRACT-GUIDA-CONAI-2025-1.pdf
+    accessed: 2026-07-06
+  - title: Brocardi — Art. 261 D.Lgs. 152/2006 (testo)
+    url: https://www.brocardi.it/codice-dell-ambiente/parte-quarta/titolo-vi/capo-i/art261.html
+    accessed: 2026-07-06
+  - title: EUR-Lex — Reg. UE 2025/40 (PPWR), art. 45
+    url: https://eur-lex.europa.eu/eli/reg/2025/40/oj/eng
+    accessed: 2026-07-06
+  - title: EUR-Lex — COM/2025/982 (sospensione AR)
+    url: https://eur-lex.europa.eu/legal-content/AUTO/?uri=CELEX%3A52025PC0982
+    accessed: 2026-07-06

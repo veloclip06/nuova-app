@@ -1,0 +1,54 @@
+{
+  "common": {
+    "appName": "Cockpit EPR",
+    "tagline": "Obblighi imballaggi UE, chiari.",
+    "legalDisclaimer": "Software di supporto alla conformità. Non costituisce consulenza legale.",
+    "privacy": "Privacy",
+    "source": "Fonte",
+    "verifiedOn": "verificato il",
+    "loading": "Caricamento…",
+    "retry": "Riprova",
+    "back": "Indietro",
+    "next": "Avanti"
+  },
+  "seal": {
+    "conforme": "Conforme",
+    "azione_richiesta": "Azione richiesta",
+    "esposto": "Esposto",
+    "non_obbligato": "Non obbligato"
+  },
+  "nav": {
+    "check": "Verifica gratuita",
+    "prezzi": "Prezzi",
+    "guide": "Guide paese",
+    "login": "Accedi",
+    "registrati": "Registrati",
+    "dashboard": "Cruscotto",
+    "prodotti": "Prodotti",
+    "report": "Report",
+    "impostazioni": "Impostazioni"
+  },
+  "landing": {
+    "heroTitle": "Il tuo quadro EPR, chiaro in due minuti.",
+    "heroSubtitle": "Sei a posto o sei esposto, ed ecco cosa fare — paese per paese.",
+    "ctaCheck": "Fai la verifica gratuita"
+  },
+  "check": {
+    "eyebrow": "Verifica EPR",
+    "resultTitle": "Il tuo quadro EPR",
+    "emailGateTitle": "Ricevi il report dettagliato",
+    "emailGateSubtitle": "Con la checklist completa delle cose da fare, paese per paese.",
+    "emailPlaceholder": "nome@azienda.it",
+    "emailSubmit": "Ricevi il report",
+    "emailReassurance": "Riceverai solo il report. Niente spam.",
+    "ctaRegister": "Metti in regola i tuoi paesi"
+  },
+  "empty": {
+    "products": "Nessun prodotto ancora. Aggiungi il primo SKU per iniziare a calcolare i report.",
+    "deadlines": "Nessuna scadenza. Configura i tuoi paesi per generarle."
+  },
+  "errors": {
+    "generic": "Qualcosa non ha funzionato. Riprova.",
+    "missingWeights": "Peso mancante per {{count}} prodotti — completali per generare il report."
+  }
+}

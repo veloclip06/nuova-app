@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #F7F8F6; }
+    body { font-family: 'Instrument Sans', sans-serif; color: #17242F; }
+    a { color: #0E6B5C; }
+    a:hover { color: #0A5347; }
+    input::placeholder { color: #8A97A0; }
+  </style>
+</helmet>
+<!-- HANDOFF per Claude Code: le 3 card paese entrano in sequenza con 80ms di stagger (fade + translateY 8px, 300ms ease-out ciascuna, ordine: Germania, Francia, Italia). Rispettare prefers-reduced-motion: se attivo, nessuna animazione. Questo mockup è statico. -->
+<div data-screen-label="Risultato checker" style="min-height:100vh;display:flex;flex-direction:column;background:#F7F8F6">
+
+  <header style="background:#17242F;color:#F7F8F6;padding:0 32px 104px 32px">
+    <div style="max-width:1080px;margin:0 auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0;border-bottom:1px solid rgba(247,248,246,0.14)">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="width:12px;height:12px;background:#0E6B5C;border-radius:3px;display:block"></span>
+          <span style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.1em;text-transform:uppercase">EPR Cockpit</span>
+        </div>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:rgba(247,248,246,0.55)">check completato · 30/06/2026</span>
+      </div>
+      <div style="padding-top:44px">
+        <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(247,248,246,0.6)">Risultato del check</div>
+        <h1 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(31px,4vw,39px);letter-spacing:-0.01em;margin:10px 0 12px 0">Il tuo quadro EPR</h1>
+        <p style="margin:0;font-size:20px;line-height:1.6;color:rgba(247,248,246,0.82)">Sei esposto in <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:#F7F8F6">2</span> paesi su <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:#F7F8F6">3</span>.</p>
+      </div>
+    </div>
+  </header>
+
+  <main style="flex:1;padding:0 32px">
+    <div style="max-width:1080px;margin:-64px auto 0 auto">
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+
+        <article style="background:#FFFFFF;border:1px solid #DEE3E0;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:22px;height:15px;border-radius:2px;border:1px solid #DEE3E0;background:linear-gradient(180deg,#1D1D1B 0%,#1D1D1B 33.4%,#C8102E 33.4%,#C8102E 66.7%,#FFCC00 66.7%,#FFCC00 100%);display:block;flex:none"></span>
+            <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase">Lucid</span>
+            <span style="margin-left:auto;font-size:13px;color:#5A6B76">Germania</span>
+          </div>
+          <div style="transform:{{ tiltA }};align-self:flex-start;border:2px solid #B3261E;border-radius:6px;padding:3px;color:#B3261E">
+            <div style="border:1px solid #B3261E;border-radius:3px;padding:7px 16px;display:flex;flex-direction:column;align-items:center;gap:2px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;letter-spacing:0.14em">ESPOSTO</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em">30/06/2026</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.55">
+            <p style="margin:0">Sanzioni fino a <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">200.000&nbsp;€</span> per vendita senza registrazione.</p>
+            <p style="margin:0">Amazon può sospendere le inserzioni senza numero LUCID.</p>
+          </div>
+          <div style="margin-top:auto;border-top:1px solid #DEE3E0;padding-top:12px;font-size:13px;color:#5A6B76">Fonte: <a href="#" style="color:#0E6B5C">VerpackG</a> · verificato il <span style="font-family:'IBM Plex Mono',monospace">30/06/2026</span></div>
+        </article>
+
+        <article style="background:#FFFFFF;border:1px solid #DEE3E0;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:22px;height:15px;border-radius:2px;border:1px solid #DEE3E0;background:linear-gradient(90deg,#003D8F 0%,#003D8F 33.4%,#FFFFFF 33.4%,#FFFFFF 66.7%,#E1000F 66.7%,#E1000F 100%);display:block;flex:none"></span>
+            <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase">Citeo</span>
+            <span style="margin-left:auto;font-size:13px;color:#5A6B76">Francia</span>
+          </div>
+          <div style="transform:{{ tiltB }};align-self:flex-start;border:2px solid #B3261E;border-radius:6px;padding:3px;color:#B3261E">
+            <div style="border:1px solid #B3261E;border-radius:3px;padding:7px 16px;display:flex;flex-direction:column;align-items:center;gap:2px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;letter-spacing:0.14em">ESPOSTO</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em">30/06/2026</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.55">
+            <p style="margin:0">Sanzioni per ogni frazione di materiale non dichiarata.</p>
+            <p style="margin:0">Registro obbligatorio anche per un solo ordine spedito in Francia.</p>
+          </div>
+          <div style="margin-top:auto;border-top:1px solid #DEE3E0;padding-top:12px;font-size:13px;color:#5A6B76">Fonte: <a href="#" style="color:#0E6B5C">Code de l'environnement</a> · verificato il <span style="font-family:'IBM Plex Mono',monospace">30/06/2026</span></div>
+        </article>
+
+        <article style="background:#FFFFFF;border:1px solid #DEE3E0;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:22px;height:15px;border-radius:2px;border:1px solid #DEE3E0;background:linear-gradient(90deg,#008C45 0%,#008C45 33.4%,#FFFFFF 33.4%,#FFFFFF 66.7%,#CD212A 66.7%,#CD212A 100%);display:block;flex:none"></span>
+            <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase">Conai</span>
+            <span style="margin-left:auto;font-size:13px;color:#5A6B76">Italia</span>
+          </div>
+          <div style="transform:{{ tiltC }};align-self:flex-start;border:2px solid #DEE3E0;border-radius:6px;padding:3px;color:#17242F">
+            <div style="border:1px solid #DEE3E0;border-radius:3px;padding:7px 16px;display:flex;flex-direction:column;align-items:center;gap:2px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;letter-spacing:0.14em">NON OBBLIGATO</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em">30/06/2026</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.55">
+            <p style="margin:0">Sei stabilito in Italia: per le vendite domestiche valgono gli adempimenti CONAI già in essere.</p>
+          </div>
+          <div style="margin-top:auto;border-top:1px solid #DEE3E0;padding-top:12px;font-size:13px;color:#5A6B76">Fonte: <a href="#" style="color:#0E6B5C">normativa CONAI</a> · verificato il <span style="font-family:'IBM Plex Mono',monospace">30/06/2026</span></div>
+        </article>
+
+      </div>
+
+      <section style="max-width:680px;margin:48px auto 0 auto;background:#FFFFFF;border:1px solid #DEE3E0;border-radius:8px;padding:32px">
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:600;font-size:22px;letter-spacing:-0.005em;margin:0 0 6px 0">Ricevi il report dettagliato</h2>
+        <p style="margin:0 0 18px 0;font-size:15px;line-height:1.6;color:#5A6B76">Con la checklist completa delle cose da fare, paese per paese.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input type="email" placeholder="nome@azienda.it" style="flex:1;min-width:220px;padding:12px 14px;border:1px solid #DEE3E0;border-radius:8px;font-family:'Instrument Sans',sans-serif;font-size:15px;color:#17242F;background:#F7F8F6" style-focus="outline:none;border-color:#0E6B5C;box-shadow:0 0 0 3px rgba(14,107,92,0.18);background:#FFFFFF">
+          <button style="flex:none;white-space:nowrap;padding:12px 22px;background:#0E6B5C;color:#FFFFFF;border:1px solid #0E6B5C;border-radius:8px;font-family:'Archivo',sans-serif;font-weight:600;font-size:15px;cursor:pointer" style-hover="background:#0A5347;border-color:#0A5347" style-focus="outline:3px solid rgba(14,107,92,0.35);outline-offset:2px">Ricevi il report</button>
+        </div>
+        <p style="margin:12px 0 0 0;font-size:13px;color:#5A6B76">Riceverai solo il report. Niente spam.</p>
+      </section>
+
+      <sc-if value="{{ ctaSecondaria }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;justify-content:center;margin-top:20px">
+          <a href="#" style="display:inline-block;padding:11px 22px;border:1px solid #0E6B5C;border-radius:8px;color:#0E6B5C;text-decoration:none;font-family:'Archivo',sans-serif;font-weight:600;font-size:15px" style-hover="background:rgba(14,107,92,0.06)" style-focus="outline:3px solid rgba(14,107,92,0.35);outline-offset:2px">Metti in regola i tuoi paesi</a>
+        </div>
+      </sc-if>
+
+    </div>
+  </main>
+
+  <footer style="margin-top:64px;border-top:1px solid #DEE3E0;padding:24px 32px;background:#F7F8F6">
+    <div style="max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;color:#5A6B76">
+      <span>Software di supporto alla conformità. Non costituisce consulenza legale.</span>
+      <a href="#" style="color:#0E6B5C">Privacy</a>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;sigilliInclinati&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sigilli&quot;},&quot;ctaSecondariaVisibile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;CTA&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const inclinati = this.props.sigilliInclinati ?? true;
+    return {
+      tiltA: inclinati ? 'rotate(-2deg)' : 'none',
+      tiltB: inclinati ? 'rotate(-1.2deg)' : 'none',
+      tiltC: inclinati ? 'rotate(-1.6deg)' : 'none',
+      ctaSecondaria: this.props.ctaSecondariaVisibile ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

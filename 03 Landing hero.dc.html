@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #F7F8F6; }
+    body { font-family: 'Instrument Sans', sans-serif; color: #17242F; }
+    a { color: #0E6B5C; }
+    a:hover { color: #0A5347; }
+  </style>
+</helmet>
+<div data-screen-label="Landing hero" style="min-height:100vh;display:flex;flex-direction:column;background:#F7F8F6">
+
+  <header style="padding:22px 32px">
+    <div style="max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:10px">
+      <span style="width:12px;height:12px;background:#0E6B5C;border-radius:3px;display:block"></span>
+      <span style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.1em;text-transform:uppercase">EPR Cockpit</span>
+    </div>
+  </header>
+
+  <main style="flex:1;padding:64px 32px 0 32px">
+    <div style="max-width:840px;margin:0 auto;text-align:center">
+      <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#5A6B76">Conformità EPR per chi vende online</div>
+      <h1 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(31px,5vw,49px);letter-spacing:-0.015em;line-height:1.15;margin:16px 0 14px 0">Vendi in più paesi UE?<br>Hai obblighi EPR in ognuno.</h1>
+      <p style="margin:0 0 28px 0;font-size:20px;line-height:1.6;color:#5A6B76">Scopri in 2 minuti dove sei esposto e cosa fare, paese per paese.</p>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+        <a href="02 Checker passo 2.dc.html" style="display:inline-block;padding:14px 30px;background:#0E6B5C;color:#FFFFFF;border-radius:8px;text-decoration:none;font-family:'Archivo',sans-serif;font-weight:600;font-size:16px" style-hover="background:#0A5347" style-focus="outline:3px solid rgba(14,107,92,0.35);outline-offset:2px">Fai il check gratuito</a>
+        <sc-if value="{{ microcopy }}" hint-placeholder-val="{{ true }}">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5A6B76">5 domande · risultato immediato · nessuna registrazione</span>
+        </sc-if>
+      </div>
+    </div>
+
+    <div style="max-width:880px;margin:56px auto 0 auto">
+      <div style="background:#FFFFFF;border:1px solid #DEE3E0;border-radius:12px;box-shadow:0 32px 64px -48px rgba(23,36,47,0.45);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:6px;padding:10px 14px;background:#F7F8F6;border-bottom:1px solid #DEE3E0">
+          <span style="width:8px;height:8px;border-radius:50%;background:#DEE3E0;display:block"></span>
+          <span style="width:8px;height:8px;border-radius:50%;background:#DEE3E0;display:block"></span>
+          <span style="width:8px;height:8px;border-radius:50%;background:#DEE3E0;display:block"></span>
+          <span style="margin:0 auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5A6B76">eprcockpit.app/check/risultato</span>
+          <span style="width:38px;display:block"></span>
+        </div>
+        <div style="background:#17242F;color:#F7F8F6;padding:18px 22px">
+          <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(247,248,246,0.6)">Risultato del check</div>
+          <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:17px;margin:4px 0 2px 0">Il tuo quadro EPR</div>
+          <div style="font-size:12px;color:rgba(247,248,246,0.8)">Sei esposto in <span style="font-family:'IBM Plex Mono',monospace">2</span> paesi su <span style="font-family:'IBM Plex Mono',monospace">3</span>.</div>
+        </div>
+        <div style="background:#F7F8F6;padding:18px 22px 22px 22px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+
+            <div style="background:#FFFFFF;border:1px solid #DEE3E0;border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="width:16px;height:11px;border-radius:1px;border:1px solid #DEE3E0;background:linear-gradient(180deg,#1D1D1B 0%,#1D1D1B 33.4%,#C8102E 33.4%,#C8102E 66.7%,#FFCC00 66.7%,#FFCC00 100%);display:block;flex:none"></span>
+                <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:9px;letter-spacing:0.08em;text-transform:uppercase">Lucid</span>
+              </div>
+              <div style="align-self:flex-start;transform:rotate(-2deg);border:1.5px solid #B3261E;border-radius:4px;padding:2px;color:#B3261E">
+                <span style="display:block;border:1px solid #B3261E;border-radius:2px;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:9px;letter-spacing:0.12em">ESPOSTO</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <span style="height:5px;width:92%;background:#E8ECE9;border-radius:3px;display:block"></span>
+                <span style="height:5px;width:74%;background:#E8ECE9;border-radius:3px;display:block"></span>
+                <span style="height:5px;width:48%;background:#EEF1EF;border-radius:3px;display:block;margin-top:4px"></span>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #DEE3E0;border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="width:16px;height:11px;border-radius:1px;border:1px solid #DEE3E0;background:linear-gradient(90deg,#003D8F 0%,#003D8F 33.4%,#FFFFFF 33.4%,#FFFFFF 66.7%,#E1000F 66.7%,#E1000F 100%);display:block;flex:none"></span>
+                <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:9px;letter-spacing:0.08em;text-transform:uppercase">Citeo</span>
+              </div>
+              <div style="align-self:flex-start;transform:rotate(-1.2deg);border:1.5px solid #B3261E;border-radius:4px;padding:2px;color:#B3261E">
+                <span style="display:block;border:1px solid #B3261E;border-radius:2px;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:9px;letter-spacing:0.12em">ESPOSTO</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <span style="height:5px;width:88%;background:#E8ECE9;border-radius:3px;display:block"></span>
+                <span style="height:5px;width:70%;background:#E8ECE9;border-radius:3px;display:block"></span>
+                <span style="height:5px;width:52%;background:#EEF1EF;border-radius:3px;display:block;margin-top:4px"></span>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border:1px solid #DEE3E0;border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="width:16px;height:11px;border-radius:1px;border:1px solid #DEE3E0;background:linear-gradient(90deg,#008C45 0%,#008C45 33.4%,#FFFFFF 33.4%,#FFFFFF 66.7%,#CD212A 66.7%,#CD212A 100%);display:block;flex:none"></span>
+                <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:9px;letter-spacing:0.08em;text-transform:uppercase">Conai</span>
+              </div>
+              <div style="align-self:flex-start;transform:rotate(-1.6deg);border:1.5px solid #DEE3E0;border-radius:4px;padding:2px;color:#17242F">
+                <span style="display:block;border:1px solid #DEE3E0;border-radius:2px;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:9px;letter-spacing:0.12em">NON OBBLIGATO</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <span style="height:5px;width:90%;background:#E8ECE9;border-radius:3px;display:block"></span>
+                <span style="height:5px;width:66%;background:#E8ECE9;border-radius:3px;display:block"></span>
+                <span style="height:5px;width:50%;background:#EEF1EF;border-radius:3px;display:block;margin-top:4px"></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <sc-if value="{{ caption }}" hint-placeholder-val="{{ true }}">
+        <p style="margin:14px 0 0 0;text-align:center;font-size:13px;color:#5A6B76">Anteprima del risultato del check gratuito.</p>
+      </sc-if>
+    </div>
+  </main>
+
+  <footer style="margin-top:72px;border-top:1px solid #DEE3E0;padding:24px 32px;background:#F7F8F6">
+    <div style="max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;color:#5A6B76">
+      <span>Software di supporto alla conformità. Non costituisce consulenza legale.</span>
+      <a href="#" style="color:#0E6B5C">Privacy</a>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;microcopyVisibile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;didascaliaVisibile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Anteprima&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      microcopy: this.props.microcopyVisibile ?? true,
+      caption: this.props.didascaliaVisibile ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

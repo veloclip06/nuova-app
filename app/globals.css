@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Token layer — DESIGN_SYSTEM.md §3-6 is the single source of truth.
+ * Raw tokens are declared once; shadcn/ui semantic aliases point at them so
+ * both `bg-brand` and `bg-primary` resolve to the same colour.
+ *
+ * Dark mode is intentionally NOT wired up: DESIGN_SYSTEM.md §2 forbids it as a
+ * default (compliance data reads better on light). Optional post-MVP.
+ */
+@layer base {
+  :root {
+    /* Raw brand tokens */
+    --ink: #17242f;
+    --paper: #f7f8f6;
+    --surface: #ffffff;
+    --line: #dee3e0;
+    --brand: #0e6b5c;
+    --brand-hover: #0a5347;
+    --ok: #1e7f4f;
+    --warn: #b45309;
+    --risk: #b3261e;
+
+    /* Supporting neutrals observed in the Claude Design export */
+    --muted-ink: #5a6b76; /* secondary text on light surfaces */
+    --placeholder: #8a97a0;
+
+    /* shadcn/ui semantic aliases → tokens above */
+    --background: var(--paper);
+    --foreground: var(--ink);
+    --card: var(--surface);
+    --card-foreground: var(--ink);
+    --popover: var(--surface);
+    --popover-foreground: var(--ink);
+    --primary: var(--brand);
+    --primary-foreground: #ffffff;
+    --secondary: var(--paper);
+    --secondary-foreground: var(--ink);
+    --muted: var(--paper);
+    --muted-foreground: var(--muted-ink);
+    --accent: var(--paper);
+    --accent-foreground: var(--ink);
+    --destructive: var(--risk);
+    --destructive-foreground: #ffffff;
+    --border: var(--line);
+    --input: var(--line);
+    --ring: var(--brand);
+
+    /* Base radius — DESIGN_SYSTEM.md §6 */
+    --radius: 8px;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Eyebrow / section label — "intestazione di registro" (DESIGN_SYSTEM.md §4) */
+  .eyebrow {
+    @apply font-display font-semibold uppercase text-2xs tracking-register;
+  }
+
+  /* Focus visibility is part of the non-negotiable quality floor (§10) */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Numbers are the product — data/codes render in mono (DESIGN_SYSTEM.md §4) */
+  .tabular {
+    @apply font-mono;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Respect prefers-reduced-motion across the app (DESIGN_SYSTEM.md §7, §10) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

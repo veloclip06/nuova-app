@@ -1,0 +1,122 @@
+country_code: DE
+country_name: Germania
+status: draft
+last_verified_by_human: null
+
+register:
+  name: LUCID
+  authority: Zentrale Stelle Verpackungsregister (ZSVR)
+  portal_url: https://lucid.verpackungsregister.org
+  languages: [de, en]
+  cost_registration: 0            # la registrazione LUCID è gratuita (fonte ZSVR)
+
+scope:
+  who_is_obligated: >
+    Chiunque immetta per la prima volta a titolo commerciale sul mercato tedesco
+    imballaggi riempiti di merce destinati al consumatore finale privato
+    (produttori, distributori, importatori, venditori online e per corrispondenza),
+    incluse le vendite a distanza dall'estero, indipendentemente dalla sede
+    dell'azienda. La registrazione è personale e non delegabile a terzi
+    (§9 e §33 VerpackG).
+  de_minimis: none            # nessuna soglia minima — obbligo dalla prima confezione
+  marketplace_enforcement: >
+    Amazon blocca le inserzioni sul marketplace DE senza numero LUCID valido
+    dal 15 giugno 2022 (obbligo legale in vigore dal 1 luglio 2022).
+
+requirements:
+  - id: register_lucid
+    label: Registrazione nel registro LUCID
+    when: prima della prima vendita
+  - id: system_participation
+    label: Contratto con un sistema duale (Systembeteiligung / licenza imballaggi)
+    when: prima della prima vendita
+    note: >
+      Il nostro software NON vende la licenza — linka i sistemi duali autorizzati
+      (es. Der Grüne Punkt, Interseroh/Lizenzero, Reclay, Landbell, PreZero,
+      Noventiz, BellandVision, EKO-Punkt, Zentek, Recycling Kontor Dual).
+  - id: volume_report
+    label: Dichiarazione volumi per materiale a LUCID e al sistema duale
+    when: vedi reporting
+    note: I dati comunicati a LUCID e al sistema duale devono coincidere esattamente (controllo incrociato ZSVR).
+
+reporting:
+  frequency: annual_plus_initial
+  period_format: "YYYY"
+  deadlines:
+    - kind: initial_planned_volume_report
+      rule: entro il 31 dicembre dell'anno precedente / prima della messa in commercio
+    - kind: year_end_report
+      rule: entro il 15 maggio dell'anno successivo (a LUCID e al sistema duale)
+    - kind: declaration_of_completeness   # Vollständigkeitserklärung
+      rule: >
+        entro il 15 maggio, SOLO sopra le soglie §11(4) VerpackG:
+        80.000 kg vetro, 50.000 kg carta/cartone (PPK), 30.000 kg altri materiali;
+        richiede audit di un revisore registrato ZSVR.
+  method: portale LUCID (inserimento manuale in kg, tre decimali, per materiale) + interfaccia XML
+
+material_categories:           # tassonomia canonica -> categorie ufficiali LUCID (VerpackG). Fonte: Prüfleitlinien ZSVR 19/11/2024 (con codici materiale)
+  - canonical: paper_cardboard
+    local_name: "Papier, Pappe, Karton (PPK)"   # codice 20000
+  - canonical: plastic
+    local_name: "Kunststoffe"                    # codice 50000
+  - canonical: glass
+    local_name: "Glas"                           # codice 10000
+  - canonical: ferrous_metal
+    local_name: "Eisenmetalle"                   # codice 30000
+  - canonical: aluminium
+    local_name: "Aluminium"                      # codice 40000
+  - canonical: wood
+    local_name: "Sonstiges Material"             # codice 80000 — NON esiste categoria separata "Holz"; il legno si dichiara qui
+  - canonical: composite_beverage
+    local_name: "Getränkekartonverpackungen"     # codice 60000
+  - canonical: composite_other
+    local_name: "Sonstige Verbundverpackungen"   # codice 70000
+  - canonical: other
+    local_name: "Sonstiges Material"             # codice 80000
+
+penalties:
+  summary: >
+    §36 Abs.2 VerpackG: fino a 200.000 € nei casi dell'Abs.1 nn. 3,4,12,13,18
+    (tra cui immissione senza corretta partecipazione al sistema); fino a 100.000 €
+    nei casi nn. 1,5,5a,6,7,8,11,14-17,19-23,25,26 (tra cui registrazione);
+    fino a 10.000 € negli altri casi. Divieto di vendita e scrematura dei profitti
+    indebiti (§37). Casi reali ZSVR: arretrati di almeno 2 mln € per omessa
+    partecipazione al sistema; multa di 35.750 € per omessa Vollständigkeitserklärung.
+  detail_url: https://www.gesetze-im-internet.de/verpackg/__36.html
+
+authorised_representative:
+  required_for_non_established: uncertain
+  note: >
+    PPWR art. 45(3) (Reg. UE 2025/40) imporrebbe il rappresentante autorizzato EPR
+    dal 12/08/2026 per chi vende a distanza in uno Stato UE dove non è stabilito,
+    MA la proposta COM/2025/982 (Environmental Omnibus, 10/12/2025) sospenderebbe
+    l'obbligo per i produttori stabiliti nell'UE fino al 1/1/2035. A luglio 2026 la
+    proposta è ancora pendente in Parlamento/Consiglio. Per produttori extra-UE
+    l'obbligo (o misure alternative di tracciabilità decise dallo Stato membro)
+    resterebbe. Trattare come INCERTO, mostrare con disclaimer, monitorare.
+
+sources:
+  - title: VerpackG §36 (Bußgeldvorschriften) — Gesetze im Internet
+    url: https://www.gesetze-im-internet.de/verpackg/__36.html
+    accessed: 2026-07-06
+  - title: ZSVR — Datenmeldung (obbligo di dichiarazione dati e scadenze)
+    url: https://www.verpackungsregister.org/en/system-participation-data-reporting/data-reporting
+    accessed: 2026-07-06
+  - title: ZSVR — Registrazione LUCID (gratuita, personale)
+    url: https://www.verpackungsregister.org/en/registration/find-out-about-registrations
+    accessed: 2026-07-06
+  - title: ZSVR — Vollständigkeitserklärung (soglie §11(4))
+    url: https://www.verpackungsregister.org/en/system-participation-data-reporting/declaration-of-completeness
+    accessed: 2026-07-06
+  - title: ZSVR — Prüfleitlinien Vollständigkeitserklärung (elenco Materialarten con codici)
+    url: https://www.verpackungsregister.org/fileadmin/files/Prüfleitlinien/2024_Pruefleitlinien_Vollstaendigkeitserklaerung.pdf
+    accessed: 2026-07-06
+  - title: Amazon Seller Central DE — EPR compliance (LUCID)
+    url: https://sell.amazon.de/en/einhaltung-der-erweiterten-herstellerverantwortung
+    accessed: 2026-07-06
+  - title: EUR-Lex — Reg. UE 2025/40 (PPWR), art. 45
+    url: https://eur-lex.europa.eu/eli/reg/2025/40/oj/eng
+    accessed: 2026-07-06
+  - title: EUR-Lex — COM/2025/982 (sospensione AR per produttori UE fino 2035)
+    url: https://eur-lex.europa.eu/legal-content/AUTO/?uri=CELEX%3A52025PC0982
+    accessed: 2026-07-06

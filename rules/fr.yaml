@@ -1,0 +1,133 @@
+country_code: FR
+country_name: Francia
+status: draft
+last_verified_by_human: null
+
+register:
+  name: SYDEREP (registro ADEME) + adesione a éco-organisme agréé
+  authority: >
+    ADEME (Agence de la transition écologique) — registro nazionale/IDU;
+    éco-organismes agréés (Citeo, Léko, Adelphe) — gestione operativa della REP
+    emballages ménagers
+  portal_url: https://www.citeo.com          # adesione all'éco-organisme; IDU consultabile su https://syderep.ademe.fr/public/acteur/recherche
+  languages: [fr, en]
+  cost_registration: null    # TODO-VERIFY: non esiste un "costo di registrazione" del registro. All'adesione a Citeo è richiesto un minimo contributivo di 80 € HT (contributo, non tassa di registro)
+
+scope:
+  who_is_obligated: >
+    Ogni "producteur" che immette per la prima volta sul mercato francese prodotti
+    imballati destinati (anche parzialmente) ai nuclei domestici: fabbricante,
+    distributore, importatore/introducteur, incluso il venditore a distanza senza
+    stabilimento in Francia. La responsabilità scatta con la prima immissione sul
+    mercato francese, indipendentemente dalla sede del venditore. Le vendite
+    dall'estero (UE ed extra-UE) rientrano nella REP emballages ménagers.
+  de_minimis: >
+    Nessuna soglia esonera dall'obbligo. Esiste però la "déclaration au forfait":
+    i piccoli produttori con meno di 10.000 UVC (unità di vendita al consumatore)
+    all'anno pagano una contribuzione forfettaria di 80 € HT (dichiarazione validata
+    "in 3 clic"; alla adesione si riceve una fattura provvisoria di 80 € HT).
+  marketplace_enforcement: >
+    Amazon richiede l'UIN/IDU per la Francia e blocca/limita le inserzioni dei
+    venditori non conformi; se il venditore terzo non fornisce l'IDU, il marketplace
+    ne assume la responsabilità (art. L541-10-9) e può attivare il "Pay on Behalf".
+
+requirements:
+  - id: appoint_mandataire
+    label: Nomina di un mandataire stabilito in Francia (per non stabiliti)
+    when: prima dell'adesione
+    note: Richiesto per i produttori senza stabilimento in Francia (art. R541-174). Vedi authorised_representative — interazione con PPWR/COM 2025/982.
+  - id: join_eco_organisme
+    label: Adesione a un éco-organisme agréé (Citeo, Léko o Adelphe)
+    when: prima della prima immissione sul mercato
+    note: Il produttore non può iscriversi da solo a SYDEREP in caso di sistema collettivo; è l'éco-organisme a registrarlo e a comunicargli l'IDU.
+  - id: obtain_idu
+    label: Ottenimento dell'IDU (identifiant unique) generato dall'ADEME
+    when: pochi giorni dopo l'adesione
+    note: >
+      Obbligatorio dal 1 gennaio 2022 (art. L541-10-13). Va indicato nelle CGV e sul
+      sito web (art. R541-173). NON è richiesto per legge in fattura (fonte ecosystem).
+  - id: triman_infotri
+    label: Apposizione della segnaletica Triman + Info-tri sugli imballaggi
+    when: dalla messa in commercio
+    note: Obbligatoria dal 1 gennaio 2022 (loi AGEC).
+  - id: annual_declaration
+    label: Dichiarazione annuale dei tonnellaggi/UVC e versamento eco-contributo
+    when: vedi reporting
+
+reporting:
+  frequency: annual
+  period_format: "YYYY"
+  deadlines:
+    - kind: annual_declaration
+      rule: dichiarazione a Citeo dal 1 gennaio al 28 febbraio, riferita agli imballaggi immessi l'anno precedente
+    - kind: payment
+      rule: >
+        se il contributo annuo > 5.000 €: fatture provvisorie trimestrali;
+        se < 5.000 €: fattura annuale, pagata a dicembre (fonte Citeo, "My membership")
+  method: Espace Client dell'éco-organisme (dichiarazione per UVC o forfait); dati per materiale in peso
+
+material_categories:           # tassonomia canonica -> famiglie di materiali Citeo. Fonte: guide tarif Citeo / méthodologie recyclabilité
+  - canonical: paper_cardboard
+    local_name: "Papier-carton (papier, carton ondulé, carton plat)"
+  - canonical: plastic
+    local_name: "Plastique (PET, PE, PP, PS/PSE, autres résines/PVC)"
+  - canonical: glass
+    local_name: "Verre"
+  - canonical: ferrous_metal
+    local_name: "Acier"
+  - canonical: aluminium
+    local_name: "Aluminium"
+  - canonical: wood
+    local_name: "Autres matériaux : bois, liège, textile"   # TODO-VERIFY: il bois non transformé di foreste gestite in modo sostenibile può non essere soggetto a contributo
+  - canonical: composite_beverage
+    local_name: "Briques (papier-carton pour liquides alimentaires)"   # in Citeo le briques rientrano nella famiglia papier-carton
+  - canonical: composite_other
+    local_name: "Multi-matériaux sans matériau majoritaire / autres matériaux"   # TODO-VERIFY denominazione esatta a barème
+  - canonical: other
+    local_name: "Autres matériaux : grès, céramique, porcelaine"
+
+penalties:
+  summary: >
+    Sanzione amministrativa fino a 30.000 € (per mancata registrazione,
+    dichiarazione erronea o mancata indicazione dell'IDU — art. L541-9-5 /
+    L541-10-13 Code de l'environnement). La mancata apposizione della segnaletica
+    Triman può comportare multe fino a 15.000 € per referenza (TODO-VERIFY importo su fonte primaria).
+  detail_url: https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006159421/
+
+authorised_representative:
+  required_for_non_established: yes_currently_uncertain_future
+  note: >
+    Attualmente il produttore non stabilito in Francia deve nominare un mandataire
+    stabilito in Francia (art. R541-174). Con il PPWR art. 45(3) dal 12/08/2026 l'AR
+    diverrebbe requisito armonizzato UE, ma la proposta COM/2025/982 sospenderebbe
+    l'obbligo per i produttori UE fino al 1/1/2035; a luglio 2026 pendente. Per gli
+    extra-UE l'obbligo resterebbe. Trattare come INCERTO, mostrare con disclaimer.
+
+sources:
+  - title: ADEME — Identifiant unique (IDU) filières REP
+    url: https://filieres-rep.ademe.fr/identifiant-unique
+    accessed: 2026-07-06
+  - title: ADEME — FAQ filières REP (obbligo IDU, mandataire)
+    url: https://filieres-rep.ademe.fr/faq
+    accessed: 2026-07-06
+  - title: Citeo — Adhérer à Citeo (REP emballages et papiers graphiques)
+    url: https://www.citeo.com/en/why-join-citeo/
+    accessed: 2026-07-06
+  - title: Citeo — My membership (finestra 1 gen–28 feb; fatturazione)
+    url: https://www.citeo.com/en/my-membership/
+    accessed: 2026-07-06
+  - title: Citeo — Déclarer vos emballages
+    url: https://www.citeo.com/declarer/
+    accessed: 2026-07-06
+  - title: Légifrance — Arrêté 7 décembre 2023 (cahier des charges éco-organismes emballages ménagers)
+    url: https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000048543633
+    accessed: 2026-07-06
+  - title: Amazon Seller Central FR — EPR (UIN)
+    url: https://sell.amazon.fr/en/conformite-a-la-responsabilite-elargie-des-producteurs
+    accessed: 2026-07-06
+  - title: EUR-Lex — Reg. UE 2025/40 (PPWR), art. 45
+    url: https://eur-lex.europa.eu/eli/reg/2025/40/oj/eng
+    accessed: 2026-07-06
+  - title: EUR-Lex — COM/2025/982 (sospensione AR)
+    url: https://eur-lex.europa.eu/legal-content/AUTO/?uri=CELEX%3A52025PC0982
+    accessed: 2026-07-06

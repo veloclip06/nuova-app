@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #F7F8F6; }
+    body { font-family: 'Instrument Sans', sans-serif; color: #17242F; }
+    a { color: #0E6B5C; }
+    a:hover { color: #0A5347; }
+  </style>
+</helmet>
+<div data-screen-label="Checker passo 2" style="min-height:100vh;display:flex;flex-direction:column;background:#F7F8F6">
+
+  <header style="background:#FFFFFF;border-bottom:1px solid #DEE3E0">
+    <div style="max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 32px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="width:12px;height:12px;background:#0E6B5C;border-radius:3px;display:block"></span>
+        <span style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.1em;text-transform:uppercase">EPR Cockpit</span>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5A6B76">Passo 2 di 5</span>
+    </div>
+    <div style="height:4px;background:#DEE3E0">
+      <div style="height:4px;width:40%;background:#0E6B5C"></div>
+    </div>
+  </header>
+
+  <main style="flex:1;padding:56px 32px 24px 32px">
+    <div style="max-width:760px;margin:0 auto">
+
+      <h1 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(25px,3.5vw,31px);letter-spacing:-0.01em;margin:0 0 8px 0">In quali paesi UE vendi?</h1>
+      <p style="margin:0 0 32px 0;font-size:16px;line-height:1.6;color:#5A6B76">Seleziona tutti i paesi in cui spedisci ordini. Puoi cambiare la selezione in ogni momento.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+        <sc-for list="{{ principali }}" as="p" hint-placeholder-count="3">
+          <button onClick="{{ p.toggle }}" style="position:relative;margin:0;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:20px;border-radius:8px;background:#FFFFFF;border:1px solid {{ p.border }};box-shadow:{{ p.shadow }};cursor:pointer;font-family:inherit;color:#17242F;text-align:left;width:100%" style-hover="border-color:#0E6B5C" style-focus="outline:3px solid rgba(14,107,92,0.35);outline-offset:2px">
+            <span style="position:absolute;top:14px;right:14px;width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid {{ p.checkBorder }};background:{{ p.checkBg }};color:#FFFFFF;font-size:13px;font-weight:700">{{ p.glyph }}</span>
+            <span style="width:34px;height:24px;border-radius:3px;border:1px solid #DEE3E0;background:{{ p.bg }};display:block"></span>
+            <span style="display:flex;flex-direction:column;gap:3px">
+              <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:16px">{{ p.nome }}</span>
+              <sc-if value="{{ mostraRegistri }}" hint-placeholder-val="{{ true }}">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6B76">Registro {{ p.registro }}</span>
+              </sc-if>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ mostraAltri }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:36px">
+          <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#5A6B76;margin-bottom:12px">Altri paesi</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+            <sc-for list="{{ altri }}" as="p" hint-placeholder-count="6">
+              <button onClick="{{ p.toggle }}" style="margin:0;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:8px;background:#FFFFFF;border:1px solid {{ p.border }};box-shadow:{{ p.shadow }};cursor:pointer;font-family:inherit;color:#17242F;text-align:left;width:100%" style-hover="border-color:#0E6B5C" style-focus="outline:3px solid rgba(14,107,92,0.35);outline-offset:2px">
+                <span style="width:24px;height:17px;border-radius:2px;border:1px solid #DEE3E0;background:{{ p.bg }};display:block;flex:none"></span>
+                <span style="font-size:15px;font-weight:500">{{ p.nome }}</span>
+                <span style="margin-left:auto;width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1px solid {{ p.checkBorder }};background:{{ p.checkBg }};color:#FFFFFF;font-size:11px;font-weight:700;flex:none">{{ p.glyph }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:44px">
+        <a href="03 Landing hero.dc.html" style="color:#5A6B76;font-size:15px;text-decoration:none" style-hover="color:#17242F">← Indietro</a>
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#5A6B76">{{ contatore }}</span>
+          <a href="01 Risultato checker.dc.html" style="pointer-events:{{ continuaEventi }};opacity:{{ continuaOpacita }};display:inline-block;padding:12px 28px;background:#0E6B5C;color:#FFFFFF;border-radius:8px;text-decoration:none;font-family:'Archivo',sans-serif;font-weight:600;font-size:15px" style-hover="background:#0A5347" style-focus="outline:3px solid rgba(14,107,92,0.35);outline-offset:2px">Continua</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer style="margin-top:40px;border-top:1px solid #DEE3E0;padding:24px 32px;background:#F7F8F6">
+    <div style="max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;color:#5A6B76">
+      <span>Software di supporto alla conformità. Non costituisce consulenza legale.</span>
+      <a href="#" style="color:#0E6B5C">Privacy</a>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;mostraAltriPaesi&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Opzioni&quot;},&quot;registriVisibili&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Opzioni&quot;}}">
+class Component extends DCLogic {
+  state = { sel: { 'Germania': true, 'Francia': true } };
+  renderVals() {
+    const BRAND = '#0E6B5C', LINE = '#DEE3E0';
+    const flags = {
+      'Germania': 'linear-gradient(180deg,#1D1D1B 0%,#1D1D1B 33.4%,#C8102E 33.4%,#C8102E 66.7%,#FFCC00 66.7%,#FFCC00 100%)',
+      'Francia': 'linear-gradient(90deg,#003D8F 0%,#003D8F 33.4%,#FFFFFF 33.4%,#FFFFFF 66.7%,#E1000F 66.7%,#E1000F 100%)',
+      'Italia': 'linear-gradient(90deg,#008C45 0%,#008C45 33.4%,#FFFFFF 33.4%,#FFFFFF 66.7%,#CD212A 66.7%,#CD212A 100%)',
+      'Spagna': 'linear-gradient(180deg,#AA151B 0%,#AA151B 25%,#F1BF00 25%,#F1BF00 75%,#AA151B 75%,#AA151B 100%)',
+      'Paesi Bassi': 'linear-gradient(180deg,#AE1C28 0%,#AE1C28 33.4%,#FFFFFF 33.4%,#FFFFFF 66.7%,#21468B 66.7%,#21468B 100%)',
+      'Austria': 'linear-gradient(180deg,#ED2939 0%,#ED2939 33.4%,#FFFFFF 33.4%,#FFFFFF 66.7%,#ED2939 66.7%,#ED2939 100%)',
+      'Polonia': 'linear-gradient(180deg,#FFFFFF 0%,#FFFFFF 50%,#DC143C 50%,#DC143C 100%)',
+      'Belgio': 'linear-gradient(90deg,#1D1D1B 0%,#1D1D1B 33.4%,#FDDA24 33.4%,#FDDA24 66.7%,#EF3340 66.7%,#EF3340 100%)',
+      'Irlanda': 'linear-gradient(90deg,#169B62 0%,#169B62 33.4%,#FFFFFF 33.4%,#FFFFFF 66.7%,#FF883E 66.7%,#FF883E 100%)'
+    };
+    const registri = { 'Germania': 'LUCID', 'Francia': 'CITEO', 'Italia': 'CONAI' };
+    const sel = this.state.sel;
+    const mk = (nome) => {
+      const on = !!sel[nome];
+      return {
+        nome,
+        registro: registri[nome] || '',
+        bg: flags[nome],
+        border: on ? BRAND : LINE,
+        shadow: on ? 'inset 0 0 0 1px ' + BRAND : 'none',
+        checkBg: on ? BRAND : '#FFFFFF',
+        checkBorder: on ? BRAND : LINE,
+        glyph: on ? '✓' : '',
+        toggle: () => this.setState(s => ({ sel: { ...s.sel, [nome]: !s.sel[nome] } }))
+      };
+    };
+    const n = Object.keys(sel).filter(k => sel[k]).length;
+    return {
+      principali: ['Germania', 'Francia', 'Italia'].map(mk),
+      altri: ['Spagna', 'Paesi Bassi', 'Austria', 'Polonia', 'Belgio', 'Irlanda'].map(mk),
+      contatore: n === 1 ? '1 paese selezionato' : n + ' paesi selezionati',
+      continuaEventi: n === 0 ? 'none' : 'auto',
+      continuaOpacita: n === 0 ? 0.45 : 1,
+      mostraAltri: this.props.mostraAltriPaesi ?? true,
+      mostraRegistri: this.props.registriVisibili ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

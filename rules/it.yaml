@@ -31,6 +31,7 @@ scope:
     Amazon per l'Italia non applicava lo stesso blocco pre-vendita di DE/FR; se il
     venditore non fornisce il numero EPR, Amazon può iscriverlo d'ufficio al servizio
     "Pay on Behalf" con costi aggiuntivi. TODO-VERIFY stato attuale 2026 su Seller Central IT.
+  marketplace_blocking: uncertain   # structured mirror of the TODO-VERIFY above: nessun blocco pre-vendita confermato, stato 2026 da verificare
 
 requirements:
   - id: join_conai
@@ -40,6 +41,7 @@ requirements:
   - id: foreign_domicile
     label: Elezione di domicilio speciale in Italia (per imprese estere che aderiscono)
     when: all'adesione
+    applies_to: non_established   # structured mirror of the label above
     note: >
       Impresa estera UE che vende via piattaforma e-commerce è soggetta (art. 178-quater,
       con modalità semplificate previste dagli accordi piattaforma-EPR); altrimenti può
@@ -52,6 +54,7 @@ requirements:
   - id: periodic_declaration
     label: Dichiarazione periodica dei quantitativi e versamento CAC
     when: vedi reporting
+    covered_by_reporting: true   # structured mirror of `when: vedi reporting`
 
 reporting:
   frequency: variable   # annuale / trimestrale / mensile in base al CAC dell'anno precedente per materiale
@@ -59,10 +62,29 @@ reporting:
   deadlines:
     - kind: annual
       rule: entro il 20 gennaio dell'anno successivo (se CAC anno precedente <= 3.000 €/materiale)
+      schedule:                   # structured mirror of `rule`: 20 Jan of the following year
+        period: year
+        months_after_period_end: 1
+        day_of_month: 20
+      applies_if_cac_eur:         # structured mirror of `rule`: CAC anno precedente <= 3.000 €/materiale
+        max_inclusive: 3000
     - kind: quarterly
       rule: entro il 20 del mese successivo al trimestre (se CAC > 3.000 e <= 31.000 €/materiale)
+      schedule:                   # structured mirror of `rule`: 20th of the month after each quarter
+        period: quarter
+        months_after_period_end: 1
+        day_of_month: 20
+      applies_if_cac_eur:         # structured mirror of `rule`: CAC > 3.000 e <= 31.000 €/materiale
+        min_exclusive: 3000
+        max_inclusive: 31000
     - kind: monthly
       rule: entro il 20 del mese successivo (se CAC > 31.000 €/materiale)
+      schedule:                   # structured mirror of `rule`: 20th of the following month
+        period: month
+        months_after_period_end: 1
+        day_of_month: 20
+      applies_if_cac_eur:         # structured mirror of `rule`: CAC > 31.000 €/materiale
+        min_exclusive: 31000
   method: servizio "Dichiarazioni online" su https://dichiarazioni.conai.org (obbligatorio); versamento al ricevimento delle fatture CONAI
 
 material_categories:           # tassonomia canonica -> materiali CONAI (7) e Consorzi di filiera
@@ -94,6 +116,7 @@ penalties:
     CONFLITTO da verificare sul testo di legge aggiornato (art. 261 c.1 richiama 5.000 €
     per la mancata raccolta ex art. 221 c.2).
   detail_url: https://www.brocardi.it/codice-dell-ambiente/parte-quarta/titolo-vi/capo-i/art261.html
+  uncertain: true   # structured mirror of the source conflict declared in the summary (importi art. 261)
 
 authorised_representative:
   required_for_non_established: uncertain

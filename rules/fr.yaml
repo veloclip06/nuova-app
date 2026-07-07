@@ -12,6 +12,7 @@ register:
   portal_url: https://www.citeo.com          # adesione all'éco-organisme; IDU consultabile su https://syderep.ademe.fr/public/acteur/recherche
   languages: [fr, en]
   cost_registration: null    # TODO-VERIFY: non esiste un "costo di registrazione" del registro. All'adesione a Citeo è richiesto un minimo contributivo di 80 € HT (contributo, non tassa di registro)
+  cost_registration_uncertain: true   # structured mirror of the TODO-VERIFY comment above
 
 scope:
   who_is_obligated: >
@@ -30,12 +31,14 @@ scope:
     Amazon richiede l'UIN/IDU per la Francia e blocca/limita le inserzioni dei
     venditori non conformi; se il venditore terzo non fornisce l'IDU, il marketplace
     ne assume la responsabilità (art. L541-10-9) e può attivare il "Pay on Behalf".
+  marketplace_blocking: "yes"     # structured mirror of marketplace_enforcement above (fonte: Amazon Seller Central FR)
 
 requirements:
   - id: appoint_mandataire
     label: Nomina di un mandataire stabilito in Francia (per non stabiliti)
     when: prima dell'adesione
     note: Richiesto per i produttori senza stabilimento in Francia (art. R541-174). Vedi authorised_representative — interazione con PPWR/COM 2025/982.
+    applies_to: non_established   # structured mirror of the label/note above
   - id: join_eco_organisme
     label: Adesione a un éco-organisme agréé (Citeo, Léko o Adelphe)
     when: prima della prima immissione sul mercato
@@ -53,6 +56,7 @@ requirements:
   - id: annual_declaration
     label: Dichiarazione annuale dei tonnellaggi/UVC e versamento eco-contributo
     when: vedi reporting
+    covered_by_reporting: true   # structured mirror of `when: vedi reporting`
 
 reporting:
   frequency: annual
@@ -60,6 +64,10 @@ reporting:
   deadlines:
     - kind: annual_declaration
       rule: dichiarazione a Citeo dal 1 gennaio al 28 febbraio, riferita agli imballaggi immessi l'anno precedente
+      schedule:                   # structured mirror of `rule`: window closes 28 Feb of the following year
+        period: year
+        months_after_period_end: 2
+        day_of_month: 28
     - kind: payment
       rule: >
         se il contributo annuo > 5.000 €: fatture provvisorie trimestrali;
@@ -78,11 +86,15 @@ material_categories:           # tassonomia canonica -> famiglie di materiali Ci
   - canonical: aluminium
     local_name: "Aluminium"
   - canonical: wood
-    local_name: "Autres matériaux : bois, liège, textile"   # TODO-VERIFY: il bois non transformé di foreste gestite in modo sostenibile può non essere soggetto a contributo
+    local_name: "Autres matériaux : bois, liège, textile"
+    uncertain: true
+    todo_verify: "il bois non transformé di foreste gestite in modo sostenibile può non essere soggetto a contributo"
   - canonical: composite_beverage
     local_name: "Briques (papier-carton pour liquides alimentaires)"   # in Citeo le briques rientrano nella famiglia papier-carton
   - canonical: composite_other
-    local_name: "Multi-matériaux sans matériau majoritaire / autres matériaux"   # TODO-VERIFY denominazione esatta a barème
+    local_name: "Multi-matériaux sans matériau majoritaire / autres matériaux"
+    uncertain: true
+    todo_verify: "denominazione esatta a barème"
   - canonical: other
     local_name: "Autres matériaux : grès, céramique, porcelaine"
 
@@ -93,6 +105,7 @@ penalties:
     L541-10-13 Code de l'environnement). La mancata apposizione della segnaletica
     Triman può comportare multe fino a 15.000 € per referenza (TODO-VERIFY importo su fonte primaria).
   detail_url: https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006159421/
+  uncertain: true   # structured mirror of the TODO-VERIFY inside the summary (importo Triman)
 
 authorised_representative:
   required_for_non_established: yes_currently_uncertain_future

@@ -22,6 +22,7 @@ scope:
   marketplace_enforcement: >
     Amazon blocca le inserzioni sul marketplace DE senza numero LUCID valido
     dal 15 giugno 2022 (obbligo legale in vigore dal 1 luglio 2022).
+  marketplace_blocking: "yes"     # structured mirror of marketplace_enforcement above (fonte: Amazon Seller Central DE)
 
 requirements:
   - id: register_lucid
@@ -37,6 +38,7 @@ requirements:
   - id: volume_report
     label: Dichiarazione volumi per materiale a LUCID e al sistema duale
     when: vedi reporting
+    covered_by_reporting: true   # structured mirror of `when: vedi reporting`
     note: I dati comunicati a LUCID e al sistema duale devono coincidere esattamente (controllo incrociato ZSVR).
 
 reporting:
@@ -45,34 +47,60 @@ reporting:
   deadlines:
     - kind: initial_planned_volume_report
       rule: entro il 31 dicembre dell'anno precedente / prima della messa in commercio
+      schedule:                   # structured mirror of `rule`: 31 Dec of the year BEFORE the reporting year
+        period: year
+        months_after_period_end: -12
+        day_of_month: 31
     - kind: year_end_report
       rule: entro il 15 maggio dell'anno successivo (a LUCID e al sistema duale)
+      schedule:                   # structured mirror of `rule`: 15 May of the following year
+        period: year
+        months_after_period_end: 5
+        day_of_month: 15
     - kind: declaration_of_completeness   # Vollständigkeitserklärung
       rule: >
         entro il 15 maggio, SOLO sopra le soglie §11(4) VerpackG:
         80.000 kg vetro, 50.000 kg carta/cartone (PPK), 30.000 kg altri materiali;
         richiede audit di un revisore registrato ZSVR.
+      schedule:                   # structured mirror of `rule`: 15 May of the following year
+        period: year
+        months_after_period_end: 5
+        day_of_month: 15
+      condition: completeness_thresholds   # only above §11(4) thresholds (structured mirror of `rule`)
+      condition_thresholds_kg:
+        glass: 80000
+        paper_cardboard: 50000
+        other_materials: 30000
   method: portale LUCID (inserimento manuale in kg, tre decimali, per materiale) + interfaccia XML
 
 material_categories:           # tassonomia canonica -> categorie ufficiali LUCID (VerpackG). Fonte: Prüfleitlinien ZSVR 19/11/2024 (con codici materiale)
   - canonical: paper_cardboard
-    local_name: "Papier, Pappe, Karton (PPK)"   # codice 20000
+    local_name: "Papier, Pappe, Karton (PPK)"
+    local_code: "20000"
   - canonical: plastic
-    local_name: "Kunststoffe"                    # codice 50000
+    local_name: "Kunststoffe"
+    local_code: "50000"
   - canonical: glass
-    local_name: "Glas"                           # codice 10000
+    local_name: "Glas"
+    local_code: "10000"
   - canonical: ferrous_metal
-    local_name: "Eisenmetalle"                   # codice 30000
+    local_name: "Eisenmetalle"
+    local_code: "30000"
   - canonical: aluminium
-    local_name: "Aluminium"                      # codice 40000
+    local_name: "Aluminium"
+    local_code: "40000"
   - canonical: wood
-    local_name: "Sonstiges Material"             # codice 80000 — NON esiste categoria separata "Holz"; il legno si dichiara qui
+    local_name: "Sonstiges Material"             # NON esiste categoria separata "Holz"; il legno si dichiara qui
+    local_code: "80000"
   - canonical: composite_beverage
-    local_name: "Getränkekartonverpackungen"     # codice 60000
+    local_name: "Getränkekartonverpackungen"
+    local_code: "60000"
   - canonical: composite_other
-    local_name: "Sonstige Verbundverpackungen"   # codice 70000
+    local_name: "Sonstige Verbundverpackungen"
+    local_code: "70000"
   - canonical: other
-    local_name: "Sonstiges Material"             # codice 80000
+    local_name: "Sonstiges Material"
+    local_code: "80000"
 
 penalties:
   summary: >

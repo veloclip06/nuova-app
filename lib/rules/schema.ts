@@ -30,16 +30,65 @@ const requirementSchema = z.object({
   label: z.string().min(1),
   when: z.string().min(1),
   note: z.string().optional(),
+  // Who the requirement applies to; defaults to every obligated company.
+  // "non_established" = only companies without an establishment in the country
+  // (e.g. FR mandataire, IT foreign domicile) — mirrors the sourced label/note.
+  applies_to: z.enum(["all", "non_established"]).optional(),
+  // Structured mirror of `when: vedi reporting` — the requirement is fulfilled
+  // through the reporting.deadlines entries, so the engine must not emit it as
+  // a separate one-off deadline.
+  covered_by_reporting: z.boolean().optional(),
 });
+
+/**
+ * Machine-readable due-date rule, country-agnostic: the deadline falls
+ * `months_after_period_end` months after the end of each reporting `period`,
+ * on `day_of_month` (clamped to the last day of the month). Negative offsets
+ * express "before the period starts" (e.g. DE initial planned volume report).
+ * Every schedule MUST restate a value already present in the sourced `rule`
+ * text of the same entry — never introduce new normative values here.
+ */
+const deadlineScheduleSchema = z.object({
+  period: z.enum(["year", "quarter", "month"]),
+  months_after_period_end: z.number().int(),
+  day_of_month: z.number().int().min(1).max(31),
+});
+
+/** Half-open EUR band (min exclusive, max inclusive) used by tiered periodicity. */
+const eurBandSchema = z
+  .object({
+    min_exclusive: z.number().nonnegative().optional(),
+    max_inclusive: z.number().positive().optional(),
+  })
+  .refine(
+    (b) => b.min_exclusive !== undefined || b.max_inclusive !== undefined,
+    { message: "eur band needs at least one bound" },
+  );
 
 const deadlineRuleSchema = z.object({
   kind: z.string().min(1),
   rule: z.string().min(1),
+  schedule: deadlineScheduleSchema.optional(),
+  // IT/CONAI: tier selected per material by prior-year CAC (€/material).
+  applies_if_cac_eur: eurBandSchema.optional(),
+  // FR/Citeo payment: tier selected by prior-year contribution (€).
+  applies_if_contribution_eur: eurBandSchema.optional(),
+  // Deadline that only applies when a condition holds (e.g. DE
+  // Vollständigkeitserklärung §11(4) thresholds). The engine emits it as
+  // `conditional` when it cannot evaluate the condition — never drops it.
+  condition: z.string().min(1).optional(),
+  condition_thresholds_kg: z.record(z.number().positive()).optional(),
+  uncertain: z.boolean().optional(),
+  todo_verify: z.string().min(1).optional(),
 });
 
 const materialCategorySchema = z.object({
   canonical: canonicalMaterialSchema,
   local_name: z.string().min(1),
+  // Official register code when one exists (e.g. LUCID Materialart codes).
+  local_code: z.string().min(1).optional(),
+  uncertain: z.boolean().optional(),
+  todo_verify: z.string().min(1).optional(),
 });
 
 const sourceSchema = z.object({
@@ -55,6 +104,9 @@ const registerSchema = z.object({
   languages: z.array(z.string().length(2)).min(1),
   // number when known, null + TODO-VERIFY when not (e.g. FR)
   cost_registration: z.number().nonnegative().nullable(),
+  // Structured mirror of a TODO-VERIFY that would otherwise live in a YAML
+  // comment (comments are lost at parse time and could not propagate).
+  cost_registration_uncertain: z.boolean().optional(),
 });
 
 const scopeSchema = z.object({
@@ -62,6 +114,9 @@ const scopeSchema = z.object({
   // "none" (DE) or a descriptive string (FR/IT)
   de_minimis: z.string().min(1),
   marketplace_enforcement: z.string().min(1),
+  // Structured restatement of `marketplace_enforcement`: do marketplaces block
+  // non-compliant listings pre-sale? Drives deterministic risk derivation.
+  marketplace_blocking: z.enum(["yes", "no", "uncertain"]).optional(),
 });
 
 const reportingSchema = z.object({
@@ -74,6 +129,9 @@ const reportingSchema = z.object({
 const penaltiesSchema = z.object({
   summary: z.string().min(1),
   detail_url: z.string().url(),
+  // Explicit marker when the summary itself flags an unresolved source
+  // conflict or TODO-VERIFY (e.g. FR Triman amount, IT art. 261 amounts).
+  uncertain: z.boolean().optional(),
 });
 
 /**
@@ -86,6 +144,7 @@ export const arRequirementSchema = z.enum([
   "uncertain",
   "yes_currently_uncertain_future",
 ]);
+export type ArRequirement = z.infer<typeof arRequirementSchema>;
 
 const authorisedRepresentativeSchema = z.object({
   required_for_non_established: arRequirementSchema,
@@ -129,3 +188,8 @@ export const countryRuleSchema = z
   );
 
 export type CountryRule = z.infer<typeof countryRuleSchema>;
+export type CountryRequirement = z.infer<typeof requirementSchema>;
+export type DeadlineSchedule = z.infer<typeof deadlineScheduleSchema>;
+export type DeadlineRule = z.infer<typeof deadlineRuleSchema>;
+export type EurBand = z.infer<typeof eurBandSchema>;
+export type MaterialCategory = z.infer<typeof materialCategorySchema>;

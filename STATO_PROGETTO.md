@@ -1,5 +1,5 @@
 # STATO_PROGETTO.md — EPR Cockpit
-Documento di handoff. Aggiornato: 08/07/2026, dopo il commit del lavoro PROMPT 3.
+Documento di handoff. Aggiornato: 08/07/2026, dopo il lavoro PROMPT 4 (landing).
 Va tenuto nel repo e aggiornato a ogni milestone. In una nuova chat, allegare questo file + ARCHITECTURE.md + DESIGN_SYSTEM.md + CLAUDE_CODE_KICKOFF.md.
 
 ## 1. Cos'è il prodotto
@@ -19,7 +19,8 @@ Stato servizi: Supabase COLLEGATO (migration 0001 applicata, seed fatto: countri
 - ✅ PROMPT 3 (Fable): checker completo — wizard 5 step, risultato con sigilli, email gate (ricalcolo server-side, lead mai persa: fallback log recuperabile), /api/leads, /privacy placeholder, 93 test totali verdi
 - ✅ DB inizializzato e primo test E2E manuale riuscito: wizard → risultato → email ricevuta → lead salvata
 - ✅ Lavoro PROMPT 3 committato
-- ⬜ PROMPT 4 landing (Opus) · ⬜ PROMPT 5 app autenticata (Opus) · ⬜ giro di rifinitura UI · ⬜ PROMPT 6 Stripe+legali (Sonnet) · ⬜ deploy Vercel · ⬜ verifica umana delle 10 incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
+- ✅ PROMPT 4 (Opus): landing / — hero fedele all'export (CTA unica → /check), sezione "dolore" (3 situazioni con fonti), come funziona (3 passi), prezzi (3 tier §8, centrale ancorato), FAQ (6 domande, risposte coerenti coi /rules, fonti linkate, AR presentato come incerto). SEO: metadata+OG (opengraph-image via next/og), sitemap.ts, robots.ts, schema.org FAQPage. /prezzi ora reale (riusa PricingSection). Testi in it.json; build+lint+93 test verdi
+- ⬜ PROMPT 5 app autenticata (Opus) · ⬜ giro di rifinitura UI · ⬜ PROMPT 6 Stripe+legali (Sonnet) · ⬜ deploy Vercel · ⬜ verifica umana delle 10 incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
 
 ## 4. Decisioni chiave ratificate (fanno fede sul mockup dove confliggono)
 1. SIGILLO = stato legale; CLAIM di rischio = enforcement confermato. Estero obbligato non coperto → ESPOSTO sempre (indipendente dal canale). Domestico → AZIONE RICHIESTA con copy CONAI dedicato. riskLevel modula le righe di rischio nella card, non il sigillo: high (marketplace+blocco confermato) → riga delisting; medium → solo sanzioni con fonte; dato incerto → badge "in verifica", mai claim di blocco.
@@ -56,7 +57,8 @@ Lavoro su main, nessun branch, NESSUN commit da parte degli agenti: modifiche un
 - 7 vulnerabilità npm preesistenti segnalate da npm audit → da rivedere prima del deploy
 - Resend: passare a dominio verificato prima del lancio
 - Verifica umana n.1 (la più urgente): stato proposta COM/2025/982 → determina il messaging sul rappresentante autorizzato in tutti e 3 i paesi
-- Nome definitivo + dominio da decidere prima della landing pubblica
+- Nome definitivo + dominio da decidere prima della landing pubblica (canonical/OG/sitemap ora dipendono da NEXT_PUBLIC_SITE_URL: valorizzarlo col dominio reale prima del deploy — oggi fallback localhost)
+- Landing: CTA dei tier a pagamento (Starter/Pro) puntano a /registrati (placeholder) finché PROMPT 5/6 non attivano signup+Stripe; l'immagine OG usa font di sistema (non Archivo), accettabile per MVP
 
 ## 8. Prossimi step (in ordine)
 1. Commit del lavoro PROMPT 3 (se non già fatto)

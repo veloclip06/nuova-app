@@ -1,12 +1,38 @@
-import { ScaffoldPlaceholder } from "@/components/scaffold-placeholder";
+import type { Metadata } from "next";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
+import { Hero } from "@/components/landing/hero";
+import { PainSection } from "@/components/landing/pain";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { PricingSection } from "@/components/landing/pricing";
+import { FaqSection } from "@/components/landing/faq";
+import { t } from "@/lib/i18n";
 
-// Landing — real hero/sections built in PROMPT 4.
+// Landing (PROMPT 4) — hero, pain, how-it-works, pricing, FAQ. The single
+// primary CTA lives in the hero; every path leads to the free checker.
+export const metadata: Metadata = {
+  title: { absolute: t("meta.home.title") },
+  description: t("meta.home.description"),
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: t("meta.home.title"),
+    description: t("meta.home.description"),
+    url: "/",
+  },
+};
+
 export default function LandingPage() {
   return (
-    <ScaffoldPlaceholder
-      eyebrow="Cockpit EPR"
-      title="Il tuo quadro EPR, chiaro in due minuti."
-      description="Sei a posto o sei esposto, ed ecco cosa fare — paese per paese. Landing definitiva in arrivo (PROMPT 4)."
-    />
+    <div className="flex min-h-screen flex-col bg-paper">
+      <SiteHeader />
+      <main className="flex-1">
+        <Hero />
+        <PainSection />
+        <HowItWorks />
+        <PricingSection />
+        <FaqSection />
+      </main>
+      <SiteFooter />
+    </div>
   );
 }

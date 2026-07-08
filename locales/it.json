@@ -29,9 +29,180 @@
     "impostazioni": "Impostazioni"
   },
   "landing": {
-    "heroTitle": "Il tuo quadro EPR, chiaro in due minuti.",
-    "heroSubtitle": "Sei a posto o sei esposto, ed ecco cosa fare — paese per paese.",
-    "ctaCheck": "Fai la verifica gratuita"
+    "nav": {
+      "prezzi": "Prezzi",
+      "faq": "Domande frequenti",
+      "login": "Accedi"
+    },
+    "hero": {
+      "eyebrow": "Conformità EPR per chi vende online",
+      "titleLine1": "Vendi in più paesi UE?",
+      "titleLine2": "Hai obblighi EPR in ognuno.",
+      "subtitle": "Scopri in due minuti dove sei esposto e cosa fare, paese per paese.",
+      "cta": "Fai il check gratuito",
+      "microcopy": "5 domande · risultato immediato · nessuna registrazione"
+    },
+    "preview": {
+      "url": "cockpitepr.app/check/risultato",
+      "kicker": "Risultato del check",
+      "title": "Il tuo quadro EPR",
+      "summary": "Sei esposto in 2 paesi su 3.",
+      "caption": "Anteprima del risultato del check gratuito."
+    },
+    "pain": {
+      "eyebrow": "Perché è un problema",
+      "title": "Tre modi in cui l'EPR ti si ritorce contro",
+      "note": "Fonti ufficiali consultate il 6 luglio 2026 · dati normativi in verifica.",
+      "items": [
+        {
+          "title": "Il portale è in tedesco, e non perdona",
+          "body": "Per vendere in Germania devi registrarti su LUCID e firmare a parte un contratto con un sistema duale — due passaggi distinti, categorie di materiale da dichiarare in tedesco, nessuna soglia minima: l'obbligo scatta dalla prima confezione.",
+          "source": { "label": "Zentrale Stelle Verpackungsregister", "url": "https://www.verpackungsregister.org/en/registration/find-out-about-registrations" }
+        },
+        {
+          "title": "Amazon ti blocca le inserzioni",
+          "body": "Dal 15 giugno 2022 Amazon blocca le inserzioni sul marketplace tedesco senza un numero LUCID valido, e richiede l'IDU per la Francia. Niente numero valido, niente vendite: il delisting è automatico.",
+          "source": { "label": "Amazon Seller Central — EPR", "url": "https://sell.amazon.de/en/einhaltung-der-erweiterten-herstellerverantwortung" }
+        },
+        {
+          "title": "Ogni paese ha il suo calendario",
+          "body": "Germania: dichiarazione di fine anno entro il 15 maggio. Francia: finestra dal 1° gennaio al 28 febbraio. Italia: dichiarazioni CONAI mensili, trimestrali o annuali secondo il contributo. Tre paesi, tre scadenzari da non sbagliare.",
+          "source": { "label": "CONAI — dichiarazione e pagamento", "url": "https://www.conai.org/en/companies/services-for-managing-consortium-obligations-and-business-opportunities/epr-fee/declaration-and-payment/" }
+        }
+      ]
+    },
+    "how": {
+      "eyebrow": "Come funziona",
+      "title": "Dal dubbio al report, in tre passi",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Fai il check gratuito",
+          "body": "Rispondi a 5 domande: dove sei stabilito, dove vendi, su quali canali. In due minuti hai il quadro paese per paese, con sigillo di stato e fonti ufficiali."
+        },
+        {
+          "step": "02",
+          "title": "Inserisci i dati degli imballaggi",
+          "body": "Aggiungi i prodotti e il peso dei materiali di imballaggio, a mano o via CSV. Le categorie sono pre-compilate in base al tipo di prodotto: correggi, non parti da zero."
+        },
+        {
+          "step": "03",
+          "title": "Genera report pronti da incollare",
+          "body": "Il motore converte i tuoi dati nelle categorie di ogni registro nazionale e produce i numeri da riportare nei portali ufficiali. Copi, incolli, dichiari."
+        }
+      ]
+    },
+    "pricing": {
+      "eyebrow": "Prezzi",
+      "title": "Tre piani, nessuna telefonata",
+      "subtitle": "Inizia gratis dal check. Passi a un piano a pagamento solo quando ti serve gestire scadenze e report.",
+      "period": "/mese",
+      "annualNote": "Fatturazione mensile o annuale (−20%).",
+      "reassurance": "Nessuna telefonata, nessun contatto commerciale. Disdici quando vuoi.",
+      "recommended": "Consigliato",
+      "featuresLabel": "Cosa include",
+      "tiers": [
+        {
+          "id": "free",
+          "name": "Free",
+          "price": "0€",
+          "tagline": "Per capire dove sei esposto.",
+          "features": [
+            "Check EPR completo, tutti i paesi coperti",
+            "1 paese con scadenze in sola lettura",
+            "Fonti ufficiali e date di verifica"
+          ],
+          "cta": "Fai il check gratuito",
+          "href": "/check"
+        },
+        {
+          "id": "starter",
+          "name": "Starter",
+          "price": "29€",
+          "tagline": "Per chi vende in due mercati.",
+          "features": [
+            "2 paesi",
+            "SKU illimitati",
+            "Report pronti da incollare",
+            "Promemoria scadenze via email"
+          ],
+          "cta": "Inizia con Starter",
+          "href": "/registrati"
+        },
+        {
+          "id": "pro",
+          "name": "Pro",
+          "price": "59€",
+          "tagline": "Per chi vende in tutta l'UE coperta.",
+          "features": [
+            "Tutti i paesi coperti",
+            "Import CSV degli imballaggi",
+            "Storico dei report",
+            "Tutto ciò che c'è in Starter"
+          ],
+          "cta": "Inizia con Pro",
+          "href": "/registrati"
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Domande frequenti",
+      "title": "EPR imballaggi, in parole chiare",
+      "note": "Le informazioni normative qui sotto sono in fase di verifica. Ogni risposta riporta la fonte ufficiale, consultata il 6 luglio 2026.",
+      "sourcesLabel": "Fonti",
+      "items": [
+        {
+          "q": "Cos'è l'EPR sugli imballaggi e a chi si applica?",
+          "a": "EPR sta per responsabilità estesa del produttore. Chi immette per primo imballaggi sul mercato di un paese UE — anche vendendo a distanza dall'estero — deve registrarsi, aderire a un sistema o consorzio, dichiarare i volumi e pagare un contributo. In Germania e Francia l'obbligo vale dalla prima confezione, senza soglie minime; in Italia l'adesione a CONAI è dovuta entro 30 giorni dall'inizio dell'attività.",
+          "sources": [
+            { "label": "VerpackG (DE)", "url": "https://www.gesetze-im-internet.de/verpackg/__36.html" },
+            { "label": "CONAI — soggetti obbligati", "url": "https://www.conai.org/imprese/servizi-gestione-adempimenti-consortili-e-opportunita-imprese/soggetti-obbligati-e-modalita-di-adesione/" }
+          ]
+        },
+        {
+          "q": "Devo registrarmi anche se vendo solo su Amazon?",
+          "a": "Sì. L'obbligo è del venditore, non del marketplace — e sono proprio i marketplace a farlo rispettare. Amazon blocca le inserzioni sul marketplace tedesco senza un numero LUCID valido (dal 15 giugno 2022) e richiede l'IDU per la Francia. Senza un numero valido rischi il delisting.",
+          "sources": [
+            { "label": "Amazon Seller Central — EPR (DE)", "url": "https://sell.amazon.de/en/einhaltung-der-erweiterten-herstellerverantwortung" }
+          ]
+        },
+        {
+          "q": "Quanto costa registrarsi in Germania, Francia e Italia?",
+          "a": "La registrazione al registro LUCID in Germania è gratuita, ma paghi a parte il contratto con un sistema duale. In Francia l'adesione a un éco-organisme come Citeo prevede un contributo minimo di 80 € HT, e i piccoli produttori sotto le 10.000 unità l'anno pagano un forfait di 80 € HT. In Italia l'adesione a CONAI ha una quota fissa una tantum di 5,16 €, più il contributo ambientale (CAC) calcolato sui materiali immessi.",
+          "sources": [
+            { "label": "ZSVR — registrazione LUCID", "url": "https://www.verpackungsregister.org/en/registration/find-out-about-registrations" },
+            { "label": "Citeo — adhérer", "url": "https://www.citeo.com/en/why-join-citeo/" },
+            { "label": "CONAI — soggetti obbligati", "url": "https://www.conai.org/imprese/servizi-gestione-adempimenti-consortili-e-opportunita-imprese/soggetti-obbligati-e-modalita-di-adesione/" }
+          ]
+        },
+        {
+          "q": "Quali sono le scadenze principali?",
+          "a": "Cambiano da paese a paese. Germania: dichiarazione di fine anno entro il 15 maggio dell'anno successivo, oltre alla dichiarazione iniziale dei volumi pianificati. Francia: dichiarazione annuale a Citeo dal 1° gennaio al 28 febbraio. Italia: dichiarazioni a CONAI con periodicità annuale, trimestrale o mensile a seconda del contributo dell'anno precedente, con scadenza il giorno 20.",
+          "sources": [
+            { "label": "ZSVR — Datenmeldung", "url": "https://www.verpackungsregister.org/en/system-participation-data-reporting/data-reporting" },
+            { "label": "Citeo — my membership", "url": "https://www.citeo.com/en/my-membership/" },
+            { "label": "CONAI — dichiarazione e pagamento", "url": "https://www.conai.org/en/companies/services-for-managing-consortium-obligations-and-business-opportunities/epr-fee/declaration-and-payment/" }
+          ]
+        },
+        {
+          "q": "Cosa rischio se non sono in regola?",
+          "a": "Sanzioni concrete e il blocco delle vendite. In Germania le multe arrivano fino a 200.000 € (§36 VerpackG), con divieto di vendita e recupero dei profitti. In Francia fino a 30.000 € (Code de l'environnement). In Italia 5.000 € per la mancata adesione a CONAI, oltre ai contributi arretrati dovuti. A questo si aggiunge il delisting dai marketplace.",
+          "sources": [
+            { "label": "VerpackG §36", "url": "https://www.gesetze-im-internet.de/verpackg/__36.html" },
+            { "label": "Code de l'environnement", "url": "https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006159421/" },
+            { "label": "Art. 261 D.Lgs. 152/2006", "url": "https://www.brocardi.it/codice-dell-ambiente/parte-quarta/titolo-vi/capo-i/art261.html" }
+          ]
+        },
+        {
+          "q": "Serve un rappresentante autorizzato per vendere all'estero?",
+          "a": "Dipende, ed è un punto in evoluzione. Oggi la Francia chiede a chi non è stabilito di nominare un mandataire; l'Italia prevede l'elezione di un domicilio speciale per le imprese estere che aderiscono a CONAI. Il regolamento UE sugli imballaggi (PPWR) introdurrebbe il rappresentante autorizzato dal 12 agosto 2026, ma una proposta della Commissione (COM/2025/982) ne sospenderebbe l'obbligo per i produttori stabiliti nell'UE fino al 2035: a oggi il quadro non è definitivo. Ti segnaliamo la tua posizione senza darti false certezze.",
+          "sources": [
+            { "label": "Reg. UE 2025/40 (PPWR), art. 45", "url": "https://eur-lex.europa.eu/eli/reg/2025/40/oj/eng" },
+            { "label": "COM/2025/982", "url": "https://eur-lex.europa.eu/legal-content/AUTO/?uri=CELEX%3A52025PC0982" }
+          ]
+        }
+      ]
+    }
   },
   "countries": {
     "AT": "Austria",
@@ -194,9 +365,17 @@
     "contactEmail": "ionandries.digitalservices@gmail.com"
   },
   "meta": {
+    "home": {
+      "title": "Cockpit EPR — Obblighi imballaggi UE, chiari",
+      "description": "Vendi in più paesi UE? Scopri in due minuti dove sei esposto sugli obblighi EPR imballaggi (LUCID, Citeo, CONAI) e cosa fare, con fonti ufficiali. Check gratuito, nessuna registrazione."
+    },
     "check": {
       "title": "Verifica EPR gratuita",
       "description": "Scopri in due minuti dove sei esposto: obblighi imballaggi in Germania, Francia e Italia, con fonti ufficiali."
+    },
+    "prezzi": {
+      "title": "Prezzi",
+      "description": "Tre piani, nessuna telefonata: Free, Starter 29€/mese, Pro 59€/mese. Inizia gratis dal check EPR e passa a un piano quando ti serve."
     },
     "result": {
       "title": "Il tuo quadro EPR"

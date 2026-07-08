@@ -33,15 +33,177 @@
     "heroSubtitle": "Sei a posto o sei esposto, ed ecco cosa fare — paese per paese.",
     "ctaCheck": "Fai la verifica gratuita"
   },
+  "countries": {
+    "AT": "Austria",
+    "BE": "Belgio",
+    "BG": "Bulgaria",
+    "CY": "Cipro",
+    "CZ": "Repubblica Ceca",
+    "DE": "Germania",
+    "DK": "Danimarca",
+    "EE": "Estonia",
+    "ES": "Spagna",
+    "FI": "Finlandia",
+    "FR": "Francia",
+    "GR": "Grecia",
+    "HR": "Croazia",
+    "HU": "Ungheria",
+    "IE": "Irlanda",
+    "IT": "Italia",
+    "LT": "Lituania",
+    "LU": "Lussemburgo",
+    "LV": "Lettonia",
+    "MT": "Malta",
+    "NL": "Paesi Bassi",
+    "PL": "Polonia",
+    "PT": "Portogallo",
+    "RO": "Romania",
+    "SE": "Svezia",
+    "SI": "Slovenia",
+    "SK": "Slovacchia",
+    "ZZ": "Fuori UE"
+  },
   "check": {
     "eyebrow": "Verifica EPR",
+    "progress": "Passo {{n}} di {{total}}",
+    "steps": {
+      "1": {
+        "title": "Dove è stabilita la tua azienda?",
+        "help": "La sede legale determina quali obblighi si applicano come paese domestico.",
+        "placeholder": "Seleziona un paese",
+        "euGroup": "Unione europea",
+        "nonEuGroup": "Fuori UE"
+      },
+      "2": {
+        "title": "In quali paesi UE vendi?",
+        "help": "Seleziona tutti i paesi in cui spedisci ordini. Puoi cambiare la selezione in ogni momento.",
+        "othersLabel": "Altri paesi",
+        "counterOne": "1 paese selezionato",
+        "counterMany": "{{count}} paesi selezionati"
+      },
+      "3": {
+        "title": "Su quali canali vendi?",
+        "help": "I marketplace applicano controlli propri sugli obblighi EPR: la selezione incide sul risultato."
+      },
+      "4": {
+        "title": "Che tipo di prodotti spedisci?",
+        "help": "Le categorie servono a stimare gli imballaggi tipici. Potrai precisare i dettagli più avanti."
+      },
+      "5": {
+        "title": "Quanti ordini spedisci all'anno?",
+        "help": "Una stima per paese è sufficiente. Se non lo sai, va bene lo stesso."
+      },
+      "continue": "Continua",
+      "showResult": "Vedi il risultato"
+    },
+    "options": {
+      "channels": {
+        "amazon": "Amazon",
+        "ebay": "eBay",
+        "shopify": "Shopify o negozio proprio",
+        "other": "Altro canale"
+      },
+      "productTypes": {
+        "fashion": "Abbigliamento e accessori",
+        "cosmetics": "Cosmetica e cura personale",
+        "electronics": "Elettronica",
+        "home": "Casa e cucina",
+        "food": "Alimentari e bevande",
+        "other": "Altro"
+      },
+      "volumes": {
+        "b1": "Meno di 100",
+        "b2": "100 – 1.000",
+        "b3": "1.000 – 10.000",
+        "b4": "Oltre 10.000",
+        "unknown": "Non lo so"
+      },
+      "registers": {
+        "DE": "Registro LUCID",
+        "FR": "Registro CITEO",
+        "IT": "Registro CONAI"
+      }
+    },
     "resultTitle": "Il tuo quadro EPR",
+    "result": {
+      "eyebrow": "Risultato del check",
+      "checkCompleted": "check completato",
+      "summaryExposed": "Sei esposto in {{n}} paesi su {{total}}.",
+      "summaryExposedOne": "Sei esposto in 1 paese su {{total}}.",
+      "summaryAction": "Azione richiesta in {{n}} paesi su {{total}}.",
+      "summaryActionOne": "Azione richiesta in 1 paese su {{total}}.",
+      "summaryNoneCovered": "Nessuno dei paesi selezionati è ancora coperto dalle nostre regole.",
+      "assumptionNote": "Risultato calcolato assumendo che tu non sia ancora registrato nei paesi indicati.",
+      "domestic": {
+        "IT": "Sei stabilito in Italia: l'adesione CONAI è comunque dovuta — verifica la tua posizione.",
+        "default": "Sei stabilito in {{country}}: gli obblighi nazionali si applicano comunque — verifica la tua posizione."
+      },
+      "inVerifica": "in verifica",
+      "draftNotice": "Dati normativi in fase di verifica",
+      "sourceAccessed": "consultata il",
+      "registerLabel": "Registro",
+      "nextDeadlineLabel": "Prossima scadenza",
+      "arLabel": "Rappresentante autorizzato",
+      "ar": {
+        "yes": "richiesto",
+        "no": "non richiesto",
+        "uncertain": "da verificare",
+        "yes_currently_uncertain_future": "richiesto oggi, quadro in evoluzione"
+      },
+      "notCoveredNote": "Per {{countries}} la copertura è in arrivo — la tua selezione ci aiuta a dare priorità."
+    },
     "emailGateTitle": "Ricevi il report dettagliato",
     "emailGateSubtitle": "Con la checklist completa delle cose da fare, paese per paese.",
     "emailPlaceholder": "nome@azienda.it",
     "emailSubmit": "Ricevi il report",
     "emailReassurance": "Riceverai solo il report. Niente spam.",
-    "ctaRegister": "Metti in regola i tuoi paesi"
+    "ctaRegister": "Metti in regola i tuoi paesi",
+    "email": {
+      "label": "Email",
+      "sending": "Invio in corso…",
+      "success": "Report inviato a {{email}}.",
+      "error": "Non siamo riusciti a inviare il report. Riprova.",
+      "invalid": "Inserisci un indirizzo email valido.",
+      "report": {
+        "subject": "Il tuo report EPR — {{countries}}",
+        "intro": "Ecco il tuo quadro EPR calcolato il {{date}}, con la checklist delle cose da fare paese per paese.",
+        "checklistTitle": "Checklist",
+        "deMinimisLabel": "Soglie ed esenzioni",
+        "penaltiesLabel": "Sanzioni",
+        "penaltiesDetail": "Dettagli",
+        "sourcesTitle": "Fonti ufficiali",
+        "notCoveredTitle": "Paesi non ancora coperti",
+        "notCoveredBody": "Per {{countries}} la copertura è in arrivo. Ti avviseremo quando le regole saranno disponibili.",
+        "outro": "Vuoi metterti in regola paese per paese? Crea il tuo account su {{appName}}."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Informativa privacy",
+    "updated": "Versione provvisoria: sarà sostituita dall'informativa completa.",
+    "whoTitle": "Chi siamo",
+    "whoBody": "Cockpit EPR è un software di supporto alla conformità EPR (responsabilità estesa del produttore) per chi vende online in Europa.",
+    "whatTitle": "Cosa raccogliamo",
+    "whatBody": "Se richiedi il report via email raccogliamo il tuo indirizzo email e le risposte del checker: paese di stabilimento, paesi di vendita, canali, tipi di prodotto e fasce di volume.",
+    "whyTitle": "Perché li raccogliamo",
+    "whyBody": "Solo per inviarti il report richiesto. I dati sono conservati su infrastruttura in regione UE.",
+    "sharingTitle": "Con chi li condividiamo",
+    "sharingBody": "Con nessuno a fini commerciali. Usiamo solo fornitori tecnici (hosting, invio email) come responsabili del trattamento.",
+    "deleteTitle": "Cancellazione",
+    "deleteBody": "Puoi chiedere la cancellazione dei tuoi dati in qualsiasi momento scrivendo a",
+    "contactEmail": "ionandries.digitalservices@gmail.com"
+  },
+  "meta": {
+    "check": {
+      "title": "Verifica EPR gratuita",
+      "description": "Scopri in due minuti dove sei esposto: obblighi imballaggi in Germania, Francia e Italia, con fonti ufficiali."
+    },
+    "result": {
+      "title": "Il tuo quadro EPR"
+    },
+    "privacy": {
+      "title": "Informativa privacy"
+    }
   },
   "empty": {
     "products": "Nessun prodotto ancora. Aggiungi il primo SKU per iniziare a calcolare i report.",

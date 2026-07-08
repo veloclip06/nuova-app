@@ -1,12 +1,20 @@
-import { ScaffoldPlaceholder } from "@/components/scaffold-placeholder";
+import type { Metadata } from "next";
+import { CheckerWizard } from "@/components/checker/checker-wizard";
+import { SiteFooter } from "@/components/site-footer";
+import { t } from "@/lib/i18n";
 
-// Checker (5 step) — built in PROMPT 3, wired to lib/engine checkObligations.
+export const metadata: Metadata = {
+  title: t("meta.check.title"),
+  description: t("meta.check.description"),
+};
+
+// Checker (5 step) — ARCHITECTURE.md §6. No login; answers live in client
+// state inside CheckerWizard and reach the server only via the result URL.
 export default function CheckPage() {
   return (
-    <ScaffoldPlaceholder
-      eyebrow="Verifica EPR"
-      title="Checker"
-      description="Verifica a step senza login. Costruito in PROMPT 3."
-    />
+    <div className="flex min-h-screen flex-col bg-paper">
+      <CheckerWizard />
+      <SiteFooter />
+    </div>
   );
 }

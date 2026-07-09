@@ -1,4 +1,4 @@
-import type { CountryRule } from "@/lib/rules/schema";
+import type { ArSellerCase, CountryRule } from "@/lib/rules/schema";
 
 /**
  * Single place that decides what counts as "uncertain" (CLAUDE.md: unverified
@@ -23,9 +23,8 @@ export function isDraft(rule: CountryRule): boolean {
   return rule.status === "draft";
 }
 
-export function isArUncertain(rule: CountryRule): boolean {
-  const value = rule.authorised_representative.required_for_non_established;
-  return value === "uncertain" || value === "yes_currently_uncertain_future";
+export function isArUncertain(sellerCase: ArSellerCase): boolean {
+  return sellerCase.status === "uncertain" || sellerCase.omnibus_effect === "uncertain";
 }
 
 export function isRegisterCostUncertain(rule: CountryRule): boolean {

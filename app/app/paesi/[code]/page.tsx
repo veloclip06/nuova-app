@@ -235,7 +235,7 @@ export default async function CountryDetailPage({
               <div className="mt-4 border-t border-line pt-4">
                 <p className="text-2xs text-muted-foreground">{t("app.country.arTitle")}</p>
                 <p className="mt-1 text-xs text-ink">
-                  {obligation.authorisedRepresentative.note}
+                  {obligation.authorisedRepresentative.notes}
                   <Uncertain when={obligation.authorisedRepresentative.uncertain} />
                 </p>
               </div>

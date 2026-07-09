@@ -1,4 +1,5 @@
 import type { CountryRule } from "@/lib/rules/schema";
+import { isEuMember } from "./eu-countries";
 import {
   DEFAULT_HORIZON_MONTHS,
   generateDeadlines,
@@ -68,12 +69,27 @@ function buildObligation(
     ...(registerUncertain ? { uncertain: true as const } : {}),
   };
 
+  // eu_seller vs non_eu_seller resolved by establishment (EU_MEMBER_STATES —
+  // the extra-EU sentinel "ZZ" is not a member, so it falls to non_eu_seller).
+  const sellerType = isEuMember(establishment) ? ("eu" as const) : ("non_eu" as const);
+  const arCase =
+    rule.authorised_representative.required_for_non_established[
+      sellerType === "eu" ? "eu_seller" : "non_eu_seller"
+    ];
   const authorisedRepresentative = domestic
     ? null
     : {
-        requirement: rule.authorised_representative.required_for_non_established,
-        uncertain: isArUncertain(rule),
-        note: rule.authorised_representative.note.trim(),
+        sellerType,
+        status: arCase.status,
+        ...(arCase.value ? { value: arCase.value } : {}),
+        ...(arCase.value_until_2026_08_11
+          ? { valueUntil20260811: arCase.value_until_2026_08_11 }
+          : {}),
+        ...(arCase.value_from_2026_08_12
+          ? { valueFrom20260812: arCase.value_from_2026_08_12 }
+          : {}),
+        uncertain: isArUncertain(arCase),
+        notes: rule.authorised_representative.notes.trim(),
       };
 
   const penaltiesUncertain = isPenaltiesUncertain(rule);
@@ -100,7 +116,7 @@ function buildObligation(
     });
   }
   if (authorisedRepresentative?.uncertain) {
-    riskFactors.push({ text: authorisedRepresentative.note, uncertain: true });
+    riskFactors.push({ text: authorisedRepresentative.notes, uncertain: true });
   }
   const riskLevel =
     onMarketplace && rule.scope.marketplace_blocking === "yes" ? "high" : "medium";

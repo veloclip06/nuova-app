@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { CountryObligation } from "@/lib/engine/types";
 import { sealStatusFor } from "@/lib/checker/seal-status";
+import { arCopyFor } from "@/lib/checker/ar-copy";
 import { formatDateIt, segmentFigures } from "@/lib/checker/format";
 import { t } from "@/lib/i18n";
 import { Seal } from "@/components/seal";
@@ -106,9 +107,7 @@ export function ResultCard({ obligation, index, referenceDate }: ResultCardProps
         {obligation.authorisedRepresentative && (
           <p>
             {t("check.result.arLabel")}:{" "}
-            <span className="text-ink">
-              {t(`check.result.ar.${obligation.authorisedRepresentative.requirement}`)}
-            </span>
+            <span className="text-ink">{arCopyFor(obligation)}</span>
             {obligation.authorisedRepresentative.uncertain && <UncertainBadge />}
           </p>
         )}

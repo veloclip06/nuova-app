@@ -1,5 +1,6 @@
 import type {
-  ArRequirement,
+  ArStatus,
+  ArValue,
   CanonicalMaterial,
   CountryRule,
 } from "@/lib/rules/schema";
@@ -73,10 +74,27 @@ export interface ObligationRegister {
   uncertain?: true;
 }
 
+/** EU-established seller vs third-country seller (EU_MEMBER_STATES). */
+export type ArSellerType = "eu" | "non_eu";
+
+/**
+ * The YAML AR case resolved for THIS company: eu_seller when the establishment
+ * country is an EU member state, non_eu_seller otherwise (verifica-com-2025-982.md).
+ * `uncertain` is true when the status itself is uncertain (DE/IT eu_seller,
+ * Omnibus pending) or a national obligation stands but the Omnibus effect on it
+ * is open (FR eu_seller) — never for confirmed third-country obligations.
+ */
 export interface AuthorisedRepresentativeStatus {
-  requirement: ArRequirement;
+  sellerType: ArSellerType;
+  status: ArStatus;
+  /** Time-independent value, verbatim from the YAML (e.g. mandatory). */
+  value?: ArValue;
+  /** Value until 11/08/2026 — the day before PPWR art. 45(3) applies. */
+  valueUntil20260811?: ArValue;
+  /** Value from 12/08/2026 — PPWR art. 45(3) application date. */
+  valueFrom20260812?: ArValue;
   uncertain: boolean;
-  note: string;
+  notes: string;
 }
 
 export interface CountryObligation {

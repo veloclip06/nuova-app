@@ -135,20 +135,59 @@ const penaltiesSchema = z.object({
 });
 
 /**
- * Uncertainty is first-class: the engine must propagate any of these as
- * `uncertain: true` and never present them as settled (see PROMPT 2).
+ * Authorised representative (PPWR art. 45(3) + Environmental Omnibus
+ * COM/2025/982). Structured per seller type — the obligation differs for
+ * EU-established vs third-country producers (docs: verifica-com-2025-982.md,
+ * primary sources verified 2026-07-09). Uncertainty is first-class: the engine
+ * must propagate `status: uncertain` / `omnibus_effect: uncertain` as
+ * `uncertain: true` and never present them as settled.
  */
-export const arRequirementSchema = z.enum([
-  "yes",
-  "no",
+export const arStatusSchema = z.enum([
+  // Omnibus pending: the obligation may or may not apply — badge "in verifica".
   "uncertain",
-  "yes_currently_uncertain_future",
+  // Obligation established (e.g. third-country producers: the proposed
+  // suspension explicitly excludes them).
+  "confirmed",
+  // Obligation already in force under pre-existing NATIONAL law (e.g. FR
+  // mandataire, loi AGEC) — the Omnibus effect on it may still be uncertain.
+  "confirmed_national",
 ]);
+export type ArStatus = z.infer<typeof arStatusSchema>;
+
+export const arValueSchema = z.enum([
+  "optional",
+  "mandatory",
+  "mandatory_unless_omnibus_adopted",
+]);
+export type ArValue = z.infer<typeof arValueSchema>;
+
+const arSellerCaseSchema = z
+  .object({
+    status: arStatusSchema,
+    /** Time-independent value (e.g. non-EU: mandatory; FR national law). */
+    value: arValueSchema.optional(),
+    /** Value until 11/08/2026 — the day before PPWR art. 45(3) applies. */
+    value_until_2026_08_11: arValueSchema.optional(),
+    /** Value from 12/08/2026 — PPWR art. 45(3) application date. */
+    value_from_2026_08_12: arValueSchema.optional(),
+    /** FR: national obligation stands, the Omnibus effect on it is open. */
+    omnibus_effect: z.literal("uncertain").optional(),
+  })
+  .refine(
+    (c) => c.value !== undefined || c.value_from_2026_08_12 !== undefined,
+    { message: "seller case needs `value` or `value_from_2026_08_12`" },
+  );
+export type ArSellerCase = z.infer<typeof arSellerCaseSchema>;
+
+export const arRequirementSchema = z.object({
+  eu_seller: arSellerCaseSchema,
+  non_eu_seller: arSellerCaseSchema,
+});
 export type ArRequirement = z.infer<typeof arRequirementSchema>;
 
 const authorisedRepresentativeSchema = z.object({
   required_for_non_established: arRequirementSchema,
-  note: z.string().min(1),
+  notes: z.string().min(1),
 });
 
 export const countryRuleSchema = z

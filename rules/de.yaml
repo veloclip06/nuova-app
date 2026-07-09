@@ -112,16 +112,22 @@ penalties:
     partecipazione al sistema; multa di 35.750 € per omessa Vollständigkeitserklärung.
   detail_url: https://www.gesetze-im-internet.de/verpackg/__36.html
 
-authorised_representative:
-  required_for_non_established: uncertain
-  note: >
-    PPWR art. 45(3) (Reg. UE 2025/40) imporrebbe il rappresentante autorizzato EPR
-    dal 12/08/2026 per chi vende a distanza in uno Stato UE dove non è stabilito,
-    MA la proposta COM/2025/982 (Environmental Omnibus, 10/12/2025) sospenderebbe
-    l'obbligo per i produttori stabiliti nell'UE fino al 1/1/2035. A luglio 2026 la
-    proposta è ancora pendente in Parlamento/Consiglio. Per produttori extra-UE
-    l'obbligo (o misure alternative di tracciabilità decise dallo Stato membro)
-    resterebbe. Trattare come INCERTO, mostrare con disclaimer, monitorare.
+authorised_representative:               # verifica fonti primarie 2026-07-09 (verifica-com-2025-982.md)
+  required_for_non_established:
+    eu_seller:
+      status: uncertain          # badge: in_verifica
+      value_until_2026_08_11: optional
+      value_from_2026_08_12: mandatory_unless_omnibus_adopted
+    non_eu_seller:
+      status: confirmed
+      value: mandatory
+  notes: >
+    Fino all'11/08/2026 il Bevollmächtigter è facoltativo per i produttori esteri.
+    Dal 12/08/2026 l'art. 45(3) PPWR + § 5(2) VerpackDG-E lo rendono obbligatorio per
+    i produttori senza sede in Germania. La proposta Omnibus (COM/2025/982, 2025/0395(COD))
+    sospenderebbe l'obbligo per i produttori UE fino al 2035, ma NON è ancora legge; il draft
+    report ENVI (PE788.916, 22/05/2026) limiterebbe la sospensione a micro/piccole imprese.
+    L'iscrizione a LUCID resta personale e non delegabile in ogni caso.
 
 sources:
   - title: VerpackG §36 (Bußgeldvorschriften) — Gesetze im Internet
@@ -147,4 +153,7 @@ sources:
     accessed: 2026-07-06
   - title: EUR-Lex — COM/2025/982 (sospensione AR per produttori UE fino 2035)
     url: https://eur-lex.europa.eu/legal-content/AUTO/?uri=CELEX%3A52025PC0982
-    accessed: 2026-07-06
+    accessed: 2026-07-09
+  - title: OEIL — Procedura 2025/0395(COD) (Environmental Omnibus, stato iter)
+    url: https://oeil.secure.europarl.europa.eu/oeil/en/procedure-file?reference=2025/0395(COD)
+    accessed: 2026-07-09

@@ -318,10 +318,18 @@
       "nextDeadlineLabel": "Prossima scadenza",
       "arLabel": "Rappresentante autorizzato",
       "ar": {
-        "yes": "richiesto",
-        "no": "non richiesto",
-        "uncertain": "da verificare",
-        "yes_currently_uncertain_future": "richiesto oggi, quadro in evoluzione"
+        "DE": {
+          "eu": "Germania: fino all'11 agosto 2026 il rappresentante autorizzato (Bevollmächtigter) è facoltativo. Dal 12 agosto 2026 diventa in linea di principio obbligatorio per chi non ha sede in Germania. È in corso una proposta UE (Environmental Omnibus) che sospenderebbe quest'obbligo per le imprese UE fino al 2035, ma non è ancora legge e potrebbe limitarsi a micro e piccole imprese. Stato in verifica: l'iscrizione a LUCID e l'adesione al sistema duale restano comunque obbligatorie.",
+          "non_eu": "Germania: se la tua azienda ha sede fuori dall'UE, dal 12 agosto 2026 devi nominare un rappresentante autorizzato (Bevollmächtigter) in Germania. La proposta di sospensione UE non si applica ai produttori di paesi terzi. Restano obbligatorie l'iscrizione a LUCID e l'adesione a un sistema duale."
+        },
+        "FR": {
+          "eu": "Francia: se vendi direttamente a consumatori francesi, la legge francese (AGEC) richiede già oggi la nomina di un mandataire stabilito in Francia, che ti registra presso Citeo/ADEME. La proposta UE di sospensione dell'obbligo di rappresentante per le imprese UE non è ancora legge e il suo effetto sull'obbligo francese è incerto (stato in verifica). Iscrizione e contributi restano dovuti.",
+          "non_eu": "Francia: se la tua azienda ha sede fuori dall'UE, devi nominare un mandataire in Francia per adempiere agli obblighi EPR (registrazione Citeo/ADEME, IDU). La proposta di sospensione UE non si applica ai produttori di paesi terzi."
+        },
+        "IT": {
+          "eu": "Italia: chi immette imballaggi sul mercato italiano deve iscriversi a CONAI, dichiarare i volumi e pagare il Contributo Ambientale. Dal 12 agosto 2026 il PPWR introduce l'obbligo di rappresentante autorizzato per chi non è stabilito in Italia; per le imprese UE quest'obbligo potrebbe essere sospeso se verrà adottata la proposta UE (Environmental Omnibus), oggi non ancora legge. Stato in verifica.",
+          "non_eu": "Italia: se la tua azienda ha sede fuori dall'UE e vende in Italia, devi designare un rappresentante in Italia e adempiere agli obblighi CONAI. La proposta di sospensione UE non si applica ai produttori di paesi terzi: l'obbligo è confermato."
+        }
       },
       "notCoveredNote": "Per {{countries}} la copertura è in arrivo — la tua selezione ci aiuta a dare priorità."
     },

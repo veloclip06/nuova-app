@@ -1,5 +1,6 @@
 import type { CountryObligation } from "@/lib/engine/types";
 import { sealStatusFor } from "@/lib/checker/seal-status";
+import { arCopyFor } from "@/lib/checker/ar-copy";
 import { formatDateIt } from "@/lib/checker/format";
 import { t } from "@/lib/i18n";
 import type { SealStatus } from "@/components/seal";
@@ -115,7 +116,7 @@ function countrySectionHtml(obligation: CountryObligation, index: number): strin
     parts.push(
       line(
         t("check.result.arLabel"),
-        escapeHtml(obligation.authorisedRepresentative.note) +
+        escapeHtml(arCopyFor(obligation)) +
           uncertainSuffixHtml(obligation.authorisedRepresentative.uncertain),
       ),
     );
@@ -185,7 +186,7 @@ function countrySectionText(obligation: CountryObligation, index: number): strin
   }
   if (obligation.authorisedRepresentative) {
     lines.push(
-      `${t("check.result.arLabel")}: ${obligation.authorisedRepresentative.note}${uncertainSuffixText(obligation.authorisedRepresentative.uncertain)}`,
+      `${t("check.result.arLabel")}: ${arCopyFor(obligation)}${uncertainSuffixText(obligation.authorisedRepresentative.uncertain)}`,
     );
   }
   lines.push(`${t("check.email.report.deMinimisLabel")}: ${obligation.deMinimis}`);

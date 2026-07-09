@@ -118,15 +118,21 @@ penalties:
   detail_url: https://www.brocardi.it/codice-dell-ambiente/parte-quarta/titolo-vi/capo-i/art261.html
   uncertain: true   # structured mirror of the source conflict declared in the summary (importi art. 261)
 
-authorised_representative:
-  required_for_non_established: uncertain
-  note: >
-    Oggi non esiste un "rappresentante autorizzato EPR" in senso PPWR per gli imballaggi
-    in Italia; l'impresa estera che aderisce a CONAI elegge un domicilio speciale in Italia
-    (o presta garanzie se extra-UE). Con il PPWR art. 45(3) dal 12/08/2026 l'AR diverrebbe
-    requisito UE, ma COM/2025/982 lo sospenderebbe per i produttori UE fino al 1/1/2035
-    (pendente a luglio 2026). Il RENAP (registro nazionale produttori) è previsto ma non
-    ancora operativo. Trattare come INCERTO, monitorare.
+authorised_representative:               # verifica fonti primarie 2026-07-09 (verifica-com-2025-982.md)
+  required_for_non_established:
+    eu_seller:
+      status: uncertain          # badge: in_verifica
+      value_from_2026_08_12: mandatory_unless_omnibus_adopted
+    non_eu_seller:
+      status: confirmed
+      value: mandatory
+  notes: >
+    Obblighi CONAI (iscrizione, dichiarazione volumi, Contributo Ambientale) dovuti da chi
+    immette imballaggi sul mercato italiano, incluse imprese UE ed extra-UE che vendono
+    direttamente a clienti italiani. Gli importatori senza soggetto giuridico in Italia devono
+    designare un rappresentante in Italia. Dal 12/08/2026 l'art. 45(3) PPWR aggiunge l'AR
+    armonizzato; per i produttori UE l'obbligo potrebbe essere sospeso se l'Omnibus venisse
+    adottato. Per i produttori extra-UE l'obbligo è confermato.
 
 sources:
   - title: CONAI — Soggetti obbligati e modalità di adesione (incl. art. 178-quater, imprese estere)
@@ -149,4 +155,7 @@ sources:
     accessed: 2026-07-06
   - title: EUR-Lex — COM/2025/982 (sospensione AR)
     url: https://eur-lex.europa.eu/legal-content/AUTO/?uri=CELEX%3A52025PC0982
-    accessed: 2026-07-06
+    accessed: 2026-07-09
+  - title: OEIL — Procedura 2025/0395(COD) (Environmental Omnibus, stato iter)
+    url: https://oeil.secure.europarl.europa.eu/oeil/en/procedure-file?reference=2025/0395(COD)
+    accessed: 2026-07-09

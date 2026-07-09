@@ -1,5 +1,5 @@
 # STATO_PROGETTO.md — EPR Cockpit
-Documento di handoff. Aggiornato: 09/07/2026, dopo il lavoro PROMPT 5 (app autenticata /app).
+Documento di handoff. Aggiornato: 09/07/2026, dopo l'integrazione della verifica COM/2025/982 (rappresentante autorizzato).
 Va tenuto nel repo e aggiornato a ogni milestone. In una nuova chat, allegare questo file + ARCHITECTURE.md + DESIGN_SYSTEM.md + CLAUDE_CODE_KICKOFF.md.
 
 ## 1. Cos'è il prodotto
@@ -21,7 +21,8 @@ Stato servizi: Supabase COLLEGATO (migration 0001 applicata, seed fatto: countri
 - ✅ Lavoro PROMPT 3 committato
 - ✅ PROMPT 4 (Opus): landing / — hero fedele all'export (CTA unica → /check), sezione "dolore" (3 situazioni con fonti), come funziona (3 passi), prezzi (3 tier §8, centrale ancorato), FAQ (6 domande, risposte coerenti coi /rules, fonti linkate, AR presentato come incerto). SEO: metadata+OG (opengraph-image via next/og), sitemap.ts, robots.ts, schema.org FAQPage. /prezzi ora reale (riusa PricingSection). Testi in it.json; build+lint+93 test verdi
 - ✅ PROMPT 5 (Opus): app autenticata /app — auth Supabase completa (email+password, Google, reset, middleware guard) + onboarding /onboarding (azienda→paesi→primo stato); dashboard fedele all'export (banner progresso con azione mancante cliccabile, card-paese con sigillo, prossime scadenze); /app/paesi + dettaglio con cambio stato (sigillo→CONFORME animato §5); /app/prodotti (tabella SKU+componenti, aggiunta manuale, import CSV con mappatura colonne/preview/validazione — parser CSV puro+test); /app/report (paese+periodo+volumi inline → computeReport → tabelle Plex Mono per materiale e per categoria registro, copia TSV + export CSV, storico in reports); cron Vercel 30/7/1gg via Resend (vercel.json + /api/cron/reminders guardato da CRON_SECRET). Data layer puro lib/app/* (mappers, seal, deadlines-sync) — sigillo dashboard rende "bozza/in verifica" sui rules draft (mai data finta). build+typecheck+119 test verdi (24 nuovi); smoke test runtime OK (guard /app, cron su DB reale, pagine auth)
-- ⬜ giro di rifinitura UI · ⬜ PROMPT 6 Stripe+legali (Sonnet) · ⬜ deploy Vercel · ⬜ verifica umana delle 10 incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
+- ✅ Verifica fonti primarie COM/2025/982 (09/07/2026, verifica-com-2025-982.md) integrata: schema AR strutturato eu_seller/non_eu_seller nei YAML+Zod, motore distingue venditore UE (incerto/badge, FR obbligo nazionale) vs extra-UE (confermato, no badge), 6 copy dedicati in it.json usati da card risultato e report email, fonte OEIL aggiunta; status resta draft (le altre incertezze non sono verificate). 120 test verdi
+- ⬜ giro di rifinitura UI · ⬜ PROMPT 6 Stripe+legali (Sonnet) · ⬜ deploy Vercel · ⬜ verifica umana delle restanti incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
 
 ## 4. Decisioni chiave ratificate (fanno fede sul mockup dove confliggono)
 1. SIGILLO = stato legale; CLAIM di rischio = enforcement confermato. Estero obbligato non coperto → ESPOSTO sempre (indipendente dal canale). Domestico → AZIONE RICHIESTA con copy CONAI dedicato. riskLevel modula le righe di rischio nella card, non il sigillo: high (marketplace+blocco confermato) → riga delisting; medium → solo sanzioni con fonte; dato incerto → badge "in verifica", mai claim di blocco.
@@ -58,7 +59,7 @@ Lavoro su main, nessun branch, NESSUN commit da parte degli agenti: modifiche un
 - Script seed non carica .env.local da solo (workaround: passare le env inline) → fix futuro
 - 7 vulnerabilità npm preesistenti segnalate da npm audit → da rivedere prima del deploy
 - Resend: passare a dominio verificato prima del lancio
-- Verifica umana n.1 (la più urgente): stato proposta COM/2025/982 → determina il messaging sul rappresentante autorizzato in tutti e 3 i paesi
+- Monitoraggio Omnibus (COM/2025/982, procedura 2025/0395(COD)) — al verificarsi di ciascun trigger rivedere i campi authorised_representative nei YAML e togliere/mantenere il badge "in verifica": (a) voto in commissione ENVI; (b) orientamento generale del Consiglio; (c) avvio/chiusura dei triloghi; (d) pubblicazione in GUUE con data di applicazione (fonte: verifica-com-2025-982.md, Recommendations §4)
 - Nome definitivo + dominio da decidere prima della landing pubblica (canonical/OG/sitemap ora dipendono da NEXT_PUBLIC_SITE_URL: valorizzarlo col dominio reale prima del deploy — oggi fallback localhost)
 - Landing: CTA dei tier a pagamento (Starter/Pro) puntano a /registrati (ora signup reale); manca solo il checkout Stripe (PROMPT 6). L'immagine OG usa font di sistema (non Archivo), accettabile per MVP
 - PROMPT 5 — env da valorizzare prima del deploy: CRON_SECRET (guardia cron 30/7/1gg) e NEXT_PUBLIC_SITE_URL non sono in .env.local; per "Continua con Google" serve configurare il provider Google su Supabase + redirect URL /auth/callback. Google/reset non verificati a runtime (richiedono config esterna); testati a runtime: guard /app, rendering pagine auth, cron su DB reale

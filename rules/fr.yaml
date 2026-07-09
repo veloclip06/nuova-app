@@ -107,14 +107,21 @@ penalties:
   detail_url: https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006159421/
   uncertain: true   # structured mirror of the TODO-VERIFY inside the summary (importo Triman)
 
-authorised_representative:
-  required_for_non_established: yes_currently_uncertain_future
-  note: >
-    Attualmente il produttore non stabilito in Francia deve nominare un mandataire
-    stabilito in Francia (art. R541-174). Con il PPWR art. 45(3) dal 12/08/2026 l'AR
-    diverrebbe requisito armonizzato UE, ma la proposta COM/2025/982 sospenderebbe
-    l'obbligo per i produttori UE fino al 1/1/2035; a luglio 2026 pendente. Per gli
-    extra-UE l'obbligo resterebbe. Trattare come INCERTO, mostrare con disclaimer.
+authorised_representative:               # verifica fonti primarie 2026-07-09 (verifica-com-2025-982.md)
+  required_for_non_established:
+    eu_seller:
+      status: confirmed_national  # mandataire già dovuto per legge nazionale
+      value: mandatory
+      omnibus_effect: uncertain   # badge: in_verifica
+    non_eu_seller:
+      status: confirmed
+      value: mandatory
+  notes: >
+    La loi AGEC (Code de l'environnement art. L541-10 / R543-42) impone già oggi a un
+    produttore non stabilito in Francia che vende direttamente a utenti finali francesi
+    di nominare un mandataire stabilito in Francia (registrazione Citeo/ADEME, IDU).
+    Obbligo nazionale preesistente e indipendente dal PPWR. L'effetto dell'eventuale
+    sospensione Omnibus dell'art. 45(3) PPWR sui produttori UE è incerto.
 
 sources:
   - title: ADEME — Identifiant unique (IDU) filières REP
@@ -143,4 +150,7 @@ sources:
     accessed: 2026-07-06
   - title: EUR-Lex — COM/2025/982 (sospensione AR)
     url: https://eur-lex.europa.eu/legal-content/AUTO/?uri=CELEX%3A52025PC0982
-    accessed: 2026-07-06
+    accessed: 2026-07-09
+  - title: OEIL — Procedura 2025/0395(COD) (Environmental Omnibus, stato iter)
+    url: https://oeil.secure.europarl.europa.eu/oeil/en/procedure-file?reference=2025/0395(COD)
+    accessed: 2026-07-09

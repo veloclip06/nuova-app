@@ -52,11 +52,16 @@ describe("checkObligations — IT company selling only in DE", () => {
     expect(ids).toContain("system_participation");
   });
 
-  it("flags the authorised representative as uncertain (PPWR/COM 2025/982 pending)", () => {
+  it("resolves the AR as the EU-seller case: uncertain, with both temporal values", () => {
     const ar = result[0].authorisedRepresentative;
     expect(ar).not.toBeNull();
-    expect(ar!.requirement).toBe("uncertain");
+    expect(ar!.sellerType).toBe("eu");
+    expect(ar!.status).toBe("uncertain");
     expect(ar!.uncertain).toBe(true);
+    // The two dates from the 2026-07-09 verification: optional until 11 Aug
+    // 2026, then mandatory unless the Omnibus is adopted in time.
+    expect(ar!.valueUntil20260811).toBe("optional");
+    expect(ar!.valueFrom20260812).toBe("mandatory_unless_omnibus_adopted");
   });
 
   it("always carries the official sources and the draft status", () => {
@@ -107,8 +112,14 @@ describe("checkObligations — IT company selling in DE+FR+IT (marketplace chann
     expect(it_.authorisedRepresentative).toBeNull();
     expect(de.authorisedRepresentative).not.toBeNull();
     expect(fr.authorisedRepresentative).not.toBeNull();
-    expect(fr.authorisedRepresentative!.requirement).toBe("yes_currently_uncertain_future");
-    expect(fr.authorisedRepresentative!.uncertain).toBe(true);
+  });
+
+  it("FR EU seller: national mandataire obligation stands, Omnibus effect uncertain", () => {
+    const ar = fr.authorisedRepresentative!;
+    expect(ar.sellerType).toBe("eu");
+    expect(ar.status).toBe("confirmed_national");
+    expect(ar.value).toBe("mandatory");
+    expect(ar.uncertain).toBe(true); // omnibus_effect: uncertain → badge
   });
 
   it("promotes risk to high only where marketplaces block listings (DE, FR)", () => {
@@ -163,12 +174,18 @@ describe("checkObligations — extra-EU company selling in DE+FR+IT", () => {
     rules,
   );
 
-  it("no country is domestic; every AR/mandataire question is surfaced", () => {
+  it("no country is domestic; the AR obligation is CONFIRMED everywhere, no badge", () => {
     expect(result).toHaveLength(3);
     for (const obligation of result) {
       expect(obligation.domestic).toBe(false);
-      expect(obligation.authorisedRepresentative).not.toBeNull();
-      expect(obligation.authorisedRepresentative!.uncertain).toBe(true);
+      const ar = obligation.authorisedRepresentative;
+      expect(ar).not.toBeNull();
+      // The Omnibus suspension explicitly excludes third-country producers.
+      expect(ar!.sellerType).toBe("non_eu");
+      expect(ar!.status).toBe("confirmed");
+      expect(ar!.value).toBe("mandatory");
+      expect(ar!.uncertain).toBe(false);
+      // The rule files themselves are still drafts, so the country stays uncertain.
       expect(obligation.uncertain).toBe(true);
     }
   });

@@ -24,9 +24,11 @@
     "login": "Accedi",
     "registrati": "Registrati",
     "dashboard": "Cruscotto",
+    "paesi": "Paesi",
     "prodotti": "Prodotti",
     "report": "Report",
-    "impostazioni": "Impostazioni"
+    "impostazioni": "Impostazioni",
+    "signout": "Esci"
   },
   "landing": {
     "nav": {
@@ -391,5 +393,313 @@
   "errors": {
     "generic": "Qualcosa non ha funzionato. Riprova.",
     "missingWeights": "Peso mancante per {{count}} prodotti — completali per generare il report."
+  },
+  "app": {
+    "auth": {
+      "google": "Continua con Google",
+      "or": "oppure",
+      "fields": {
+        "email": "Email",
+        "password": "Password",
+        "newPassword": "Nuova password"
+      },
+      "login": {
+        "title": "Accedi",
+        "subtitle": "Entra nel tuo cruscotto EPR.",
+        "submit": "Accedi",
+        "forgot": "Password dimenticata?",
+        "noAccount": "Non hai un account?",
+        "signupLink": "Registrati"
+      },
+      "signup": {
+        "title": "Crea il tuo account",
+        "subtitle": "Gestisci gli obblighi EPR paese per paese.",
+        "submit": "Crea account",
+        "terms": "Creando un account accetti l'informativa privacy.",
+        "haveAccount": "Hai già un account?",
+        "loginLink": "Accedi",
+        "confirmTitle": "Controlla la tua email",
+        "confirmBody": "Ti abbiamo inviato un link a {{email}} per confermare l'account e continuare."
+      },
+      "reset": {
+        "requestTitle": "Reimposta la password",
+        "requestSubtitle": "Ti invieremo un link per reimpostarla.",
+        "requestSubmit": "Invia il link",
+        "requestSent": "Se esiste un account per {{email}}, riceverai un link per reimpostare la password.",
+        "updateTitle": "Scegli una nuova password",
+        "updateSubtitle": "Imposta la nuova password del tuo account.",
+        "updateSubmit": "Aggiorna la password",
+        "backToLogin": "Torna all'accesso"
+      },
+      "errors": {
+        "invalidCredentials": "Email o password non corretti.",
+        "emailInUse": "Esiste già un account con questa email.",
+        "weakPassword": "La password deve avere almeno 8 caratteri.",
+        "generic": "Qualcosa non ha funzionato. Riprova."
+      }
+    },
+    "onboarding": {
+      "eyebrow": "Configurazione",
+      "stepOf": "Passo {{n}} di {{total}}",
+      "company": {
+        "title": "Crea la tua azienda",
+        "subtitle": "Bastano pochi dati per iniziare.",
+        "nameLabel": "Ragione sociale",
+        "namePlaceholder": "Rossi Commerce Srl",
+        "countryLabel": "Paese di stabilimento",
+        "countryHelp": "La sede legale determina gli obblighi come paese domestico.",
+        "countryPlaceholder": "Seleziona un paese",
+        "vatLabel": "Partita IVA (facoltativa)",
+        "vatPlaceholder": "IT01234567890",
+        "submit": "Continua"
+      },
+      "countries": {
+        "title": "In quali paesi vendi?",
+        "subtitle": "Seleziona i paesi coperti. Potrai modificarli in seguito.",
+        "empty": "Nessun paese disponibile. Esegui il seed delle regole (npm run seed-rules).",
+        "counterOne": "1 paese selezionato",
+        "counterMany": "{{count}} paesi selezionati",
+        "back": "Indietro",
+        "submit": "Continua"
+      },
+      "status": {
+        "title": "A che punto sei in ogni paese?",
+        "subtitle": "Imposta lo stato attuale. Potrai aggiornarlo quando cambia.",
+        "back": "Indietro",
+        "submit": "Vai al cruscotto",
+        "options": {
+          "not_registered": "Non registrato",
+          "in_progress": "Registrazione in corso",
+          "registered": "Registrato"
+        }
+      },
+      "error": "Non è stato possibile salvare. Riprova."
+    },
+    "dashboard": {
+      "eyebrow": "Quadro generale",
+      "title": "Quadro generale",
+      "banner": {
+        "progress": "Configurazione: {{done}} paesi su {{total}} completati",
+        "complete": "Completa {{country}}",
+        "allDone": "Tutti i paesi sono configurati."
+      },
+      "card": {
+        "nextDeadline": "Prossima scadenza",
+        "noDeadline": "Nessuna scadenza imminente",
+        "start": "Inizia la registrazione",
+        "continue": "Continua la configurazione",
+        "details": "Vedi dettagli"
+      },
+      "status": {
+        "not_registered": "Registrazione da avviare.",
+        "in_progress": "Registrazione in corso.",
+        "registered": "Conforme e registrato.",
+        "not_obligated": "Nessun obbligo in questo paese."
+      },
+      "deadlines": {
+        "title": "Prossime scadenze",
+        "empty": "Nessuna scadenza. Configura i tuoi paesi per generarle.",
+        "undated": "Data da definire",
+        "esposto": "Scoperto",
+        "azione_richiesta": "Da preparare",
+        "conforme": "In regola",
+        "non_obbligato": "Informativo"
+      },
+      "draftNotice": "Dati normativi in verifica",
+      "empty": {
+        "title": "Configura il tuo primo paese",
+        "body": "Aggiungi i paesi in cui vendi per vedere obblighi e scadenze.",
+        "cta": "Vai alla configurazione"
+      }
+    },
+    "paesi": {
+      "eyebrow": "Paesi",
+      "title": "I tuoi paesi",
+      "subtitle": "Stato e obblighi per ogni paese in cui vendi."
+    },
+    "country": {
+      "back": "Torna al cruscotto",
+      "registerTitle": "Registro",
+      "authorityLabel": "Autorità",
+      "portalLabel": "Portale",
+      "costLabel": "Costo di registrazione",
+      "costFree": "Gratuito",
+      "costUnknown": "Da verificare",
+      "languagesLabel": "Lingue",
+      "requirementsTitle": "Cosa serve",
+      "deadlinesTitle": "Scadenze",
+      "noDeadlines": "Nessuna scadenza datata al momento.",
+      "penaltiesTitle": "Sanzioni",
+      "penaltiesDetail": "Dettagli",
+      "arTitle": "Rappresentante autorizzato",
+      "sourcesTitle": "Fonti",
+      "sourceAccessed": "consultata il",
+      "draftNotice": "Dati normativi in verifica",
+      "statusTitle": "Stato in questo paese",
+      "statusHelp": "Aggiornalo man mano che avanzi. Quando registrato, il sigillo diventa Conforme.",
+      "statusSaved": "Stato aggiornato.",
+      "statusOptions": {
+        "not_registered": "Non registrato",
+        "in_progress": "Registrazione in corso",
+        "registered": "Registrato"
+      },
+      "notObligatedTitle": "Nessun obbligo",
+      "notObligatedBody": "In base ai dati attuali non risultano obblighi EPR in questo paese.",
+      "notCovered": "Questo paese non è ancora coperto dalle nostre regole.",
+      "inVerifica": "in verifica"
+    },
+    "products": {
+      "eyebrow": "Prodotti",
+      "title": "Prodotti e imballaggi",
+      "subtitle": "SKU e componenti di imballaggio usati per calcolare i report.",
+      "addButton": "Aggiungi prodotto",
+      "importButton": "Importa CSV",
+      "table": {
+        "sku": "SKU",
+        "name": "Nome",
+        "components": "Componenti",
+        "totalWeight": "Peso unitario",
+        "source": "Origine",
+        "actions": "Azioni",
+        "delete": "Elimina",
+        "deleteConfirm": "Eliminare lo SKU {{sku}}?"
+      },
+      "componentSummary": "{{count}} materiali",
+      "empty": "Nessun prodotto ancora. Aggiungi il primo SKU per iniziare a calcolare i report.",
+      "sourceManual": "manuale",
+      "sourceCsv": "CSV",
+      "form": {
+        "title": "Nuovo prodotto",
+        "skuLabel": "Codice SKU",
+        "skuPlaceholder": "BOX-01",
+        "nameLabel": "Nome (facoltativo)",
+        "namePlaceholder": "Scatola media",
+        "componentsLabel": "Componenti di imballaggio",
+        "materialLabel": "Materiale",
+        "weightLabel": "Peso (g)",
+        "addComponent": "Aggiungi componente",
+        "removeComponent": "Rimuovi",
+        "save": "Salva prodotto",
+        "cancel": "Annulla",
+        "saved": "Prodotto salvato.",
+        "errorSku": "Inserisci un codice SKU.",
+        "errorComponents": "Aggiungi almeno un componente con materiale e peso.",
+        "errorDuplicate": "Esiste già un prodotto con questo codice SKU.",
+        "errorGeneric": "Non è stato possibile salvare. Riprova."
+      },
+      "import": {
+        "title": "Importa prodotti da CSV",
+        "help": "Una riga per componente: righe con lo stesso SKU diventano un unico prodotto.",
+        "pick": "Scegli un file CSV",
+        "mapTitle": "Mappa le colonne",
+        "mapHelp": "Indica quale colonna del CSV corrisponde a ciascun campo.",
+        "colSku": "Codice SKU",
+        "colName": "Nome (facoltativo)",
+        "colMaterial": "Materiale",
+        "colWeight": "Peso (g)",
+        "colNone": "— nessuna —",
+        "previewTitle": "Anteprima",
+        "previewValid": "{{count}} righe valide",
+        "previewErrors": "{{count}} righe con errori",
+        "previewSkus": "{{count}} SKU pronti all'import",
+        "rowLabel": "Riga {{n}}",
+        "confirm": "Importa {{count}} SKU",
+        "cancel": "Annulla",
+        "back": "Indietro",
+        "done": "{{count}} SKU importati.",
+        "errorParse": "Non è stato possibile leggere il file. Verifica che sia un CSV valido.",
+        "errorMapping": "Mappa i campi obbligatori: SKU, materiale e peso.",
+        "errorNoValid": "Nessuna riga valida da importare.",
+        "errorGeneric": "Import non riuscito. Riprova."
+      },
+      "rowErrors": {
+        "MISSING_SKU_CODE": "SKU mancante",
+        "UNKNOWN_MATERIAL": "materiale non riconosciuto",
+        "INVALID_WEIGHT": "peso non valido"
+      }
+    },
+    "materials": {
+      "paper_cardboard": "Carta e cartone",
+      "plastic": "Plastica",
+      "glass": "Vetro",
+      "ferrous_metal": "Acciaio",
+      "aluminium": "Alluminio",
+      "wood": "Legno",
+      "composite_beverage": "Poliaccoppiato per bevande",
+      "composite_other": "Poliaccoppiato",
+      "other": "Altro"
+    },
+    "report": {
+      "eyebrow": "Report",
+      "title": "Genera un report",
+      "subtitle": "Seleziona paese e periodo, conferma i volumi e ottieni i numeri da dichiarare.",
+      "countryLabel": "Paese",
+      "periodLabel": "Periodo",
+      "periodPlaceholder": "2026 oppure 2026-Q3",
+      "volumesTitle": "Volumi venduti",
+      "volumesHelp": "Unità vendute per SKU nel periodo selezionato.",
+      "unitsLabel": "Unità",
+      "generate": "Genera report",
+      "regenerate": "Ricalcola",
+      "noProducts": "Aggiungi prima i tuoi prodotti per generare un report.",
+      "noProductsCta": "Vai ai prodotti",
+      "selectPrompt": "Seleziona un paese e un periodo per iniziare.",
+      "result": {
+        "title": "Report {{register}} · {{period}}",
+        "materialView": "Per materiale",
+        "portalView": "Per categoria del registro",
+        "material": "Materiale",
+        "localCategory": "Categoria registro",
+        "code": "Codice",
+        "weightKg": "Peso (kg)",
+        "units": "Unità",
+        "copy": "Copia negli appunti",
+        "copied": "Copiato negli appunti.",
+        "exportCsv": "Esporta CSV",
+        "saved": "Report salvato nello storico.",
+        "draftNotice": "Dati normativi in verifica: controlla i valori prima di dichiararli."
+      },
+      "errors": {
+        "title": "Il report non può essere generato",
+        "hint": "Correggi i dati e riprova.",
+        "MISSING_PACKAGING_COMPONENTS": "Lo SKU {{sku}} non ha componenti di imballaggio.",
+        "MISSING_COMPONENT_WEIGHT": "Lo SKU {{sku}} ha un componente senza peso.",
+        "UNKNOWN_SKU_IN_VOLUMES": "Lo SKU {{sku}} nei volumi non esiste tra i prodotti.",
+        "UNMAPPED_MATERIAL": "Lo SKU {{sku}} usa un materiale senza corrispondenza nel registro.",
+        "INVALID_UNITS": "Unità non valide per lo SKU {{sku}}.",
+        "INVALID_PERIOD": "Il periodo non è valido per questo paese.",
+        "generic": "Dati non validi. Correggi e riprova."
+      }
+    },
+    "settings": {
+      "eyebrow": "Impostazioni",
+      "title": "Impostazioni",
+      "companyTitle": "Azienda",
+      "nameLabel": "Ragione sociale",
+      "countryLabel": "Paese di stabilimento",
+      "vatLabel": "Partita IVA",
+      "save": "Salva",
+      "saved": "Modifiche salvate.",
+      "error": "Non è stato possibile salvare. Riprova.",
+      "accountTitle": "Account",
+      "emailLabel": "Email",
+      "signout": "Esci"
+    },
+    "common": {
+      "saving": "Salvataggio…",
+      "loadingError": "Impossibile caricare i dati. Riprova."
+    },
+    "email": {
+      "reminder": {
+        "subject": "Promemoria scadenze EPR — {{count}} in arrivo",
+        "subjectOne": "Promemoria: una scadenza EPR in arrivo",
+        "intro": "Ciao {{company}}, hai scadenze EPR in arrivo:",
+        "inDays": "tra {{days}} giorni",
+        "tomorrow": "domani",
+        "in7": "tra 7 giorni",
+        "outro": "Accedi al tuo cruscotto per prepararle in tempo.",
+        "cta": "Vai al cruscotto"
+      }
+    }
   }
 }

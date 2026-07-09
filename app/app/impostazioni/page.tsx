@@ -1,12 +1,23 @@
-import { ScaffoldPlaceholder } from "@/components/scaffold-placeholder";
+import { getCompanyContext, getUser } from "@/lib/app/company";
+import { t } from "@/lib/i18n";
+import { AppMain } from "@/components/app/app-main";
+import { PageHeader } from "@/components/app/page-header";
+import { SettingsForm } from "@/components/app/settings-form";
 
-// Company + subscription (link to Stripe Portal). Built in PROMPT 5 / 6.
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const context = await getCompanyContext();
+  if (!context) return null;
+  const user = await getUser();
+
   return (
-    <ScaffoldPlaceholder
-      eyebrow="Impostazioni"
-      title="Azienda e abbonamento"
-      description="Dati azienda e gestione abbonamento (Stripe Customer Portal)."
-    />
+    <AppMain>
+      <PageHeader eyebrow={t("app.settings.eyebrow")} title={t("app.settings.title")} />
+      <SettingsForm
+        email={user?.email ?? ""}
+        initialName={context.company.name}
+        initialEstablishment={context.company.establishment_country}
+        initialVat={context.company.vat_number ?? ""}
+      />
+    </AppMain>
   );
 }

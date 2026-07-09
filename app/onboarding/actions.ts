@@ -1,0 +1,65 @@
+"use server";
+
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { getCompanyContext } from "@/lib/app/company";
+import { syncDeadlines } from "@/lib/app/deadlines-server";
+import type { CompanyCountryRow, CompanyCountryStatus, CompanyRow } from "@/lib/app/types";
+
+export interface OnboardingPayload {
+  name: string;
+  establishmentCountry: string;
+  vatNumber: string;
+  countries: { code: string; status: CompanyCountryStatus }[];
+}
+
+/**
+ * Create the user's company + selling countries (onboarding, ARCHITECTURE.md §3),
+ * then materialise deadlines for the reminder cron and land on the dashboard.
+ * RLS scopes every write to the current user.
+ */
+export async function completeOnboarding(
+  payload: OnboardingPayload,
+): Promise<{ error: string } | void> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { error: "unauthenticated" };
+
+  const name = payload.name.trim();
+  if (!name || !payload.establishmentCountry || payload.countries.length === 0) {
+    return { error: "invalid" };
+  }
+
+  // Guard against a double submit — never create a second company.
+  if (await getCompanyContext()) redirect("/app");
+
+  const { data: company, error: companyError } = await supabase
+    .from("companies")
+    .insert({
+      owner_id: user.id,
+      name,
+      establishment_country: payload.establishmentCountry,
+      vat_number: payload.vatNumber.trim() || null,
+    })
+    .select()
+    .single();
+  if (companyError || !company) return { error: "save" };
+
+  const rows = payload.countries.map((country) => ({
+    company_id: company.id,
+    country_code: country.code,
+    status: country.status,
+  }));
+  const { error: ccError } = await supabase.from("company_countries").insert(rows);
+  if (ccError) return { error: "save" };
+
+  const { data: companyCountries } = await supabase
+    .from("company_countries")
+    .select("*")
+    .eq("company_id", company.id);
+  await syncDeadlines(company as CompanyRow, (companyCountries ?? []) as CompanyCountryRow[]);
+
+  redirect("/app");
+}

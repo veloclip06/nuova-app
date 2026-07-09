@@ -1,12 +1,53 @@
-import { ScaffoldPlaceholder } from "@/components/scaffold-placeholder";
+import { createClient } from "@/lib/supabase/server";
+import { getCompanyContext } from "@/lib/app/company";
+import { getSkusWithComponents } from "@/lib/app/products";
+import { loadAllRules } from "@/lib/rules/load";
+import { t } from "@/lib/i18n";
+import { AppMain } from "@/components/app/app-main";
+import { PageHeader } from "@/components/app/page-header";
+import { ReportClient } from "@/components/app/report-client";
+import type { SalesVolumeRow } from "@/lib/app/types";
 
-// Report per paese/periodo → computeReport → breakdown per materiale. PROMPT 5.
-export default function ReportPage() {
+export default async function ReportPage() {
+  const context = await getCompanyContext();
+  if (!context) return null;
+  const { company, companyCountries } = context;
+
+  const rules = loadAllRules().ok.map(({ rule }) => rule);
+  const ruleByCode = new Map(rules.map((r) => [r.country_code, r]));
+
+  const countries = companyCountries
+    .map((c) => ruleByCode.get(c.country_code))
+    .filter((rule): rule is NonNullable<typeof rule> => Boolean(rule))
+    .map((rule) => ({
+      code: rule.country_code,
+      name: rule.country_name,
+      registerName: rule.register.name,
+    }));
+
+  const { skus } = await getSkusWithComponents(company.id);
+  const skuList = skus.map((sku) => ({ id: sku.id, skuCode: sku.sku_code, name: sku.name }));
+
+  const supabase = await createClient();
+  const { data: volumeData } = await supabase
+    .from("sales_volumes")
+    .select("*")
+    .eq("company_id", company.id);
+  const volumes = ((volumeData ?? []) as SalesVolumeRow[]).map((v) => ({
+    skuId: v.sku_id,
+    countryCode: v.country_code,
+    period: v.period,
+    units: v.units,
+  }));
+
   return (
-    <ScaffoldPlaceholder
-      eyebrow="Report"
-      title="Genera report per paese e periodo"
-      description="Breakdown per materiale in Plex Mono, copia negli appunti ed export CSV."
-    />
+    <AppMain>
+      <PageHeader
+        eyebrow={t("app.report.eyebrow")}
+        title={t("app.report.title")}
+        subtitle={t("app.report.subtitle")}
+      />
+      <ReportClient countries={countries} skus={skuList} volumes={volumes} />
+    </AppMain>
   );
 }

@@ -1,12 +1,26 @@
-import { ScaffoldPlaceholder } from "@/components/scaffold-placeholder";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { AuthShell } from "@/components/auth/auth-shell";
+import { SignupForm } from "@/components/auth/signup-form";
+import { t } from "@/lib/i18n";
 
-// Sign up (Supabase Auth) → onboarding azienda in PROMPT 5.
+export const metadata: Metadata = { title: t("app.auth.signup.title") };
+
 export default function SignupPage() {
   return (
-    <ScaffoldPlaceholder
-      eyebrow="Registrazione"
-      title="Registrati"
-      description="Crea l'account e la tua azienda (Supabase Auth)."
-    />
+    <AuthShell
+      title={t("app.auth.signup.title")}
+      subtitle={t("app.auth.signup.subtitle")}
+      footer={
+        <>
+          {t("app.auth.signup.haveAccount")}{" "}
+          <Link href="/login" className="rounded-sm text-brand hover:underline">
+            {t("app.auth.signup.loginLink")}
+          </Link>
+        </>
+      }
+    >
+      <SignupForm />
+    </AuthShell>
   );
 }

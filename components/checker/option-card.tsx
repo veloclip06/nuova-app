@@ -16,10 +16,10 @@ export interface OptionCardProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
   label: string;
-  /** Mono sublabel, e.g. "Registro LUCID" (presentational, it.json). */
+  /** Mono sublabel (presentational, it.json). */
   sublabel?: string;
   flagCode?: string;
-  /** Denser variant for the "Altri paesi" secondary grid. */
+  /** Denser variant for large uniform grids (e.g. the 27-country step). */
   compact?: boolean;
 }
 

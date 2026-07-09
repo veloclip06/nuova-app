@@ -1,23 +1,20 @@
 import { Seal, type SealStatus } from "@/components/seal";
 import { Flag } from "@/components/checker/flag";
+import { getCoveredCountries } from "@/lib/rules/coverage";
 import { t } from "@/lib/i18n";
 
 /**
  * Decorative product preview from the Claude Design export ("Landing hero"):
- * a browser window framing a checker result with three status seals. Reuses the
+ * a browser window framing a checker result with status seals. Reuses the
  * real Seal + Flag so what visitors see is the actual product signature (§5),
  * not a throwaway mock. Purely presentational, hidden from assistive tech.
+ *
+ * The countries and registers shown come from /rules (server component):
+ * coverage is data, never hardcoded in the UI. Statuses and tilts stay
+ * decorative, cycling over the export's original pattern.
  */
-const PREVIEW_COUNTRIES: Array<{
-  code: string;
-  register: string;
-  status: SealStatus;
-  tilt: number;
-}> = [
-  { code: "DE", register: "LUCID", status: "esposto", tilt: -2 },
-  { code: "FR", register: "CITEO", status: "esposto", tilt: -1.2 },
-  { code: "IT", register: "CONAI", status: "non_obbligato", tilt: -1.6 },
-];
+const PREVIEW_STATUSES: SealStatus[] = ["esposto", "esposto", "non_obbligato"];
+const PREVIEW_TILTS = [-2, -1.2, -1.6];
 
 /** Render digits in mono — "i numeri sono il prodotto" (DESIGN_SYSTEM.md §4). */
 function MonoDigits({ text }: { text: string }) {
@@ -37,6 +34,8 @@ function MonoDigits({ text }: { text: string }) {
 }
 
 export function HeroPreview() {
+  // First three covered countries — the export's layout shows three cards.
+  const previewCountries = getCoveredCountries().slice(0, 3);
   return (
     <div aria-hidden="true" className="mx-auto mt-14 w-full max-w-[880px]">
       <div className="overflow-hidden rounded-xl border border-line bg-surface shadow-[0_32px_64px_-48px_rgba(23,36,47,0.45)]">
@@ -60,13 +59,20 @@ export function HeroPreview() {
             {t("landing.preview.title")}
           </p>
           <p className="mt-0.5 text-2xs text-paper/80">
-            <MonoDigits text={t("landing.preview.summary")} />
+            <MonoDigits
+              text={t("landing.preview.summary", {
+                n: previewCountries.filter(
+                  (_, index) => PREVIEW_STATUSES[index % PREVIEW_STATUSES.length] === "esposto",
+                ).length,
+                total: previewCountries.length,
+              })}
+            />
           </p>
         </div>
 
         {/* Country cards */}
         <div className="grid grid-cols-1 gap-3 bg-paper p-5 sm:grid-cols-3">
-          {PREVIEW_COUNTRIES.map(({ code, register, status, tilt }) => (
+          {previewCountries.map(({ code, registerName }, index) => (
             <div
               key={code}
               className="flex flex-col gap-2.5 rounded-md border border-line bg-surface p-3.5"
@@ -74,10 +80,13 @@ export function HeroPreview() {
               <div className="flex items-center gap-1.5">
                 <Flag code={code} size="sm" />
                 <span className="font-display text-[9px] font-semibold uppercase tracking-register">
-                  {register}
+                  {registerName}
                 </span>
               </div>
-              <Seal status={status} tilt={tilt} />
+              <Seal
+                status={PREVIEW_STATUSES[index % PREVIEW_STATUSES.length]}
+                tilt={PREVIEW_TILTS[index % PREVIEW_TILTS.length]}
+              />
               <div className="mt-1 flex flex-col gap-1.5">
                 <span className="h-1 w-[92%] rounded-full bg-line/70" />
                 <span className="h-1 w-[68%] rounded-full bg-line/70" />

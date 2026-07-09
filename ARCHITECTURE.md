@@ -152,7 +152,7 @@ Ogni file regole-paese contiene la mappatura dalle categorie canoniche a quelle 
 ## 6. Spec del checker (route /check)
 Step, uno per schermata, con barra progresso:
 1. Dove è stabilita la tua azienda? (select paese)
-2. In quali paesi UE vendi? (multi-select con bandiere; MVP evidenzia DE/FR/IT, gli altri raccolgono interesse)
+2. In quali paesi UE vendi? (multi-select con bandiere: griglia uniforme dei 27 stati UE, nessun paese evidenziato — decisione ratificata 2026-07-10. La copertura è un dato derivato da /rules e comunicata in microcopy; i paesi non coperti raccolgono interesse. Vedi NUOVO_PAESE.md)
 3. Su quali canali? (Amazon / eBay / Shopify / altro — multi)
 4. Che tipo di prodotti spedisci? (categorie con default di imballaggio)
 5. Quanti ordini/anno circa per paese? (fasce, slider o pill)

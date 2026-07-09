@@ -1,5 +1,5 @@
 # STATO_PROGETTO.md — EPR Cockpit
-Documento di handoff. Aggiornato: 09/07/2026, dopo l'integrazione della verifica COM/2025/982 (rappresentante autorizzato).
+Documento di handoff. Aggiornato: 10/07/2026, dopo il refactor "UI neutra rispetto ai paesi" (copertura guidata dai dati, NUOVO_PAESE.md).
 Va tenuto nel repo e aggiornato a ogni milestone. In una nuova chat, allegare questo file + ARCHITECTURE.md + DESIGN_SYSTEM.md + CLAUDE_CODE_KICKOFF.md.
 
 ## 1. Cos'è il prodotto
@@ -22,6 +22,7 @@ Stato servizi: Supabase COLLEGATO (migration 0001 applicata, seed fatto: countri
 - ✅ PROMPT 4 (Opus): landing / — hero fedele all'export (CTA unica → /check), sezione "dolore" (3 situazioni con fonti), come funziona (3 passi), prezzi (3 tier §8, centrale ancorato), FAQ (6 domande, risposte coerenti coi /rules, fonti linkate, AR presentato come incerto). SEO: metadata+OG (opengraph-image via next/og), sitemap.ts, robots.ts, schema.org FAQPage. /prezzi ora reale (riusa PricingSection). Testi in it.json; build+lint+93 test verdi
 - ✅ PROMPT 5 (Opus): app autenticata /app — auth Supabase completa (email+password, Google, reset, middleware guard) + onboarding /onboarding (azienda→paesi→primo stato); dashboard fedele all'export (banner progresso con azione mancante cliccabile, card-paese con sigillo, prossime scadenze); /app/paesi + dettaglio con cambio stato (sigillo→CONFORME animato §5); /app/prodotti (tabella SKU+componenti, aggiunta manuale, import CSV con mappatura colonne/preview/validazione — parser CSV puro+test); /app/report (paese+periodo+volumi inline → computeReport → tabelle Plex Mono per materiale e per categoria registro, copia TSV + export CSV, storico in reports); cron Vercel 30/7/1gg via Resend (vercel.json + /api/cron/reminders guardato da CRON_SECRET). Data layer puro lib/app/* (mappers, seal, deadlines-sync) — sigillo dashboard rende "bozza/in verifica" sui rules draft (mai data finta). build+typecheck+119 test verdi (24 nuovi); smoke test runtime OK (guard /app, cron su DB reale, pagine auth)
 - ✅ Verifica fonti primarie COM/2025/982 (09/07/2026, verifica-com-2025-982.md) integrata: schema AR strutturato eu_seller/non_eu_seller nei YAML+Zod, motore distingue venditore UE (incerto/badge, FR obbligo nazionale) vs extra-UE (confermato, no badge), 6 copy dedicati in it.json usati da card risultato e report email, fonte OEIL aggiunta; status resta draft (le altre incertezze non sono verificate). 120 test verdi
+- ✅ Refactor UI neutra rispetto ai paesi (10/07/2026, decisione ratificata: nessun paese ha rilievo visivo speciale): griglia uniforme 27 paesi UE in checker step 2 e onboarding (bandiere CSS complete per tutti i 27 + test), copertura derivata a runtime da /rules (lib/rules/coverage.ts) con microcopy onesta, PRIMARY_SELLING/INTEREST_SELLING eliminati, landing/OG/meta generati dai rules, checker_result con notCoveredCountries + nuovo evento onboarding_interest_countries, NUOVO_PAESE.md (playbook zero-codice). 123 test verdi
 - ⬜ giro di rifinitura UI · ⬜ PROMPT 6 Stripe+legali (Sonnet) · ⬜ deploy Vercel · ⬜ verifica umana delle restanti incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
 
 ## 4. Decisioni chiave ratificate (fanno fede sul mockup dove confliggono)
@@ -65,6 +66,8 @@ Lavoro su main, nessun branch, NESSUN commit da parte degli agenti: modifiche un
 - PROMPT 5 — env da valorizzare prima del deploy: CRON_SECRET (guardia cron 30/7/1gg) e NEXT_PUBLIC_SITE_URL non sono in .env.local; per "Continua con Google" serve configurare il provider Google su Supabase + redirect URL /auth/callback. Google/reset non verificati a runtime (richiedono config esterna); testati a runtime: guard /app, rendering pagine auth, cron su DB reale
 - PROMPT 5 — volumi del report inseriti inline nella schermata /app/report (salvati in sales_volumes e precompilati al ritorno); nessuna schermata volumi separata (scelta UX ratificata in chat 09/07)
 - PROMPT 5 — flusso interattivo signup→onboarding→dashboard→prodotti→report non guidato E2E da qui (richiede sessione browser + conferma email/Google): da validare manualmente da Ion
+- Onboarding ora accetta anche aziende che vendono solo in paesi non coperti (company senza company_countries, dashboard vuota; selezione tracciata come interesse in PostHog) — verificare che l'empty state della dashboard sia accettabile in quel caso
+- ARCHITECTURE.md §6 punto 2 aggiornato alla decisione ratificata 10/07 (griglia uniforme 27, copertura = dato): unica riga toccata
 
 ## 8. Prossimi step (in ordine)
 1. Commit del lavoro PROMPT 3 (se non già fatto)

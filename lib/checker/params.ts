@@ -1,7 +1,7 @@
 import { EU_MEMBER_STATES } from "@/lib/engine/eu-countries";
 import {
-  ALL_SELLING,
   CHANNEL_IDS,
+  EU_COUNTRIES,
   EXTRA_EU,
   PRODUCT_TYPE_IDS,
   VOLUME_BAND_IDS,
@@ -49,7 +49,7 @@ export function sanitizeAnswers(raw: unknown): CheckerAnswers | null {
     typeof input.establishment === "string" ? input.establishment.trim().toUpperCase() : "";
   if (establishment !== EXTRA_EU && !EU_MEMBER_STATES.has(establishment)) return null;
 
-  const selling = filterKnown(input.selling, ALL_SELLING, (s) => s.toUpperCase());
+  const selling = filterKnown(input.selling, EU_COUNTRIES, (s) => s.toUpperCase());
   const channels = filterKnown(input.channels, CHANNEL_IDS, (s) => s.toLowerCase());
   if (selling.length === 0 || channels.length === 0) return null;
 

@@ -1,10 +1,12 @@
 import { ImageResponse } from "next/og";
+import { getCoveredCountries } from "@/lib/rules/coverage";
 
 /**
  * Social preview card (og:image + twitter:image via the file convention).
  * "Torre di controllo" look: ink surface, register wordmark, one status stamp —
  * no external assets, no fetched fonts (DESIGN_SYSTEM.md §2). Colours are the
  * raw tokens from §3; satori needs explicit display:flex on multi-child nodes.
+ * The register list comes from /rules — coverage is data, not copy.
  */
 export const alt = "Cockpit EPR — obblighi imballaggi UE, chiari";
 export const size = { width: 1200, height: 630 };
@@ -17,6 +19,9 @@ const RISK = "#B3261E";
 const MUTED = "#5A6B76";
 
 export default function OpenGraphImage() {
+  const registers = getCoveredCountries()
+    .map((c) => c.registerName)
+    .join(" · ");
   return new ImageResponse(
     (
       <div
@@ -66,7 +71,7 @@ export default function OpenGraphImage() {
             </div>
           </div>
           <div style={{ fontSize: 22, color: MUTED }}>
-            LUCID · Citeo · CONAI — con fonti ufficiali
+            {`${registers} — con fonti ufficiali`}
           </div>
         </div>
       </div>

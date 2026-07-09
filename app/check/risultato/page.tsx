@@ -152,7 +152,7 @@ export default async function CheckResultPage({
       <ResultTracker
         covered={obligations.length}
         exposed={exposedCount}
-        notCovered={notCovered.length}
+        notCoveredCountries={notCovered}
         establishment={answers.establishment}
         channels={answers.channels}
       />

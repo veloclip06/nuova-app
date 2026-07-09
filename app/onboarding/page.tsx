@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getCompanyContext, getUser, listCountries } from "@/lib/app/company";
-import { OnboardingWizard, type WizardCountry } from "@/components/app/onboarding-wizard";
+import { OnboardingWizard } from "@/components/app/onboarding-wizard";
 import { t } from "@/lib/i18n";
 
 export const metadata: Metadata = {
@@ -14,11 +14,9 @@ export default async function OnboardingPage() {
   if (!user) redirect("/login");
   if (await getCompanyContext()) redirect("/app");
 
-  const countries: WizardCountry[] = (await listCountries()).map((c) => ({
-    code: c.code,
-    name: c.name,
-    registerName: c.register_name,
-  }));
+  // Covered = the countries table, seeded from /rules (npm run seed-rules) —
+  // the persistable set. The wizard shows all 27 EU states regardless.
+  const covered = (await listCountries()).map((c) => c.code);
 
-  return <OnboardingWizard countries={countries} />;
+  return <OnboardingWizard covered={covered} />;
 }

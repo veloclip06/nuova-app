@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { loadAllRules } from "@/lib/rules/load";
+import { listRuleFiles, loadAllRules } from "@/lib/rules/load";
 import type { CountryRule } from "@/lib/rules/schema";
 import { checkObligations } from "./check-obligations";
 import type { CheckerInput } from "./types";
@@ -24,7 +24,13 @@ function input(overrides: Partial<CheckerInput>): CheckerInput {
 describe("rule files", () => {
   it("all /rules YAML files load and validate", () => {
     expect(loaded.errors).toEqual([]);
-    expect(rules.map((r) => r.country_code).sort()).toEqual(["DE", "FR", "IT"]);
+    // Coverage is data: the loaded set must match the files on disk (one
+    // country per file, filename = lowercase country code) — never a constant.
+    const expected = listRuleFiles()
+      .map((f) => f.replace(/\.ya?ml$/, "").toUpperCase())
+      .sort();
+    expect(rules.map((r) => r.country_code).sort()).toEqual(expected);
+    expect(rules.length).toBeGreaterThan(0);
   });
 });
 

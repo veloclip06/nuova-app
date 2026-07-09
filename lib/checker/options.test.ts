@@ -1,13 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { t } from "@/lib/i18n";
 import { EU_MEMBER_STATES } from "@/lib/engine/eu-countries";
+import { FLAG_GRADIENTS } from "./flags";
 import {
-  ALL_SELLING,
   CHANNEL_IDS,
-  ESTABLISHMENT_EU,
+  EU_COUNTRIES,
   EXTRA_EU,
-  INTEREST_SELLING,
-  PRIMARY_SELLING,
   PRODUCT_TYPE_IDS,
   VOLUME_BAND_IDS,
   optionKeys,
@@ -26,32 +24,32 @@ function expectLocalized(key: string) {
 
 describe("checker option taxonomy", () => {
   it("ids are unique within each list", () => {
-    expectUnique(ESTABLISHMENT_EU);
-    expectUnique(ALL_SELLING);
+    expectUnique(EU_COUNTRIES);
     expectUnique(CHANNEL_IDS);
     expectUnique(PRODUCT_TYPE_IDS);
     expectUnique(VOLUME_BAND_IDS);
   });
 
-  it("selling countries never overlap between primary and interest-only", () => {
-    for (const code of INTEREST_SELLING) {
-      expect(PRIMARY_SELLING).not.toContain(code);
-    }
-  });
-
-  it("establishment options are the 27 EU states, and ZZ is not one of them", () => {
-    expect(ESTABLISHMENT_EU).toHaveLength(27);
-    expect(new Set(ESTABLISHMENT_EU)).toEqual(new Set(EU_MEMBER_STATES));
+  it("country options are the 27 EU states, and ZZ is not one of them", () => {
+    expect(EU_COUNTRIES).toHaveLength(27);
+    expect(new Set(EU_COUNTRIES)).toEqual(new Set(EU_MEMBER_STATES));
     expect(EU_MEMBER_STATES.has(EXTRA_EU)).toBe(false);
   });
 
   it("every option id resolves to an Italian label in it.json", () => {
-    for (const code of ESTABLISHMENT_EU) expectLocalized(optionKeys.country(code));
+    for (const code of EU_COUNTRIES) expectLocalized(optionKeys.country(code));
     expectLocalized(optionKeys.country(EXTRA_EU));
-    for (const code of ALL_SELLING) expectLocalized(optionKeys.country(code));
     for (const id of CHANNEL_IDS) expectLocalized(optionKeys.channel(id));
     for (const id of PRODUCT_TYPE_IDS) expectLocalized(optionKeys.productType(id));
     for (const id of VOLUME_BAND_IDS) expectLocalized(optionKeys.volume(id));
+  });
+
+  // NUOVO_PAESE.md checklist: no country may ever need a code change for its
+  // flag — every EU member state has a CSS swatch (ZZ falls back to neutral).
+  it("every EU member state has a flag gradient", () => {
+    for (const code of EU_COUNTRIES) {
+      expect(FLAG_GRADIENTS[code], `missing flag gradient: ${code}`).toBeTruthy();
+    }
   });
 });
 

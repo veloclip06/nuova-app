@@ -27,8 +27,11 @@ export async function completeOnboarding(
   } = await supabase.auth.getUser();
   if (!user) return { error: "unauthenticated" };
 
+  // countries may be empty: a company selling only in not-yet-covered
+  // countries still completes onboarding (the selection is captured as
+  // interest client-side); the dashboard starts empty.
   const name = payload.name.trim();
-  if (!name || !payload.establishmentCountry || payload.countries.length === 0) {
+  if (!name || !payload.establishmentCountry) {
     return { error: "invalid" };
   }
 
@@ -52,8 +55,10 @@ export async function completeOnboarding(
     country_code: country.code,
     status: country.status,
   }));
-  const { error: ccError } = await supabase.from("company_countries").insert(rows);
-  if (ccError) return { error: "save" };
+  if (rows.length > 0) {
+    const { error: ccError } = await supabase.from("company_countries").insert(rows);
+    if (ccError) return { error: "save" };
+  }
 
   const { data: companyCountries } = await supabase
     .from("company_countries")

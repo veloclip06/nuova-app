@@ -8,10 +8,8 @@ import { capture } from "@/lib/analytics/capture";
 import { EVENTS } from "@/lib/analytics/events";
 import {
   CHANNEL_IDS,
-  ESTABLISHMENT_EU,
+  EU_COUNTRIES,
   EXTRA_EU,
-  INTEREST_SELLING,
-  PRIMARY_SELLING,
   PRODUCT_TYPE_IDS,
   TOTAL_STEPS,
   VOLUME_BAND_IDS,
@@ -49,7 +47,12 @@ function StepHelp({ step }: { step: number }) {
   return <p className="mt-2 text-base text-muted-foreground">{t(`check.steps.${step}.help`)}</p>;
 }
 
-export function CheckerWizard() {
+export interface CheckerWizardProps {
+  /** Italian names of the countries covered by /rules — data, not layout. */
+  coveredNames: string[];
+}
+
+export function CheckerWizard({ coveredNames }: CheckerWizardProps) {
   const router = useRouter();
   const [step, setStep] = React.useState(1);
   const [answers, setAnswers] = React.useState<CheckerAnswers>(EMPTY_ANSWERS);
@@ -94,9 +97,11 @@ export function CheckerWizard() {
     }
   }
 
+  // One uniform list for steps 1 and 2 — no country is visually privileged;
+  // detailed coverage is data (coveredNames), not layout.
   const euSorted = React.useMemo(
     () =>
-      [...ESTABLISHMENT_EU].sort((a, b) =>
+      [...EU_COUNTRIES].sort((a, b) =>
         t(optionKeys.country(a)).localeCompare(t(optionKeys.country(b)), "it"),
       ),
     [],
@@ -152,28 +157,8 @@ export function CheckerWizard() {
 
               {step === 2 && (
                 <>
-                  <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3.5">
-                    {PRIMARY_SELLING.map((code) => (
-                      <OptionCard
-                        key={code}
-                        type="checkbox"
-                        name="selling"
-                        value={code}
-                        checked={answers.selling.includes(code)}
-                        onChange={() =>
-                          setAnswers({ ...answers, selling: toggle(answers.selling, code) })
-                        }
-                        label={t(optionKeys.country(code))}
-                        sublabel={t(`check.options.registers.${code}`)}
-                        flagCode={code}
-                      />
-                    ))}
-                  </div>
-                  <p className="eyebrow mb-3 mt-8 text-muted-foreground">
-                    {t("check.steps.2.othersLabel")}
-                  </p>
                   <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2.5">
-                    {INTEREST_SELLING.map((code) => (
+                    {euSorted.map((code) => (
                       <OptionCard
                         key={code}
                         type="checkbox"
@@ -189,6 +174,16 @@ export function CheckerWizard() {
                       />
                     ))}
                   </div>
+                  <p className="mt-5 text-2xs text-muted-foreground">
+                    {coveredNames.length > 0 && (
+                      <>
+                        {t("check.steps.2.coverageIntro", {
+                          countries: coveredNames.join(", "),
+                        })}{" "}
+                      </>
+                    )}
+                    {t("check.steps.2.coverageOutro")}
+                  </p>
                 </>
               )}
 

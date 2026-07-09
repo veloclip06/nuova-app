@@ -3,20 +3,17 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { t } from "@/lib/i18n";
-import { ESTABLISHMENT_EU, EXTRA_EU } from "@/lib/checker/options";
+import { EU_COUNTRIES, EXTRA_EU } from "@/lib/checker/options";
+import { capture } from "@/lib/analytics/capture";
+import { EVENTS } from "@/lib/analytics/events";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import { OptionCard } from "@/components/checker/option-card";
 import { Flag } from "@/components/checker/flag";
 import { completeOnboarding } from "@/app/onboarding/actions";
 import type { CompanyCountryStatus } from "@/lib/app/types";
-
-export interface WizardCountry {
-  code: string;
-  name: string;
-  registerName: string;
-}
 
 const STATUS_ORDER: CompanyCountryStatus[] = ["not_registered", "in_progress", "registered"];
 const TOTAL_STEPS = 3;
@@ -24,8 +21,13 @@ const TOTAL_STEPS = 3;
 /**
  * Post-signup onboarding (PROMPT 5): crea azienda → seleziona paesi → primo
  * stato. One decision per screen with endowed progress (DESIGN_SYSTEM.md §8.1-2).
+ *
+ * Country selection shows all 27 EU states in one uniform grid — coverage is
+ * data, not layout. Only covered countries (`covered`, seeded from /rules) are
+ * persisted; the others fire onboarding_interest_countries, the demand signal
+ * that decides the next country to cover.
  */
-export function OnboardingWizard({ countries }: { countries: WizardCountry[] }) {
+export function OnboardingWizard({ covered }: { covered: string[] }) {
   const [step, setStep] = React.useState(1);
   const [name, setName] = React.useState("");
   const [establishment, setEstablishment] = React.useState("");
@@ -35,12 +37,24 @@ export function OnboardingWizard({ countries }: { countries: WizardCountry[] }) 
   const [error, setError] = React.useState<string | null>(null);
   const [pending, setPending] = React.useState(false);
 
+  // One uniform 27-country list for establishment and selling — no country is
+  // visually privileged (coverage is data, not layout).
   const euOptions = React.useMemo(
     () =>
-      [...ESTABLISHMENT_EU].sort((a, b) =>
+      [...EU_COUNTRIES].sort((a, b) =>
         t(`countries.${a}`).localeCompare(t(`countries.${b}`), "it"),
       ),
     [],
+  );
+
+  const coveredSelected = selected.filter((code) => covered.includes(code));
+  const interestSelected = selected.filter((code) => !covered.includes(code));
+  const coveredNames = React.useMemo(
+    () =>
+      covered
+        .map((code) => t(`countries.${code}`))
+        .sort((a, b) => a.localeCompare(b, "it")),
+    [covered],
   );
 
   const canContinue =
@@ -62,11 +76,15 @@ export function OnboardingWizard({ countries }: { countries: WizardCountry[] }) 
     }
     setPending(true);
     setError(null);
+    // Fire before the action: on success it redirects and never returns here.
+    if (interestSelected.length > 0) {
+      capture(EVENTS.onboardingInterest, { countries: interestSelected });
+    }
     const result = await completeOnboarding({
       name,
       establishmentCountry: establishment,
       vatNumber: vat,
-      countries: selected.map((code) => ({
+      countries: coveredSelected.map((code) => ({
         code,
         status: statusByCode[code] ?? "not_registered",
       })),
@@ -166,41 +184,29 @@ export function OnboardingWizard({ countries }: { countries: WizardCountry[] }) 
                   {t("app.onboarding.countries.subtitle")}
                 </p>
               </div>
-              {countries.length === 0 ? (
-                <p className="rounded-lg border border-line bg-surface p-5 text-base text-muted-foreground">
-                  {t("app.onboarding.countries.empty")}
-                </p>
-              ) : (
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3">
-                  {countries.map((country) => {
-                    const checked = selected.includes(country.code);
-                    return (
-                      <label
-                        key={country.code}
-                        className={cn(
-                          "flex cursor-pointer items-center gap-3 rounded-lg border bg-surface p-4 transition-colors",
-                          "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-2",
-                          checked ? "border-brand bg-brand/[0.04]" : "border-line hover:border-brand",
-                        )}
-                      >
-                        <input
-                          type="checkbox"
-                          className="sr-only"
-                          checked={checked}
-                          onChange={() => toggleCountry(country.code)}
-                        />
-                        <Flag code={country.code} />
-                        <span className="min-w-0">
-                          <span className="block text-xs font-medium text-ink">{country.name}</span>
-                          <span className="block font-display text-2xs font-semibold uppercase tracking-register text-muted-foreground">
-                            {country.registerName}
-                          </span>
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-              )}
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2.5">
+                {euOptions.map((code) => (
+                  <OptionCard
+                    key={code}
+                    type="checkbox"
+                    name="selling-countries"
+                    value={code}
+                    checked={selected.includes(code)}
+                    onChange={() => toggleCountry(code)}
+                    label={t(`countries.${code}`)}
+                    flagCode={code}
+                    compact
+                  />
+                ))}
+              </div>
+              <p className="text-2xs text-muted-foreground">
+                {coveredNames.length > 0 && (
+                  <>
+                    {t("check.steps.2.coverageIntro", { countries: coveredNames.join(", ") })}{" "}
+                  </>
+                )}
+                {t("check.steps.2.coverageOutro")}
+              </p>
             </div>
           )}
 
@@ -214,14 +220,18 @@ export function OnboardingWizard({ countries }: { countries: WizardCountry[] }) 
                   {t("app.onboarding.status.subtitle")}
                 </p>
               </div>
+              {coveredSelected.length === 0 && (
+                <p className="rounded-lg border border-line bg-surface p-5 text-base text-muted-foreground">
+                  {t("app.onboarding.status.noneCovered")}
+                </p>
+              )}
               <div className="flex flex-col gap-3">
-                {selected.map((code) => {
-                  const country = countries.find((c) => c.code === code);
+                {coveredSelected.map((code) => {
                   return (
                     <fieldset key={code} className="rounded-lg border border-line bg-surface p-4">
                       <legend className="flex items-center gap-2 px-1 font-display text-xs font-semibold text-ink">
                         <Flag code={code} />
-                        {country?.name ?? code}
+                        {t(`countries.${code}`)}
                       </legend>
                       <div className="mt-2 flex flex-wrap gap-2">
                         {STATUS_ORDER.map((status) => {

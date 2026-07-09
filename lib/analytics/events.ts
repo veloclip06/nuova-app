@@ -7,4 +7,6 @@ export const EVENTS = {
   checkerStep: (step: 1 | 2 | 3 | 4 | 5) => `checker_step_${step}` as const,
   checkerResult: "checker_result",
   checkerEmailSubmitted: "checker_email_submitted",
+  /** Onboarding selections of countries without a rule file — demand signal. */
+  onboardingInterest: "onboarding_interest_countries",
 } as const;

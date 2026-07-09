@@ -12,7 +12,7 @@ import type { CheckerInput } from "@/lib/engine/types";
 export interface CheckerAnswers {
   /** ISO 3166-1 alpha-2 code, or EXTRA_EU for companies outside the EU. */
   establishment: string;
-  /** ISO codes among PRIMARY_SELLING + INTEREST_SELLING. */
+  /** ISO codes among EU_COUNTRIES (all 27 — coverage is data, not taxonomy). */
   selling: string[];
   /** Channel ids among CHANNEL_IDS. */
   channels: string[];
@@ -31,14 +31,13 @@ export const TOTAL_STEPS = 5;
  */
 export const EXTRA_EU = "ZZ";
 
-/** Step 1 — EU establishment options (the component sorts by Italian label). */
-export const ESTABLISHMENT_EU: readonly string[] = [...EU_MEMBER_STATES];
-
-/** Step 2 — countries with a rule file, highlighted per ARCHITECTURE.md §6. */
-export const PRIMARY_SELLING = ["DE", "FR", "IT"] as const;
-/** Step 2 — offered to collect interest only (no rule file yet). */
-export const INTEREST_SELLING = ["ES", "NL", "AT", "PL", "BE", "IE"] as const;
-export const ALL_SELLING: readonly string[] = [...PRIMARY_SELLING, ...INTEREST_SELLING];
+/**
+ * Steps 1 and 2 — all 27 EU member states, one uniform list (components sort
+ * by Italian label). No country is visually privileged: which countries get a
+ * detailed analysis is derived at runtime from the loaded /rules files
+ * (lib/rules/coverage.ts), never from constants here.
+ */
+export const EU_COUNTRIES: readonly string[] = [...EU_MEMBER_STATES];
 
 /** Step 3 — matches MARKETPLACE_CHANNELS in the engine ("amazon"/"ebay"). */
 export const CHANNEL_IDS = ["amazon", "ebay", "shopify", "other"] as const;

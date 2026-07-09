@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { ESTABLISHMENT_EU, EXTRA_EU } from "@/lib/checker/options";
+import { EU_COUNTRIES, EXTRA_EU } from "@/lib/checker/options";
 import { t } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,7 +31,7 @@ export function SettingsForm({
 
   const euOptions = React.useMemo(
     () =>
-      [...ESTABLISHMENT_EU].sort((a, b) =>
+      [...EU_COUNTRIES].sort((a, b) =>
         t(`countries.${a}`).localeCompare(t(`countries.${b}`), "it"),
       ),
     [],

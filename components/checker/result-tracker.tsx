@@ -6,12 +6,15 @@ import { EVENTS } from "@/lib/analytics/events";
 
 /**
  * Fires checker_result once when the result page is viewed. Aggregate
- * properties only — no email, no PII.
+ * properties only — no email, no PII. notCoveredCountries carries WHICH
+ * selected countries have no rule file yet: it is the demand signal that
+ * decides the next country to cover.
  */
 export interface ResultTrackerProps {
   covered: number;
   exposed: number;
-  notCovered: number;
+  /** ISO codes of selected countries without a rule file. */
+  notCoveredCountries: string[];
   establishment: string;
   channels: string[];
 }
@@ -19,7 +22,7 @@ export interface ResultTrackerProps {
 export function ResultTracker({
   covered,
   exposed,
-  notCovered,
+  notCoveredCountries,
   establishment,
   channels,
 }: ResultTrackerProps) {
@@ -27,7 +30,14 @@ export function ResultTracker({
   useEffect(() => {
     if (fired.current) return;
     fired.current = true;
-    capture(EVENTS.checkerResult, { covered, exposed, notCovered, establishment, channels });
-  }, [covered, exposed, notCovered, establishment, channels]);
+    capture(EVENTS.checkerResult, {
+      covered,
+      exposed,
+      notCovered: notCoveredCountries.length,
+      notCoveredCountries,
+      establishment,
+      channels,
+    });
+  }, [covered, exposed, notCoveredCountries, establishment, channels]);
   return null;
 }

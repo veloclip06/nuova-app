@@ -48,7 +48,7 @@
       "url": "cockpitepr.app/check/risultato",
       "kicker": "Risultato del check",
       "title": "Il tuo quadro EPR",
-      "summary": "Sei esposto in 2 paesi su 3.",
+      "summary": "Sei esposto in {{n}} paesi su {{total}}.",
       "caption": "Anteprima del risultato del check gratuito."
     },
     "pain": {
@@ -250,7 +250,8 @@
       "2": {
         "title": "In quali paesi UE vendi?",
         "help": "Seleziona tutti i paesi in cui spedisci ordini. Puoi cambiare la selezione in ogni momento.",
-        "othersLabel": "Altri paesi",
+        "coverageIntro": "Analisi dettagliata oggi per: {{countries}}.",
+        "coverageOutro": "Gli altri paesi vengono registrati come interesse e aggiunti in base alla domanda.",
         "counterOne": "1 paese selezionato",
         "counterMany": "{{count}} paesi selezionati"
       },
@@ -290,11 +291,6 @@
         "b3": "1.000 – 10.000",
         "b4": "Oltre 10.000",
         "unknown": "Non lo so"
-      },
-      "registers": {
-        "DE": "Registro LUCID",
-        "FR": "Registro CITEO",
-        "IT": "Registro CONAI"
       }
     },
     "resultTitle": "Il tuo quadro EPR",
@@ -377,11 +373,11 @@
   "meta": {
     "home": {
       "title": "Cockpit EPR — Obblighi imballaggi UE, chiari",
-      "description": "Vendi in più paesi UE? Scopri in due minuti dove sei esposto sugli obblighi EPR imballaggi (LUCID, Citeo, CONAI) e cosa fare, con fonti ufficiali. Check gratuito, nessuna registrazione."
+      "description": "Vendi in più paesi UE? Scopri in due minuti dove sei esposto sugli obblighi EPR imballaggi ({{registers}}) e cosa fare, con fonti ufficiali. Check gratuito, nessuna registrazione."
     },
     "check": {
       "title": "Verifica EPR gratuita",
-      "description": "Scopri in due minuti dove sei esposto: obblighi imballaggi in Germania, Francia e Italia, con fonti ufficiali."
+      "description": "Scopri in due minuti dove sei esposto: obblighi imballaggi in {{countries}}, con fonti ufficiali."
     },
     "prezzi": {
       "title": "Prezzi",
@@ -463,8 +459,7 @@
       },
       "countries": {
         "title": "In quali paesi vendi?",
-        "subtitle": "Seleziona i paesi coperti. Potrai modificarli in seguito.",
-        "empty": "Nessun paese disponibile. Esegui il seed delle regole (npm run seed-rules).",
+        "subtitle": "Seleziona tutti i paesi UE in cui vendi. Potrai modificarli in seguito.",
         "counterOne": "1 paese selezionato",
         "counterMany": "{{count}} paesi selezionati",
         "back": "Indietro",
@@ -473,6 +468,7 @@
       "status": {
         "title": "A che punto sei in ogni paese?",
         "subtitle": "Imposta lo stato attuale. Potrai aggiornarlo quando cambia.",
+        "noneCovered": "Nessuno dei paesi selezionati è già coperto dall'analisi dettagliata: li abbiamo registrati come interesse. Puoi comunque completare la configurazione.",
         "back": "Indietro",
         "submit": "Vai al cruscotto",
         "options": {

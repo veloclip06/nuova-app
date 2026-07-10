@@ -1,11 +1,13 @@
+import { cache } from "react";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 /**
  * Server Supabase client (anon key, RLS-enforced) bound to the request cookies.
  * Use in Server Components, Route Handlers and Server Actions.
+ * Wrapped in React cache() so layout + page share one client per request.
  */
-export async function createClient() {
+export const createClient = cache(async () => {
   const cookieStore = await cookies();
 
   return createServerClient(
@@ -29,4 +31,4 @@ export async function createClient() {
       },
     },
   );
-}
+});

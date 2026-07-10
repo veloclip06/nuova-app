@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
 import { CANONICAL_MATERIALS } from "@/lib/rules/schema";
 import { t } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
@@ -23,38 +22,38 @@ const ERROR_KEYS: Record<string, string> = {
 
 /** Manual product entry (PROMPT 5): SKU + name + packaging components. */
 export function ProductForm({ onSaved, onCancel }: { onSaved: () => void; onCancel: () => void }) {
-  const router = useRouter();
   const [skuCode, setSkuCode] = React.useState("");
   const [name, setName] = React.useState("");
   const [components, setComponents] = React.useState<ComponentRow[]>([{ material: "", weight: "" }]);
   const [error, setError] = React.useState<string | null>(null);
-  const [pending, setPending] = React.useState(false);
+  // The action revalidates /app/prodotti itself — no router.refresh() needed.
+  const [pending, startTransition] = React.useTransition();
 
   function updateComponent(index: number, patch: Partial<ComponentRow>) {
     setComponents((prev) => prev.map((c, i) => (i === index ? { ...c, ...patch } : c)));
   }
 
-  async function onSubmit(event: React.FormEvent) {
+  function onSubmit(event: React.FormEvent) {
     event.preventDefault();
     setError(null);
     const parsed = components
       .filter((c) => c.material && c.weight.trim() !== "")
       .map((c) => ({ material: c.material, weightGrams: Number(c.weight.replace(",", ".")) }));
 
-    setPending(true);
-    const result = await createProduct({ skuCode, name, components: parsed });
-    setPending(false);
-    if (result?.error) {
-      setError(t(ERROR_KEYS[result.error] ?? "app.products.form.errorGeneric"));
-      return;
-    }
-    router.refresh();
-    onSaved();
+    startTransition(async () => {
+      const result = await createProduct({ skuCode, name, components: parsed });
+      if (result?.error) {
+        setError(t(ERROR_KEYS[result.error] ?? "app.products.form.errorGeneric"));
+        return;
+      }
+      onSaved();
+    });
   }
 
   return (
     <form
       onSubmit={onSubmit}
+      aria-busy={pending}
       className="flex flex-col gap-5 rounded-lg border border-line bg-surface p-6"
     >
       <p className="font-display text-base font-semibold text-ink">{t("app.products.form.title")}</p>

@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
 import type { CountryObligation } from "@/lib/engine/types";
 import { dashboardSealFor } from "@/lib/app/seal";
 import { cn } from "@/lib/utils";
@@ -29,29 +28,29 @@ export function StatusChanger({
   domestic: boolean;
   initialStatus: CompanyCountryStatus;
 }) {
-  const router = useRouter();
   const [status, setStatus] = React.useState<CompanyCountryStatus>(initialStatus);
   const [animate, setAnimate] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
-  const [pending, setPending] = React.useState(false);
+  // The action revalidates the affected paths itself, so the transition covers
+  // both the save and the streamed re-render — no router.refresh() needed.
+  const [pending, startTransition] = React.useTransition();
 
   const seal = dashboardSealFor({ obligated, domestic } as CountryObligation, status);
 
-  async function choose(next: CompanyCountryStatus) {
+  function choose(next: CompanyCountryStatus) {
     if (next === status || pending) return;
     const previous = status;
     setStatus(next);
     setAnimate(true);
     setSaved(false);
-    setPending(true);
-    const result = await updateCountryStatus(code, next);
-    setPending(false);
-    if (result?.error) {
-      setStatus(previous);
-      return;
-    }
-    setSaved(true);
-    router.refresh();
+    startTransition(async () => {
+      const result = await updateCountryStatus(code, next);
+      if (result?.error) {
+        setStatus(previous);
+        return;
+      }
+      setSaved(true);
+    });
   }
 
   return (
@@ -62,6 +61,7 @@ export function StatusChanger({
       <div
         role="radiogroup"
         aria-label={t("app.country.statusTitle")}
+        aria-busy={pending}
         className="flex flex-wrap gap-2"
       >
         {ORDER.map((option) => {
@@ -86,7 +86,12 @@ export function StatusChanger({
           );
         })}
       </div>
-      {saved && (
+      {pending && (
+        <p role="status" className="text-2xs text-muted-foreground">
+          {t("app.common.saving")}
+        </p>
+      )}
+      {saved && !pending && (
         <p role="status" className="text-2xs text-ok">
           {t("app.country.statusSaved")}
         </p>

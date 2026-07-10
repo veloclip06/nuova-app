@@ -48,13 +48,27 @@ export function loadRuleFile(
   }
 }
 
-/** Load + validate all rule files, partitioning successes from failures. */
+/** Production memo — rule files are bundled at deploy time and never change
+ * within a running server, so parsing + Zod validation happens once per dir.
+ * Dev/test stay unmemoized to keep YAML hot-reload while authoring rules. */
+const memo = new Map<string, LoadRulesResult>();
+
+/**
+ * Load + validate all rule files, partitioning successes from failures.
+ * Treat the returned result as immutable — in production it is shared
+ * between requests.
+ */
 export function loadAllRules(dir: string = RULES_DIR): LoadRulesResult {
+  if (process.env.NODE_ENV === "production") {
+    const hit = memo.get(dir);
+    if (hit) return hit;
+  }
   const result: LoadRulesResult = { ok: [], errors: [] };
   for (const file of listRuleFiles(dir)) {
     const { rule, error } = loadRuleFile(file, dir);
     if (rule) result.ok.push({ file, rule });
     else result.errors.push({ file, message: error ?? "unknown error" });
   }
+  if (process.env.NODE_ENV === "production") memo.set(dir, result);
   return result;
 }

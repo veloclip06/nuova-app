@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
 import {
   groupIntoSkus,
   guessMapping,
@@ -33,13 +32,13 @@ export function CsvImport({
   onDone: (count: number) => void;
   onCancel: () => void;
 }) {
-  const router = useRouter();
   const [step, setStep] = React.useState<Step>("upload");
   const [header, setHeader] = React.useState<string[]>([]);
   const [rows, setRows] = React.useState<string[][]>([]);
   const [mapping, setMapping] = React.useState<Partial<ColumnMapping>>({});
   const [error, setError] = React.useState<string | null>(null);
-  const [pending, setPending] = React.useState(false);
+  // The action revalidates /app/prodotti itself — no router.refresh() needed.
+  const [pending, startTransition] = React.useTransition();
 
   async function onFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -93,22 +92,21 @@ export function CsvImport({
     setStep("preview");
   }
 
-  async function confirm() {
+  function confirm() {
     if (skus.length === 0) {
       setError(t("app.products.import.errorNoValid"));
       return;
     }
-    setPending(true);
-    const result = await importProducts(
-      skus.map((s) => ({ skuCode: s.skuCode, name: s.name, components: s.components })),
-    );
-    setPending(false);
-    if (result.error) {
-      setError(t("app.products.import.errorGeneric"));
-      return;
-    }
-    router.refresh();
-    onDone(result.imported);
+    startTransition(async () => {
+      const result = await importProducts(
+        skus.map((s) => ({ skuCode: s.skuCode, name: s.name, components: s.components })),
+      );
+      if (result.error) {
+        setError(t("app.products.import.errorGeneric"));
+        return;
+      }
+      onDone(result.imported);
+    });
   }
 
   return (

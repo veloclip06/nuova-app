@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
 import { t } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -22,17 +21,20 @@ export interface ProductVM {
 type Panel = "none" | "add" | "import";
 
 export function ProductsClient({ products }: { products: ProductVM[] }) {
-  const router = useRouter();
   const [panel, setPanel] = React.useState<Panel>("none");
   const [feedback, setFeedback] = React.useState<string | null>(null);
   const [deleting, setDeleting] = React.useState<string | null>(null);
+  // The action revalidates /app/prodotti itself; the transition keeps the row
+  // disabled through the streamed re-render — no router.refresh() needed.
+  const [, startTransition] = React.useTransition();
 
-  async function onDelete(product: ProductVM) {
+  function onDelete(product: ProductVM) {
     if (!window.confirm(t("app.products.table.deleteConfirm", { sku: product.skuCode }))) return;
     setDeleting(product.id);
-    await deleteProduct(product.id);
-    setDeleting(null);
-    router.refresh();
+    startTransition(async () => {
+      await deleteProduct(product.id);
+      setDeleting(null);
+    });
   }
 
   return (

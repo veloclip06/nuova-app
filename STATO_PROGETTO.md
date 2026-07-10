@@ -1,5 +1,5 @@
 # STATO_PROGETTO.md — EPR Cockpit
-Documento di handoff. Aggiornato: 10/07/2026, dopo il refactor "UI neutra rispetto ai paesi" (copertura guidata dai dati, NUOVO_PAESE.md).
+Documento di handoff. Aggiornato: 10/07/2026, dopo il giro performance/UX percepita (loading states, dedup fetch, useTransition).
 Va tenuto nel repo e aggiornato a ogni milestone. In una nuova chat, allegare questo file + ARCHITECTURE.md + DESIGN_SYSTEM.md + CLAUDE_CODE_KICKOFF.md.
 
 ## 1. Cos'è il prodotto
@@ -23,6 +23,7 @@ Stato servizi: Supabase COLLEGATO (migration 0001 applicata, seed fatto: countri
 - ✅ PROMPT 5 (Opus): app autenticata /app — auth Supabase completa (email+password, Google, reset, middleware guard) + onboarding /onboarding (azienda→paesi→primo stato); dashboard fedele all'export (banner progresso con azione mancante cliccabile, card-paese con sigillo, prossime scadenze); /app/paesi + dettaglio con cambio stato (sigillo→CONFORME animato §5); /app/prodotti (tabella SKU+componenti, aggiunta manuale, import CSV con mappatura colonne/preview/validazione — parser CSV puro+test); /app/report (paese+periodo+volumi inline → computeReport → tabelle Plex Mono per materiale e per categoria registro, copia TSV + export CSV, storico in reports); cron Vercel 30/7/1gg via Resend (vercel.json + /api/cron/reminders guardato da CRON_SECRET). Data layer puro lib/app/* (mappers, seal, deadlines-sync) — sigillo dashboard rende "bozza/in verifica" sui rules draft (mai data finta). build+typecheck+119 test verdi (24 nuovi); smoke test runtime OK (guard /app, cron su DB reale, pagine auth)
 - ✅ Verifica fonti primarie COM/2025/982 (09/07/2026, verifica-com-2025-982.md) integrata: schema AR strutturato eu_seller/non_eu_seller nei YAML+Zod, motore distingue venditore UE (incerto/badge, FR obbligo nazionale) vs extra-UE (confermato, no badge), 6 copy dedicati in it.json usati da card risultato e report email, fonte OEIL aggiunta; status resta draft (le altre incertezze non sono verificate). 120 test verdi
 - ✅ Refactor UI neutra rispetto ai paesi (10/07/2026, decisione ratificata: nessun paese ha rilievo visivo speciale): griglia uniforme 27 paesi UE in checker step 2 e onboarding (bandiere CSS complete per tutti i 27 + test), copertura derivata a runtime da /rules (lib/rules/coverage.ts) con microcopy onesta, PRIMARY_SELLING/INTEREST_SELLING eliminati, landing/OG/meta generati dai rules, checker_result con notCoveredCountries + nuovo evento onboarding_interest_countries, NUOVO_PAESE.md (playbook zero-codice). 123 test verdi
+- ✅ Giro performance/UX percepita (10/07/2026, Fable): skeleton+loading.tsx per ogni vista dati (§10 ora rispettato) + error.tsx /app + 404; React.cache() su getUser/getCompanyContext/listCountries/createClient (fetch layout+pagina deduplicati); useTransition al posto di router.refresh() ridondanti nei 5 componenti di salvataggio; loadAllRules() memoizzata in produzione; matcher middleware ristretto a /app, /onboarding, /login, /registrati (pagine pubbliche senza round-trip auth); next dev --turbopack; micro-stati hover/active ratificati in addendum DESIGN_SYSTEM §7
 - ⬜ giro di rifinitura UI · ⬜ PROMPT 6 Stripe+legali (Sonnet) · ⬜ deploy Vercel · ⬜ verifica umana delle restanti incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
 
 ## 4. Decisioni chiave ratificate (fanno fede sul mockup dove confliggono)
@@ -58,6 +59,7 @@ Lavoro su main, nessun branch, NESSUN commit da parte degli agenti: modifiche un
 ## 7. Problemi aperti / backlog
 - Rifiniture UI checker: piccoli errori di posizionamento notati da Ion nel primo test (lista dettagliata da compilare) → giro di polish dedicato dopo PROMPT 5
 - Script seed non carica .env.local da solo (workaround: passare le env inline) → fix futuro
+- Middleware: valutare getClaims() + migrazione del progetto Supabase a JWT signing keys asimmetriche (verifica sessione locale senza round-trip di rete) + bump @supabase/ssr — follow-up del giro performance 10/07
 - 7 vulnerabilità npm preesistenti segnalate da npm audit → da rivedere prima del deploy
 - Resend: passare a dominio verificato prima del lancio
 - Monitoraggio Omnibus (COM/2025/982, procedura 2025/0395(COD)) — al verificarsi di ciascun trigger rivedere i campi authorised_representative nei YAML e togliere/mantenere il badge "in verifica": (a) voto in commissione ENVI; (b) orientamento generale del Consiglio; (c) avvio/chiusura dei triloghi; (d) pubblicazione in GUUE con data di applicazione (fonte: verifica-com-2025-982.md, Recommendations §4)

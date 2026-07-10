@@ -12,11 +12,12 @@ export const metadata: Metadata = {
 export default async function OnboardingPage() {
   const user = await getUser();
   if (!user) redirect("/login");
-  if (await getCompanyContext()) redirect("/app");
 
   // Covered = the countries table, seeded from /rules (npm run seed-rules) —
   // the persistable set. The wizard shows all 27 EU states regardless.
-  const covered = (await listCountries()).map((c) => c.code);
+  const [context, countries] = await Promise.all([getCompanyContext(), listCountries()]);
+  if (context) redirect("/app");
+  const covered = countries.map((c) => c.code);
 
   return <OnboardingWizard covered={covered} />;
 }

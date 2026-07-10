@@ -52,7 +52,7 @@ export function CountryCard({
     : null;
 
   return (
-    <article className="flex flex-col gap-3.5 rounded-lg border border-line bg-surface p-6">
+    <article className="flex flex-col gap-3.5 rounded-lg border border-line bg-surface p-6 transition-[border-color,box-shadow] hover:border-ink/20 hover:shadow-sm">
       <div className="flex items-center gap-2">
         <Flag code={obligation.countryCode} />
         <span className="font-display text-2xs font-semibold uppercase tracking-register text-ink">

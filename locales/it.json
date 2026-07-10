@@ -11,6 +11,11 @@
     "back": "Indietro",
     "next": "Avanti"
   },
+  "notFound": {
+    "title": "Pagina non trovata",
+    "body": "La pagina che cerchi non esiste o è stata spostata.",
+    "cta": "Torna alla home"
+  },
   "seal": {
     "conforme": "Conforme",
     "azione_richiesta": "Azione richiesta",
@@ -691,6 +696,7 @@
     },
     "common": {
       "saving": "Salvataggio…",
+      "errorTitle": "Qualcosa è andato storto",
       "loadingError": "Impossibile caricare i dati. Riprova."
     },
     "email": {

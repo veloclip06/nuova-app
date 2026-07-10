@@ -27,7 +27,9 @@ export function SettingsForm({
   const [establishment, setEstablishment] = React.useState(initialEstablishment);
   const [vat, setVat] = React.useState(initialVat);
   const [feedback, setFeedback] = React.useState<"saved" | "error" | null>(null);
-  const [pending, setPending] = React.useState(false);
+  // The action revalidates /app paths itself; the transition keeps `pending`
+  // true through the streamed re-render, so no router.refresh() is needed.
+  const [pending, startTransition] = React.useTransition();
 
   const euOptions = React.useMemo(
     () =>
@@ -37,18 +39,17 @@ export function SettingsForm({
     [],
   );
 
-  async function onSubmit(event: React.FormEvent) {
+  function onSubmit(event: React.FormEvent) {
     event.preventDefault();
-    setPending(true);
     setFeedback(null);
-    const result = await updateCompany({ name, establishmentCountry: establishment, vatNumber: vat });
-    setPending(false);
-    if (result?.error) {
-      setFeedback("error");
-      return;
-    }
-    setFeedback("saved");
-    router.refresh();
+    startTransition(async () => {
+      const result = await updateCompany({
+        name,
+        establishmentCountry: establishment,
+        vatNumber: vat,
+      });
+      setFeedback(result?.error ? "error" : "saved");
+    });
   }
 
   async function signOut() {
@@ -60,7 +61,11 @@ export function SettingsForm({
 
   return (
     <div className="flex flex-col gap-6">
-      <form onSubmit={onSubmit} className="flex flex-col gap-5 rounded-lg border border-line bg-surface p-6">
+      <form
+        onSubmit={onSubmit}
+        aria-busy={pending}
+        className="flex flex-col gap-5 rounded-lg border border-line bg-surface p-6"
+      >
         <p className="eyebrow text-muted-foreground">{t("app.settings.companyTitle")}</p>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="name">{t("app.settings.nameLabel")}</Label>

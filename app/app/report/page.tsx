@@ -25,14 +25,12 @@ export default async function ReportPage() {
       registerName: rule.register.name,
     }));
 
-  const { skus } = await getSkusWithComponents(company.id);
-  const skuList = skus.map((sku) => ({ id: sku.id, skuCode: sku.sku_code, name: sku.name }));
-
   const supabase = await createClient();
-  const { data: volumeData } = await supabase
-    .from("sales_volumes")
-    .select("*")
-    .eq("company_id", company.id);
+  const [{ skus }, { data: volumeData }] = await Promise.all([
+    getSkusWithComponents(company.id),
+    supabase.from("sales_volumes").select("*").eq("company_id", company.id),
+  ]);
+  const skuList = skus.map((sku) => ({ id: sku.id, skuCode: sku.sku_code, name: sku.name }));
   const volumes = ((volumeData ?? []) as SalesVolumeRow[]).map((v) => ({
     skuId: v.sku_id,
     countryCode: v.country_code,

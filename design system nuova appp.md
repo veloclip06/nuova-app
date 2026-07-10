@@ -47,6 +47,12 @@ Regola: `risk` e `warn` sono semantici. Se tutto è urgente, niente è urgente.
 ## 7. Motion
 Minimale. Un solo momento orchestrato: la rivelazione del risultato del checker (le card-paese entrano in sequenza, 80ms di stagger). Micro-feedback su azioni (i sigilli, i salvataggi). Nient'altro. Troppa animazione = look AI-generato.
 
+**Addendum stati di caricamento e interazione (approvato da Ion in chat, 2026-07-10):**
+- **Skeleton di caricamento**: durante il fetch di una vista dati si mostra uno skeleton che rispecchia il layout reale (bordi e superfici veri, righe interne pulsanti). Il pulse è solo opacità sul token `line` (`animate-pulse`, componente `ui/skeleton`): è feedback di stato del sistema richiesto dal §10 e dal §8.12, non animazione decorativa — non conta nel budget motion. Congelato da `prefers-reduced-motion`.
+- **Feedback di salvataggio**: testuale ("Salvataggio…"), mai spinner. Il testo copre l'intera finestra azione + ri-render.
+- **Stati hover ammessi** (solo `transition-colors`, nessun movimento): bordo `ink/25` su input e select; riga tabella `bg-paper`; card interattive con bordo `ink/20` + `shadow-sm` (già previsto dal §6).
+- **Pressione bottone**: `active:translate-y-px` — 1px fisico, carattere "timbro". È un cambio di stato istantaneo, non un'animazione.
+
 ## 8. Principi UX applicati (con dove si applicano)
 1. **Carico cognitivo minimo** — checker: una domanda per schermata, mai form lunghi. Nell'app: una decisione per vista.
 2. **Progresso visibile e dotato** (endowed progress) — barra passi nel checker; nel dashboard "2/3 paesi configurati" con il pezzo mancante cliccabile.

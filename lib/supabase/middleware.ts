@@ -2,10 +2,12 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 /**
- * Refreshes the Supabase session on every request and guards the authenticated
- * area. Following the @supabase/ssr contract: the SAME response object must
- * carry the refreshed auth cookies, and getUser() must run here so Server
- * Components downstream see a valid session (ARCHITECTURE.md §2, Supabase Auth).
+ * Refreshes the Supabase session on every matched request (see middleware.ts —
+ * only /app, /onboarding and the entry auth pages) and guards the
+ * authenticated area. Following the @supabase/ssr contract: the SAME response
+ * object must carry the refreshed auth cookies, and getUser() must run here so
+ * Server Components downstream see a valid session (ARCHITECTURE.md §2,
+ * Supabase Auth).
  *
  * - Unauthenticated → /app/* or /onboarding : redirect to /login?next=…
  * - Authenticated   → /login or /registrati  : redirect to /app

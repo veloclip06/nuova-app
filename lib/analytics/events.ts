@@ -9,4 +9,8 @@ export const EVENTS = {
   checkerEmailSubmitted: "checker_email_submitted",
   /** Onboarding selections of countries without a rule file — demand signal. */
   onboardingInterest: "onboarding_interest_countries",
+  /** Upgrade funnel (/app/piano → Stripe Checkout). */
+  upgradeViewed: "upgrade_viewed",
+  checkoutStarted: "checkout_started",
+  checkoutCompleted: "checkout_completed",
 } as const;

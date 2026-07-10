@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { archivo, instrumentSans, ibmPlexMono } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { PostHogProvider } from "@/components/posthog-provider";
+import { CookieBanner } from "@/components/cookie-banner";
 import "./globals.css";
 
 // metadataBase makes canonical/OG URLs absolute. Domain is not decided yet
@@ -38,7 +39,10 @@ export default function RootLayout({
           ibmPlexMono.variable,
         )}
       >
-        <PostHogProvider>{children}</PostHogProvider>
+        <PostHogProvider>
+          {children}
+          <CookieBanner />
+        </PostHogProvider>
       </body>
     </html>
   );

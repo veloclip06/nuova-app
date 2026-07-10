@@ -1,5 +1,6 @@
 import { getCompanyContext } from "@/lib/app/company";
 import { getSkusWithComponents } from "@/lib/app/products";
+import { canImportCsv, normalizePlan } from "@/lib/plans";
 import { t } from "@/lib/i18n";
 import { AppMain } from "@/components/app/app-main";
 import { PageHeader } from "@/components/app/page-header";
@@ -36,7 +37,10 @@ export default async function ProductsPage() {
         title={t("app.products.title")}
         subtitle={t("app.products.subtitle")}
       />
-      <ProductsClient products={products} />
+      <ProductsClient
+        products={products}
+        csvEnabled={canImportCsv(normalizePlan(context.company.plan))}
+      />
     </AppMain>
   );
 }

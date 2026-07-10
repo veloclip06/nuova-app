@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getCompanyContext } from "@/lib/app/company";
+import { canImportCsv, normalizePlan } from "@/lib/plans";
 import { CANONICAL_MATERIALS, type CanonicalMaterial } from "@/lib/rules/schema";
 
 interface ComponentInput {
@@ -93,6 +94,11 @@ export async function importProducts(
 ): Promise<{ imported: number; error?: string }> {
   const context = await getCompanyContext();
   if (!context) return { imported: 0, error: "unauthenticated" };
+
+  // Server-side plan gate (never UI-only): CSV import is completo-only.
+  if (!canImportCsv(normalizePlan(context.company.plan))) {
+    return { imported: 0, error: "plan" };
+  }
   const companyId = context.company.id;
 
   const clean = skus

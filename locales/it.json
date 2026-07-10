@@ -4,6 +4,7 @@
     "tagline": "Obblighi imballaggi UE, chiari.",
     "legalDisclaimer": "Software di supporto alla conformità. Non costituisce consulenza legale.",
     "privacy": "Privacy",
+    "termini": "Termini di servizio",
     "source": "Fonte",
     "verifiedOn": "verificato il",
     "loading": "Caricamento…",
@@ -32,6 +33,7 @@
     "paesi": "Paesi",
     "prodotti": "Prodotti",
     "report": "Report",
+    "piano": "Piano",
     "impostazioni": "Impostazioni",
     "signout": "Esci"
   },
@@ -353,18 +355,104 @@
   },
   "privacy": {
     "title": "Informativa privacy",
-    "updated": "Versione provvisoria: sarà sostituita dall'informativa completa.",
-    "whoTitle": "Chi siamo",
-    "whoBody": "Cockpit EPR è un software di supporto alla conformità EPR (responsabilità estesa del produttore) per chi vende online in Europa.",
-    "whatTitle": "Cosa raccogliamo",
-    "whatBody": "Se richiedi il report via email raccogliamo il tuo indirizzo email e le risposte del checker: paese di stabilimento, paesi di vendita, canali, tipi di prodotto e fasce di volume.",
-    "whyTitle": "Perché li raccogliamo",
-    "whyBody": "Solo per inviarti il report richiesto. I dati sono conservati su infrastruttura in regione UE.",
-    "sharingTitle": "Con chi li condividiamo",
-    "sharingBody": "Con nessuno a fini commerciali. Usiamo solo fornitori tecnici (hosting, invio email) come responsabili del trattamento.",
-    "deleteTitle": "Cancellazione",
+    "updated": "Ultimo aggiornamento: 10 luglio 2026.",
+    "sections": [
+      {
+        "title": "Titolare del trattamento",
+        "body": "Il titolare del trattamento è [DA COMPLETARE: ragione sociale], con sede in [DA COMPLETARE: indirizzo], P.IVA [DA COMPLETARE: partita IVA]. Per qualsiasi richiesta relativa ai tuoi dati puoi scrivere all'indirizzo email indicato in fondo a questa pagina."
+      },
+      {
+        "title": "Quali dati trattiamo",
+        "body": "Dati dell'account: email e password (gestite da Supabase, mai visibili a noi in chiaro). Dati aziendali che inserisci nell'app: ragione sociale, paese di stabilimento, partita IVA, paesi di vendita, SKU e componenti di imballaggio, volumi di vendita. Checker gratuito: se richiedi il report via email raccogliamo il tuo indirizzo email e le risposte del checker (paese di stabilimento, paesi di vendita, canali, tipi di prodotto, fasce di volume). Fatturazione: i dati di pagamento (carta, indirizzo di fatturazione, partita IVA) sono raccolti e trattati direttamente da Stripe; noi conserviamo solo l'identificativo cliente e il piano attivo. Analytics: dati di utilizzo del sito raccolti tramite PostHog solo dopo il tuo consenso esplicito dal banner cookie."
+      },
+      {
+        "title": "Finalità e basi giuridiche",
+        "body": "Erogazione del servizio, calcolo di scadenze e report, promemoria via email: esecuzione del contratto (art. 6.1.b GDPR). Invio del report del checker: esecuzione di misure precontrattuali richieste da te. Fatturazione e adempimenti fiscali: obbligo legale (art. 6.1.c). Analytics: consenso (art. 6.1.a), sempre revocabile."
+      },
+      {
+        "title": "Responsabili del trattamento e destinatari",
+        "body": "Non vendiamo né cediamo i tuoi dati a terzi per fini commerciali. Usiamo solo fornitori tecnici in qualità di responsabili del trattamento: Supabase (database e autenticazione, regione UE), Vercel (hosting), Resend (email transazionali), Stripe (pagamenti e fatturazione), PostHog (analytics, server UE, solo previo consenso)."
+      },
+      {
+        "title": "Conservazione",
+        "body": "I dati dell'account e i dati aziendali sono conservati finché l'account è attivo e cancellati su richiesta. I dati del checker (lead) sono conservati per il tempo necessario a fornire il report e le comunicazioni collegate. I dati di fatturazione sono conservati per i termini previsti dalla legge."
+      },
+      {
+        "title": "I tuoi diritti",
+        "body": "Ai sensi degli artt. 15-22 GDPR hai diritto di ottenere accesso, rettifica, cancellazione, limitazione del trattamento, portabilità dei dati e di opporti al trattamento. Puoi esercitarli scrivendo all'email di contatto. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali."
+      },
+      {
+        "title": "Cookie",
+        "body": "Usiamo cookie tecnici necessari al funzionamento del servizio (sessione di autenticazione), che non richiedono consenso. Gli strumenti di analytics (PostHog) partono solo dopo il tuo consenso espresso tramite il banner. Puoi modificare la scelta in qualsiasi momento cancellando i dati di navigazione di questo sito: alla visita successiva il banner ricomparirà."
+      }
+    ],
+    "deleteTitle": "Cancellazione e contatti",
     "deleteBody": "Puoi chiedere la cancellazione dei tuoi dati in qualsiasi momento scrivendo a",
     "contactEmail": "ionandries.digitalservices@gmail.com"
+  },
+  "termini": {
+    "title": "Termini di servizio",
+    "updated": "Ultimo aggiornamento: 10 luglio 2026.",
+    "sections": [
+      {
+        "title": "Oggetto del servizio",
+        "body": "Cockpit EPR è un software di supporto alla conformità EPR (responsabilità estesa del produttore) sugli imballaggi per chi vende online in più paesi UE. Il servizio fornisce scadenzari, dati per SKU e report basati su fonti ufficiali, ma non costituisce consulenza legale. Non agiamo da rappresentante autorizzato, non presentiamo dichiarazioni per tuo conto e non vendiamo licenze: la responsabilità della conformità resta tua."
+      },
+      {
+        "title": "Account e onboarding",
+        "body": "Per usare l'app è necessario un account. Sei responsabile della correttezza dei dati inseriti (dati aziendali, paesi, SKU, pesi e volumi): i report sono calcolati a partire da ciò che dichiari."
+      },
+      {
+        "title": "Piani e prezzi",
+        "body": "Il servizio è offerto con due piani in abbonamento annuale: Essenziale (149€/anno, fino a 3 paesi coperti) e Completo (249€/anno, tutti i paesi coperti inclusi quelli aggiunti in futuro, import CSV, storico dei report). I prezzi sono IVA esclusa. L'account gratuito consente l'accesso al cruscotto con funzionalità limitate e non è un prodotto in vendita."
+      },
+      {
+        "title": "Pagamenti e fatturazione",
+        "body": "I pagamenti sono gestiti da Stripe. In fase di acquisto sono richiesti indirizzo di fatturazione e, per i soggetti IVA, la partita IVA, che compare sui documenti di fatturazione."
+      },
+      {
+        "title": "Rinnovo e disdetta",
+        "body": "L'abbonamento si rinnova automaticamente ogni anno. Puoi cambiare piano o disdire in qualsiasi momento dal portale di gestione abbonamento (Stripe Customer Portal) raggiungibile dall'app: la disdetta ha effetto alla fine del periodo già pagato."
+      },
+      {
+        "title": "Rimborso 30 giorni",
+        "body": "Se il servizio non fa per te, entro 30 giorni dal primo acquisto puoi chiedere il rimborso completo scrivendo all'email di contatto, senza motivazione."
+      },
+      {
+        "title": "Dati normativi e limiti del servizio",
+        "body": "Ogni dato normativo mostrato riporta la fonte ufficiale e la data di consultazione o verifica. Dove un dato è incerto o in evoluzione lo dichiariamo esplicitamente. Le normative cambiano: facciamo il possibile per mantenerle aggiornate, ma il servizio non sostituisce la verifica presso le autorità competenti o un consulente."
+      },
+      {
+        "title": "Limitazione di responsabilità",
+        "body": "Nei limiti consentiti dalla legge, non rispondiamo di sanzioni, danni indiretti o perdite derivanti dall'uso del servizio o da dati inseriti in modo errato o incompleto. Nulla in questi termini limita la responsabilità nei casi in cui non può essere esclusa per legge."
+      },
+      {
+        "title": "Proprietà intellettuale",
+        "body": "Il software, i contenuti e i marchi del servizio restano di proprietà del titolare. L'abbonamento dà diritto a un uso del servizio limitato alla tua azienda, non esclusivo e non trasferibile."
+      },
+      {
+        "title": "Modifiche ai termini",
+        "body": "Possiamo aggiornare questi termini. Le modifiche sostanziali saranno comunicate via email o nell'app con ragionevole anticipo; l'uso del servizio dopo l'entrata in vigore vale come accettazione."
+      },
+      {
+        "title": "Legge applicabile e foro",
+        "body": "Questi termini sono regolati dalla legge italiana. Per ogni controversia è competente il foro di [DA COMPLETARE: foro competente], fatti salvi i fori inderogabili previsti per legge."
+      },
+      {
+        "title": "Dati societari",
+        "body": "[DA COMPLETARE: ragione sociale] — [DA COMPLETARE: indirizzo] — P.IVA [DA COMPLETARE: partita IVA]."
+      }
+    ],
+    "contactTitle": "Contatti",
+    "contactBody": "Per qualsiasi domanda su questi termini scrivi a",
+    "contactEmail": "ionandries.digitalservices@gmail.com"
+  },
+  "consent": {
+    "ariaLabel": "Consenso cookie",
+    "body": "Usiamo cookie tecnici necessari e, solo con il tuo consenso, statistiche d'uso anonime (PostHog, server UE) per migliorare il prodotto.",
+    "privacyLink": "Informativa privacy",
+    "accept": "Accetta",
+    "reject": "Rifiuta"
   },
   "meta": {
     "home": {
@@ -384,6 +472,9 @@
     },
     "privacy": {
       "title": "Informativa privacy"
+    },
+    "termini": {
+      "title": "Termini di servizio"
     }
   },
   "empty": {
@@ -392,7 +483,8 @@
   },
   "errors": {
     "generic": "Qualcosa non ha funzionato. Riprova.",
-    "missingWeights": "Peso mancante per {{count}} prodotti — completali per generare il report."
+    "missingWeights": "Peso mancante per {{count}} prodotti — completali per generare il report.",
+    "plan": "Questa funzione non è inclusa nel tuo piano."
   },
   "app": {
     "auth": {
@@ -458,6 +550,7 @@
         "subtitle": "Seleziona tutti i paesi UE in cui vendi. Potrai modificarli in seguito.",
         "counterOne": "1 paese selezionato",
         "counterMany": "{{count}} paesi selezionati",
+        "limitNotice": "Puoi seguire fino a 3 paesi coperti dall'analisi. Il piano Completo li sblocca tutti, anche quelli che aggiungeremo.",
         "back": "Indietro",
         "submit": "Continua"
       },
@@ -473,7 +566,8 @@
           "registered": "Registrato"
         }
       },
-      "error": "Non è stato possibile salvare. Riprova."
+      "error": "Non è stato possibile salvare. Riprova.",
+      "errorLimit": "Puoi selezionare al massimo 3 paesi coperti. Il piano Completo li sblocca tutti."
     },
     "dashboard": {
       "eyebrow": "Quadro generale",
@@ -644,6 +738,13 @@
       "noProducts": "Aggiungi prima i tuoi prodotti per generare un report.",
       "noProductsCta": "Vai ai prodotti",
       "selectPrompt": "Seleziona un paese e un periodo per iniziare.",
+      "history": {
+        "title": "Storico report",
+        "empty": "Nessun report generato finora. Il primo che generi comparirà qui.",
+        "colDate": "Data",
+        "colCountry": "Paese",
+        "colPeriod": "Periodo"
+      },
       "result": {
         "title": "Report {{register}} · {{period}}",
         "materialView": "Per materiale",
@@ -668,6 +769,7 @@
         "UNMAPPED_MATERIAL": "Lo SKU {{sku}} usa un materiale senza corrispondenza nel registro.",
         "INVALID_UNITS": "Unità non valide per lo SKU {{sku}}.",
         "INVALID_PERIOD": "Il periodo non è valido per questo paese.",
+        "plan": "Questa funzione non è inclusa nel tuo piano.",
         "generic": "Dati non validi. Correggi e riprova."
       }
     },
@@ -683,7 +785,54 @@
       "error": "Non è stato possibile salvare. Riprova.",
       "accountTitle": "Account",
       "emailLabel": "Email",
-      "signout": "Esci"
+      "signout": "Esci",
+      "planTitle": "Abbonamento",
+      "planBody": "Piano attuale: {{plan}}. Cambio piano, disdetta e fatture si gestiscono dalla pagina Piano.",
+      "planCta": "Vai al piano"
+    },
+    "plan": {
+      "eyebrow": "Abbonamento",
+      "title": "Piano",
+      "subtitle": "Due piani annuali, IVA esclusa. Cambi o disdici quando vuoi, rimborso completo entro 30 giorni.",
+      "names": {
+        "free": "Gratuito",
+        "essenziale": "Essenziale",
+        "completo": "Completo"
+      },
+      "currentBadge": "Piano attuale",
+      "currentBanner": "Il tuo piano attuale è {{plan}}.",
+      "freeBanner": "Sei sul piano gratuito: cruscotto, sigilli e prodotti sono inclusi. Report, promemoria, import CSV e storico si sbloccano con un piano.",
+      "portalTitle": "Gestisci il tuo abbonamento",
+      "portalBody": "Cambio piano, disdetta e fatture passano dal portale sicuro di Stripe.",
+      "portalCta": "Gestisci abbonamento",
+      "checkoutNote": "Pagamento sicuro via Stripe. Prezzi IVA esclusa: in fase di acquisto ti chiederemo indirizzo di fatturazione e partita IVA.",
+      "success": {
+        "title": "Pagamento riuscito",
+        "body": "Grazie! Stiamo attivando il tuo piano: se qui vedi ancora quello precedente, ricarica tra qualche istante."
+      },
+      "cancelled": "Acquisto annullato. Nessun addebito effettuato.",
+      "error": {
+        "config": "Il pagamento non è ancora configurato. Riprova più tardi.",
+        "stripe": "Non è stato possibile aprire il pagamento. Riprova."
+      },
+      "gate": {
+        "unlockWith": "Si sblocca con {{plan}}",
+        "report": {
+          "title": "I report si sbloccano con un piano",
+          "body": "Con Essenziale o Completo generi i numeri pronti da incollare nei portali ufficiali, per paese e periodo, con i promemoria delle scadenze via email.",
+          "cta": "Vedi i piani"
+        },
+        "csvImport": {
+          "title": "L'import CSV si sblocca con Completo",
+          "body": "Carica in un colpo solo tutti i tuoi SKU e componenti di imballaggio da un file CSV, con mappatura colonne e anteprima.",
+          "cta": "Passa a Completo"
+        },
+        "history": {
+          "title": "Lo storico report si sblocca con Completo",
+          "body": "Ritrova ogni report generato, per paese e periodo, pronto da riaprire quando il registro te lo chiede.",
+          "cta": "Passa a Completo"
+        }
+      }
     },
     "common": {
       "saving": "Salvataggio…",

@@ -6,6 +6,7 @@ import { t } from "@/lib/i18n";
 import { EU_COUNTRIES, EXTRA_EU } from "@/lib/checker/options";
 import { capture } from "@/lib/analytics/capture";
 import { EVENTS } from "@/lib/analytics/events";
+import { canAddCoveredCountry } from "@/lib/plans";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -36,6 +37,7 @@ export function OnboardingWizard({ covered }: { covered: string[] }) {
   const [statusByCode, setStatusByCode] = React.useState<Record<string, CompanyCountryStatus>>({});
   const [error, setError] = React.useState<string | null>(null);
   const [pending, setPending] = React.useState(false);
+  const [limitHit, setLimitHit] = React.useState(false);
 
   // One uniform 27-country list for establishment and selling — no country is
   // visually privileged (coverage is data, not layout).
@@ -61,6 +63,18 @@ export function OnboardingWizard({ covered }: { covered: string[] }) {
     step === 1 ? name.trim() !== "" && establishment !== "" : step === 2 ? selected.length > 0 : true;
 
   function toggleCountry(code: string) {
+    // Covered countries are capped at 3 during onboarding (everyone is on the
+    // free plan here; the cap matches Essenziale — lib/plans.ts). Interest-only
+    // countries stay uncapped: they never create company_countries rows.
+    if (
+      !selected.includes(code) &&
+      covered.includes(code) &&
+      !canAddCoveredCountry("free", coveredSelected.length)
+    ) {
+      setLimitHit(true);
+      return;
+    }
+    setLimitHit(false);
     setSelected((prev) =>
       prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code],
     );
@@ -91,7 +105,9 @@ export function OnboardingWizard({ covered }: { covered: string[] }) {
     });
     // On success the action redirects; only errors return here.
     if (result?.error) {
-      setError(t("app.onboarding.error"));
+      setError(
+        t(result.error === "limit" ? "app.onboarding.errorLimit" : "app.onboarding.error"),
+      );
       setPending(false);
     }
   }
@@ -199,6 +215,11 @@ export function OnboardingWizard({ covered }: { covered: string[] }) {
                   />
                 ))}
               </div>
+              {limitHit && (
+                <p role="status" className="rounded-lg border border-warn/40 bg-warn/[0.06] p-4 text-2xs text-ink">
+                  {t("app.onboarding.countries.limitNotice")}
+                </p>
+              )}
               <p className="text-2xs text-muted-foreground">
                 {coveredNames.length > 0 && (
                   <>

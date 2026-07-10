@@ -4,6 +4,7 @@ import { loadAllRules } from "@/lib/rules/load";
 import { todayInRome } from "@/lib/checker/format";
 import { buildDeadlineReminderEmail, type ReminderDeadline } from "@/lib/email/deadline-reminder";
 import { getResend, EMAIL_FROM } from "@/lib/email/resend";
+import { canReceiveReminders, normalizePlan } from "@/lib/plans";
 import { t } from "@/lib/i18n";
 import type { DeadlineRow } from "@/lib/app/types";
 
@@ -73,10 +74,12 @@ export async function GET(request: Request): Promise<NextResponse> {
 
   const { data: companiesData } = await supabase
     .from("companies")
-    .select("id, owner_id, name")
+    .select("id, owner_id, name, plan")
     .in("id", [...byCompany.keys()]);
   const companyById = new Map(
-    (companiesData ?? []).map((c: { id: string; owner_id: string; name: string }) => [c.id, c]),
+    (companiesData ?? []).map(
+      (c: { id: string; owner_id: string; name: string; plan: string }) => [c.id, c],
+    ),
   );
 
   const resend = getResend();
@@ -87,6 +90,8 @@ export async function GET(request: Request): Promise<NextResponse> {
   for (const [companyId, companyDeadlines] of byCompany) {
     const company = companyById.get(companyId);
     if (!company) continue;
+    // Reminders are a paid feature (ARCHITECTURE §8): skip non-paying plans.
+    if (!canReceiveReminders(normalizePlan(company.plan))) continue;
 
     const { data: userData } = await supabase.auth.admin.getUserById(company.owner_id);
     const email = userData?.user?.email;

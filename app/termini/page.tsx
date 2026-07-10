@@ -4,15 +4,15 @@ import { SiteFooter } from "@/components/site-footer";
 import { t, tList } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: t("meta.privacy.title"),
+  title: t("meta.termini.title"),
 };
 
-// Full privacy policy (§9). Company data (ragione sociale, address, VAT) is a
-// marked [DA COMPLETARE] placeholder in it.json until the entity exists —
-// completing it is a step in STRIPE_SETUP.md.
-export default function PrivacyPage() {
-  const contactEmail = t("privacy.contactEmail");
-  const sections = tList<{ title: string; body: string }>("privacy.sections");
+// Terms of service (§9). Same skeleton as /privacy; company data and the
+// competent court are marked [DA COMPLETARE] placeholders in it.json —
+// completing them is a step in STRIPE_SETUP.md.
+export default function TerminiPage() {
+  const contactEmail = t("termini.contactEmail");
+  const sections = tList<{ title: string; body: string }>("termini.sections");
 
   return (
     <div className="flex min-h-screen flex-col bg-paper">
@@ -28,11 +28,11 @@ export default function PrivacyPage() {
       </header>
 
       <main className="mx-auto w-full max-w-[720px] flex-1 px-4 py-12 sm:px-8">
-        <p className="eyebrow text-muted-foreground">{t("common.privacy")}</p>
+        <p className="eyebrow text-muted-foreground">{t("common.termini")}</p>
         <h1 className="mt-2 font-display text-2xl font-bold tracking-tightDisplay text-ink">
-          {t("privacy.title")}
+          {t("termini.title")}
         </h1>
-        <p className="mt-2 text-2xs text-muted-foreground">{t("privacy.updated")}</p>
+        <p className="mt-2 text-2xs text-muted-foreground">{t("termini.updated")}</p>
 
         {sections.map((section) => (
           <section key={section.title} className="mt-8">
@@ -43,10 +43,10 @@ export default function PrivacyPage() {
 
         <section className="mt-8">
           <h2 className="font-display text-lg font-semibold text-ink">
-            {t("privacy.deleteTitle")}
+            {t("termini.contactTitle")}
           </h2>
           <p className="mt-2 text-base text-ink">
-            {t("privacy.deleteBody")}{" "}
+            {t("termini.contactBody")}{" "}
             <a
               href={`mailto:${contactEmail}`}
               className="rounded-sm text-brand hover:underline"

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getCompanyContext } from "@/lib/app/company";
 import { getSkusWithComponents } from "@/lib/app/products";
+import { canAccessReports, normalizePlan } from "@/lib/plans";
 import { toSkuInputs } from "@/lib/app/mappers";
 import { loadAllRules } from "@/lib/rules/load";
 import { computeReport } from "@/lib/engine/compute-report";
@@ -29,6 +30,11 @@ export type ReportActionResult =
 export async function generateReport(input: GenerateReportInput): Promise<ReportActionResult> {
   const context = await getCompanyContext();
   if (!context) return { ok: false, errors: [{ code: "generic", message: "unauthenticated" }] };
+
+  // Server-side plan gate (never UI-only): reports are a paid feature.
+  if (!canAccessReports(normalizePlan(context.company.plan))) {
+    return { ok: false, errors: [{ code: "plan", message: "plan does not include reports" }] };
+  }
 
   const countryCode = input.countryCode.toUpperCase();
   if (!context.companyCountries.some((c) => c.country_code === countryCode)) {

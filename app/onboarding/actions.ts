@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getCompanyContext } from "@/lib/app/company";
+import { maxCoveredCountries } from "@/lib/plans";
 import { syncDeadlines } from "@/lib/app/deadlines-server";
 import type { CompanyCountryRow, CompanyCountryStatus, CompanyRow } from "@/lib/app/types";
 
@@ -33,6 +34,13 @@ export async function completeOnboarding(
   const name = payload.name.trim();
   if (!name || !payload.establishmentCountry) {
     return { error: "invalid" };
+  }
+
+  // Server-side country cap (never UI-only): a new company starts on the free
+  // plan, capped at 3 covered countries (lib/plans.ts — matches Essenziale).
+  const maxCountries = maxCoveredCountries("free");
+  if (maxCountries !== null && payload.countries.length > maxCountries) {
+    return { error: "limit" };
   }
 
   // Guard against a double submit — never create a second company.

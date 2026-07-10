@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ProductForm } from "./product-form";
 import { CsvImport } from "./csv-import";
+import { UpgradeGate } from "./upgrade-gate";
 import { deleteProduct } from "@/app/app/prodotti/actions";
 
 export interface ProductVM {
@@ -20,7 +21,14 @@ export interface ProductVM {
 
 type Panel = "none" | "add" | "import";
 
-export function ProductsClient({ products }: { products: ProductVM[] }) {
+export function ProductsClient({
+  products,
+  csvEnabled,
+}: {
+  products: ProductVM[];
+  /** CSV import is completo-only: the panel renders the upgrade gate instead. */
+  csvEnabled: boolean;
+}) {
   const [panel, setPanel] = React.useState<Panel>("none");
   const [feedback, setFeedback] = React.useState<string | null>(null);
   const [deleting, setDeleting] = React.useState<string | null>(null);
@@ -68,15 +76,18 @@ export function ProductsClient({ products }: { products: ProductVM[] }) {
         />
       )}
 
-      {panel === "import" && (
-        <CsvImport
-          onDone={(count) => {
-            setPanel("none");
-            setFeedback(t("app.products.import.done", { count }));
-          }}
-          onCancel={() => setPanel("none")}
-        />
-      )}
+      {panel === "import" &&
+        (csvEnabled ? (
+          <CsvImport
+            onDone={(count) => {
+              setPanel("none");
+              setFeedback(t("app.products.import.done", { count }));
+            }}
+            onCancel={() => setPanel("none")}
+          />
+        ) : (
+          <UpgradeGate feature="csvImport" variant="inline" />
+        ))}
 
       {products.length === 0 ? (
         <div className="rounded-lg border border-line bg-surface p-8 text-base text-muted-foreground">

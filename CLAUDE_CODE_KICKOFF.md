@@ -1,5 +1,5 @@
 # CLAUDE_CODE_KICKOFF.md — Sequenza di lavoro per Claude Code
-Aggiornato: 07/07/2026. Questo file riflette lo stato reale del progetto.
+Aggiornato: 10/07/2026. Questo file riflette lo stato reale del progetto.
 
 ## Stato lavori — GIÀ FATTO (non rifare)
 - ✅ Ricerca regole EPR DE/FR/IT: completata via Claude Research.
@@ -9,6 +9,11 @@ Aggiornato: 07/07/2026. Questo file riflette lo stato reale del progetto.
   esportate nella cartella del progetto. Sono IL riferimento
   estetico per i Prompt 3, 4 e 5.
 - ✅ DESIGN_SYSTEM.md e ARCHITECTURE.md: definitivi.
+- ✅ PROMPT 1–5 eseguiti (scaffold, motore, checker, landing, app):
+  dettaglio in STATO_PROGETTO.md §3. Resta SOLO il Prompt 6.
+- ✅ Pricing ratificato il 10/07/2026: 2 piani annuali (Essenziale
+  149€, Completo 249€), niente mensile — il Prompt 6 qui sotto è
+  già allineato.
 
 ## Regole di lavoro (già nel CLAUDE.md della root)
 ```
@@ -29,9 +34,10 @@ Aggiornato: 07/07/2026. Questo file riflette lo stato reale del progetto.
 ```
 
 ## Ordine di esecuzione e modello per ciascun prompt
-1 (Opus 4.8) → 2 (Fable 5) → 3 (Fable 5) → 4 (Opus 4.8) → 5 (Opus 4.8) → 6 (Sonnet 4.6).
-I prompt 2 e 3 sono il cuore: vanno fatti con Fable 5 finché è disponibile.
-Il 6 può slittare senza problemi: è lavoro standard.
+1 (Opus 4.8) → 2 (Fable 5) → 3 (Fable 5) → 4 (Opus 4.8) → 5 (Opus 4.8) → 6 (Opus 4.8).
+I prompt 1–5 sono FATTI. Il 6 (Stripe) è flusso di pagamento, non
+meccanica: va fatto con Opus 4.8 (o Fable 5 se ancora disponibile),
+decisione ratificata 10/07/2026.
 
 ---
 
@@ -122,12 +128,66 @@ Claude Design (schermata dashboard: è il riferimento). Costruisci /app:
 Ogni vista: stati empty/loading/error curati come da design system.
 ```
 
-## PROMPT 6 — Stripe + rifiniture (Sonnet 4.6, può slittare)
+## PROMPT 6 — Stripe + legali (Opus 4.8)
 ```
-Stripe Checkout per i 3 tier di ARCHITECTURE.md §8 (mensile/annuale),
-webhook per aggiornare companies.plan, gating feature per piano,
-Customer Portal per gestione abbonamento. Pagine legali: privacy,
-termini, cookie banner minimo.
+Leggi ARCHITECTURE.md §8 (pricing ratificato 10/07/2026: SOLO
+fatturazione annuale, 2 piani — Essenziale 149€/anno, Completo
+249€/anno; il checker gratuito NON è un piano) e STATO_PROGETTO.md §7.
+Vincolo chiave: account Stripe, chiavi e price ID reali NON esistono
+ancora. Usa placeholder mock in .env.example e struttura tutto in modo
+che basti sostituire i valori env, senza toccare codice.
+
+1. Migration 0002: valori di companies.plan → free | essenziale |
+   completo (decisione ratificata: rinominare, niente mappe
+   starter/pro). Aggiorna default, commenti, tipi TS e ogni
+   riferimento nel codice.
+2. Config Stripe centralizzata in lib/stripe/: client server-side,
+   mappa piano → price ID letta da env:
+   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET,
+   NEXT_PUBLIC_STRIPE_PRICE_ESSENZIALE,
+   NEXT_PUBLIC_STRIPE_PRICE_COMPLETO.
+   Aggiorna .env.example (elimina le var STARTER/PRO).
+3. Flusso acquisto (decisione ratificata: prima l'account, poi il
+   checkout). Le CTA di landing e /prezzi continuano a puntare a
+   /registrati. L'acquisto avviene da /app: pagina piano/upgrade che
+   mostra piano attuale, i 2 piani con feature, CTA → route server
+   che crea Stripe Checkout Session (mode: subscription, price
+   annuale, customer riusato/creato via stripe_customer_id,
+   success/cancel URL). Nel Checkout: billing_address_collection
+   required + tax_id_collection abilitata (B2B, prezzi IVA esclusa);
+   la P.IVA finisce sul customer per la fatturazione. NON attivare
+   automatic_tax (richiede Stripe Tax configurato a mano: va in
+   STRIPE_SETUP.md come decisione/step di Ion).
+   Se già abbonato: link al Customer Portal (billing portal session)
+   al posto del checkout.
+4. Webhook /api/stripe/webhook: verifica firma; su
+   checkout.session.completed e customer.subscription.updated /
+   .deleted aggiorna companies.plan e stripe_customer_id con service
+   role (mai fidarsi del client). Gestione idempotente.
+5. Gating per piano, enforce LATO SERVER oltre che in UI (decisione
+   ratificata sul free: dashboard sì, output no):
+   - free: onboarding, dashboard con sigilli e scadenze, gestione
+     SKU. BLOCCATI: report, promemoria email, import CSV, storico
+     report → empty state curato con CTA upgrade (design system,
+     non un semplice disabled).
+   - essenziale: max 3 paesi (blocco alla selezione del 4°, con
+     copy che propone Completo), niente import CSV né storico.
+   - completo: tutto, inclusi paesi futuri.
+   Centralizza le regole in lib/plans.ts (funzioni pure) con unit
+   test Vitest. Il cron promemoria filtra i piani non paganti.
+6. Pagine legali: completa /privacy (oggi placeholder) e crea
+   /termini — contenuto reale in it.json, dati societari (ragione
+   sociale, indirizzo, P.IVA) come placeholder marcati. Cookie
+   banner minimo: PostHog parte solo dopo consenso.
+7. Crea STRIPE_SETUP.md alla root: checklist di TUTTO ciò che deve
+   fare Ion a mano — creare account Stripe, prodotti + 2 price
+   annuali, incollare chiavi e price ID in .env.local/Vercel,
+   registrare l'endpoint webhook (e ottenere il whsec), configurare
+   il Customer Portal nel dashboard Stripe, completare i dati
+   societari nelle pagine legali. Ogni valore mock lasciato nel
+   codice/env DEVE comparire in questa checklist.
+Eventi PostHog: upgrade_viewed, checkout_started, checkout_completed.
+Build, lint e tutti i test devono restare verdi.
 ```
 
 ---

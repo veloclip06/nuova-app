@@ -1,4 +1,5 @@
 import type { CompanyCountryStatus } from "@/lib/engine/types";
+import type { PlanId } from "@/lib/plans";
 
 /**
  * Database row shapes for the authenticated app area (mirror of the tables in
@@ -15,7 +16,7 @@ export interface CompanyRow {
   name: string;
   establishment_country: string;
   vat_number: string | null;
-  plan: string;
+  plan: PlanId;
   stripe_customer_id: string | null;
   created_at: string;
 }

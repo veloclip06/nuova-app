@@ -13,5 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/`, lastModified, changeFrequency: "weekly", priority: 1 },
     { url: `${siteUrl}/check`, lastModified, changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/prezzi`, lastModified, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${siteUrl}/privacy`, lastModified, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${siteUrl}/termini`, lastModified, changeFrequency: "yearly", priority: 0.2 },
   ];
 }

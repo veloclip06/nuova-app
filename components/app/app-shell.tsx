@@ -24,6 +24,7 @@ const NAV: NavItem[] = [
   { href: "/app/paesi", key: "nav.paesi" },
   { href: "/app/prodotti", key: "nav.prodotti" },
   { href: "/app/report", key: "nav.report" },
+  { href: "/app/piano", key: "nav.piano" },
   { href: "/app/impostazioni", key: "nav.impostazioni" },
 ];
 

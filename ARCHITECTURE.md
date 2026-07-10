@@ -162,11 +162,12 @@ Regole: nessun login richiesto, salvataggio risposte in stato locale, funnel tra
 ## 7. Promemoria scadenze
 Cron giornaliero (Vercel Cron) → query scadenze a 30/7/1 giorni → email via Resend → segna `reminder_sent_at`. Niente code, niente infrastruttura extra.
 
-## 8. Pricing (MVP)
-- **Free:** checker + 1 paese in sola visualizzazione scadenze
-- **Starter 29€/mese:** 2 paesi, SKU illimitati, report, promemoria
-- **Pro 59€/mese:** tutti i paesi coperti, import CSV, storico report
-Stripe Checkout, mensile/annuale (-20%). Nessuna telefonata, nessun "contattaci".
+## 8. Pricing (ratificato 10/07/2026)
+- Solo fatturazione ANNUALE. Nessun piano mensile.
+- **Essenziale 149€/anno:** fino a 3 paesi, SKU illimitati, report, promemoria
+- **Completo 249€/anno:** tutti i paesi coperti (anche quelli futuri, senza costi extra), import CSV, storico report
+- Il checker gratuito NON è un piano: presentato come striscia sotto i due piani (link a /check). L'account non pagante è uno stato (plan 'free' nel DB), non un prodotto in vendita.
+- Piano evidenziato: Completo. Stripe Checkout, due price annuali. Rimborso 30 giorni. Nessuna telefonata, nessun "contattaci".
 
 ## 9. Legale e fiducia (nel MVP, non dopo)
 - Footer fisso: "Software di supporto alla conformità. Non costituisce consulenza legale."

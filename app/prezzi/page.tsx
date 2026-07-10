@@ -5,7 +5,7 @@ import { PricingSection } from "@/components/landing/pricing";
 import { t } from "@/lib/i18n";
 
 // Pricing page (ARCHITECTURE.md §2, §8) — reuses the landing PricingSection so
-// the three tiers stay in one place. Stripe checkout is wired in PROMPT 6.
+// the two annual tiers stay in one place. Stripe checkout is wired in PROMPT 6.
 export const metadata: Metadata = {
   title: t("meta.prezzi.title"),
   description: t("meta.prezzi.description"),

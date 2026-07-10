@@ -101,56 +101,47 @@
     },
     "pricing": {
       "eyebrow": "Prezzi",
-      "title": "Tre piani, nessuna telefonata",
-      "subtitle": "Inizia gratis dal check. Passi a un piano a pagamento solo quando ti serve gestire scadenze e report.",
-      "period": "/mese",
-      "annualNote": "Fatturazione mensile o annuale (−20%).",
-      "reassurance": "Nessuna telefonata, nessun contatto commerciale. Disdici quando vuoi.",
+      "title": "Due piani annuali, nessuna telefonata",
+      "subtitle": "Paghi una volta l'anno, come le scadenze che gestisci. Nessuna mensilità, nessuna sorpresa.",
+      "period": "/anno",
+      "annualNote": "IVA esclusa. Rimborso completo entro 30 giorni.",
+      "reassurance": "Nessuna telefonata, nessun contatto commerciale.",
       "recommended": "Consigliato",
       "featuresLabel": "Cosa include",
       "tiers": [
         {
-          "id": "free",
-          "name": "Free",
-          "price": "0€",
-          "tagline": "Per capire dove sei esposto.",
+          "id": "essenziale",
+          "name": "Essenziale",
+          "price": "149€",
+          "tagline": "Per chi vende in pochi mercati.",
           "features": [
-            "Check EPR completo, tutti i paesi coperti",
-            "1 paese con scadenze in sola lettura",
-            "Fonti ufficiali e date di verifica"
-          ],
-          "cta": "Fai il check gratuito",
-          "href": "/check"
-        },
-        {
-          "id": "starter",
-          "name": "Starter",
-          "price": "29€",
-          "tagline": "Per chi vende in due mercati.",
-          "features": [
-            "2 paesi",
+            "Fino a 3 paesi",
             "SKU illimitati",
             "Report pronti da incollare",
             "Promemoria scadenze via email"
           ],
-          "cta": "Inizia con Starter",
+          "cta": "Inizia con Essenziale",
           "href": "/registrati"
         },
         {
-          "id": "pro",
-          "name": "Pro",
-          "price": "59€",
-          "tagline": "Per chi vende in tutta l'UE coperta.",
+          "id": "completo",
+          "name": "Completo",
+          "price": "249€",
+          "tagline": "Il meglio che possiamo offrire.",
           "features": [
-            "Tutti i paesi coperti",
+            "Tutti i paesi coperti, inclusi quelli che aggiungeremo",
             "Import CSV degli imballaggi",
             "Storico dei report",
-            "Tutto ciò che c'è in Starter"
+            "Tutto ciò che c'è in Essenziale"
           ],
-          "cta": "Inizia con Pro",
+          "cta": "Inizia con Completo",
           "href": "/registrati"
         }
-      ]
+      ],
+      "checkerStrip": {
+        "text": "Non sei sicuro di quali obblighi hai?",
+        "cta": "Fai il check gratuito — 2 minuti, senza registrazione"
+      }
     },
     "faq": {
       "eyebrow": "Domande frequenti",
@@ -386,7 +377,7 @@
     },
     "prezzi": {
       "title": "Prezzi",
-      "description": "Tre piani, nessuna telefonata: Free, Starter 29€/mese, Pro 59€/mese. Inizia gratis dal check EPR e passa a un piano quando ti serve."
+      "description": "Due piani annuali, nessuna telefonata: Essenziale 149€/anno, Completo 249€/anno. Inizia dal check EPR gratuito e passa a un piano quando ti serve."
     },
     "result": {
       "title": "Il tuo quadro EPR"

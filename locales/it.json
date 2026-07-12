@@ -259,38 +259,48 @@
     "ZZ": "Fuori UE"
   },
   "check": {
-    "eyebrow": "Verifica EPR",
     "progress": "Passo {{n}} di {{total}}",
     "steps": {
       "1": {
+        "eyebrow": "Sede legale",
         "title": "Dove è stabilita la tua azienda?",
         "help": "La sede legale determina quali obblighi si applicano come paese domestico.",
+        "hint": "Seleziona il paese della sede per continuare.",
         "placeholder": "Seleziona un paese",
         "euGroup": "Unione europea",
         "nonEuGroup": "Fuori UE"
       },
       "2": {
+        "eyebrow": "Mercati di vendita",
         "title": "In quali paesi UE vendi?",
         "help": "Seleziona tutti i paesi in cui spedisci ordini. Puoi cambiare la selezione in ogni momento.",
-        "coverageIntro": "Analisi dettagliata oggi per: {{countries}}.",
-        "coverageOutro": "Gli altri paesi vengono registrati come interesse e aggiunti in base alla domanda.",
+        "hint": "Seleziona almeno un paese per continuare.",
+        "coverageIntro": "Tutti i 27 paesi UE sono selezionabili. L'analisi dettagliata oggi copre {{countries}}.",
+        "coverageOutro": "Gli altri paesi entrano in copertura in base alla domanda: la tua selezione dà loro priorità.",
         "counterOne": "1 paese selezionato",
         "counterMany": "{{count}} paesi selezionati"
       },
       "3": {
+        "eyebrow": "Canali di vendita",
         "title": "Su quali canali vendi?",
-        "help": "I marketplace applicano controlli propri sugli obblighi EPR: la selezione incide sul risultato."
+        "help": "I marketplace applicano controlli propri sugli obblighi EPR: la selezione incide sul risultato.",
+        "hint": "Seleziona almeno un canale per continuare."
       },
       "4": {
+        "eyebrow": "Prodotti",
         "title": "Che tipo di prodotti spedisci?",
-        "help": "Le categorie servono a stimare gli imballaggi tipici. Potrai precisare i dettagli più avanti."
+        "help": "Le categorie servono a stimare gli imballaggi tipici. Potrai precisare i dettagli più avanti.",
+        "hint": "Seleziona almeno una categoria per continuare."
       },
       "5": {
-        "title": "Quanti ordini spedisci all'anno?",
-        "help": "Una stima per paese è sufficiente. Se non lo sai, va bene lo stesso."
+        "eyebrow": "Volumi annui",
+        "title": "Quanti ordini spedisci all'anno, paese per paese?",
+        "help": "Basta una fascia indicativa. Se non hai il numero, «Non lo so» è una risposta valida.",
+        "hint": "Indica una fascia per ogni paese — anche «Non lo so» va bene.",
+        "counter": "{{done}} di {{total}} paesi indicati"
       },
       "continue": "Continua",
-      "showResult": "Vedi il risultato"
+      "showResult": "Vedi il tuo quadro EPR"
     },
     "options": {
       "channels": {
@@ -491,7 +501,7 @@
     },
     "check": {
       "title": "Verifica EPR gratuita",
-      "description": "Scopri in due minuti dove sei esposto: obblighi imballaggi in {{countries}}, con fonti ufficiali."
+      "description": "Scopri in due minuti dove sei esposto: obblighi imballaggi UE paese per paese, con fonti ufficiali e senza registrazione. Analisi dettagliata oggi per {{countries}}."
     },
     "prezzi": {
       "title": "Prezzi",

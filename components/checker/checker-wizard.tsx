@@ -112,6 +112,11 @@ export function CheckerWizard({ coveredNames }: CheckerWizardProps) {
       ? t("check.steps.2.counterOne")
       : t("check.steps.2.counterMany", { count: answers.selling.length });
 
+  // Step 5 mirror of the step-2 counter: how many countries have a band yet.
+  const volumeDone = answers.selling.filter((code) =>
+    Boolean(answers.volumeByCountry[code]),
+  ).length;
+
   return (
     <>
       <ProgressHeader step={step} />
@@ -120,6 +125,13 @@ export function CheckerWizard({ coveredNames }: CheckerWizardProps) {
           {/* key remounts the block per step → the enter animation replays;
               the global prefers-reduced-motion rule disables it */}
           <div key={step} className="animate-card-enter">
+            {/* Register-style step label: mono step number + small-caps eyebrow */}
+            <p className="mb-3 flex items-baseline gap-2.5 text-2xs text-muted-foreground">
+              <span className="font-mono">{String(step).padStart(2, "0")}</span>
+              <span className="font-display font-semibold uppercase tracking-register">
+                {t(`check.steps.${step}.eyebrow`)}
+              </span>
+            </p>
             <h1
               ref={headingRef}
               tabIndex={-1}
@@ -132,27 +144,59 @@ export function CheckerWizard({ coveredNames }: CheckerWizardProps) {
 
             <fieldset className="mt-8 border-0 p-0" aria-labelledby="checker-question">
               {step === 1 && (
-                <select
-                  value={answers.establishment}
-                  onChange={(event) =>
-                    setAnswers({ ...answers, establishment: event.target.value })
-                  }
-                  className="h-12 w-full max-w-md rounded-lg border border-line bg-surface px-4 text-base text-ink"
-                >
-                  <option value="" disabled>
-                    {t("check.steps.1.placeholder")}
-                  </option>
-                  <optgroup label={t("check.steps.1.euGroup")}>
-                    {euSorted.map((code) => (
-                      <option key={code} value={code}>
-                        {t(optionKeys.country(code))}
+                <div className="relative w-full max-w-md">
+                  {/* Echo of the chosen country: flag swatch inside the field */}
+                  {answers.establishment && (
+                    <Flag
+                      code={answers.establishment}
+                      className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2"
+                    />
+                  )}
+                  <select
+                    value={answers.establishment}
+                    onChange={(event) =>
+                      setAnswers({ ...answers, establishment: event.target.value })
+                    }
+                    aria-label={t("check.steps.1.title")}
+                    className={cn(
+                      "h-12 w-full appearance-none rounded-lg border border-line bg-surface pr-11 text-base transition-colors",
+                      "hover:border-ink/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                      answers.establishment
+                        ? "pl-12 text-ink"
+                        : "pl-4 text-[color:var(--placeholder)]",
+                    )}
+                  >
+                    <option value="" disabled>
+                      {t("check.steps.1.placeholder")}
+                    </option>
+                    <optgroup label={t("check.steps.1.euGroup")}>
+                      {euSorted.map((code) => (
+                        <option key={code} value={code} className="text-ink">
+                          {t(optionKeys.country(code))}
+                        </option>
+                      ))}
+                    </optgroup>
+                    <optgroup label={t("check.steps.1.nonEuGroup")}>
+                      <option value={EXTRA_EU} className="text-ink">
+                        {t(optionKeys.country(EXTRA_EU))}
                       </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label={t("check.steps.1.nonEuGroup")}>
-                    <option value={EXTRA_EU}>{t(optionKeys.country(EXTRA_EU))}</option>
-                  </optgroup>
-                </select>
+                    </optgroup>
+                  </select>
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                  >
+                    <path
+                      d="m4 6 4 4 4-4"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
               )}
 
               {step === 2 && (
@@ -236,6 +280,12 @@ export function CheckerWizard({ coveredNames }: CheckerWizardProps) {
                       <legend className="flex items-center gap-2 px-1 font-display text-xs font-semibold text-ink">
                         <Flag code={code} />
                         {t(optionKeys.country(code))}
+                        {/* Done mark: with many countries, answered blocks read at a glance */}
+                        {Boolean(answers.volumeByCountry[code]) && (
+                          <span aria-hidden="true" className="font-mono text-2xs text-brand">
+                            ✓
+                          </span>
+                        )}
                       </legend>
                       <div className="mt-1 flex flex-wrap gap-2">
                         {VOLUME_BAND_IDS.map((band) => {
@@ -279,23 +329,41 @@ export function CheckerWizard({ coveredNames }: CheckerWizardProps) {
             </fieldset>
           </div>
 
-          <div className="mt-10 flex items-center justify-between gap-4">
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
             {step > 1 ? (
-              <Button type="button" variant="ghost" onClick={() => setStep(step - 1)}>
+              <Button
+                type="button"
+                variant="ghost"
+                className="text-muted-foreground hover:bg-transparent hover:text-ink"
+                onClick={() => setStep(step - 1)}
+              >
                 ← {t("common.back")}
               </Button>
             ) : (
               <span aria-hidden="true" />
             )}
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center justify-end gap-4">
               {step === 2 && (
                 <span className="font-mono text-2xs text-muted-foreground">{counter}</span>
+              )}
+              {step === 5 && answers.selling.length > 1 && (
+                <span className="font-mono text-2xs text-muted-foreground">
+                  {t("check.steps.5.counter", {
+                    done: volumeDone,
+                    total: answers.selling.length,
+                  })}
+                </span>
               )}
               <Button type="submit" disabled={!canContinue}>
                 {step < TOTAL_STEPS ? t("check.steps.continue") : t("check.steps.showResult")}
               </Button>
             </div>
           </div>
+          {/* Why Continue is disabled — guidance, not an error (§8.7). The
+              min-height keeps the row from jumping when the hint clears. */}
+          <p aria-live="polite" className="mt-2 min-h-5 text-right text-2xs text-muted-foreground">
+            {!canContinue ? t(`check.steps.${step}.hint`) : ""}
+          </p>
         </form>
       </main>
     </>

@@ -15,6 +15,11 @@ interface ReportCountry {
   code: string;
   name: string;
   registerName: string;
+  // Mirrors of sourced rule fields (register.portal_url, sources[].accessed,
+  // status) — display only, never invented here.
+  portalUrl: string;
+  sourceAccessed: string;
+  ruleStatus: "draft" | "verified";
 }
 interface ReportSku {
   id: string;
@@ -32,10 +37,12 @@ export function ReportClient({
   countries,
   skus,
   volumes,
+  historyVisible,
 }: {
   countries: ReportCountry[];
   skus: ReportSku[];
   volumes: ReportVolume[];
+  historyVisible: boolean;
 }) {
   const [countryCode, setCountryCode] = React.useState(countries[0]?.code ?? "");
   const [period, setPeriod] = React.useState("");
@@ -43,6 +50,14 @@ export function ReportClient({
   const [result, setResult] = React.useState<ReportActionResult | null>(null);
   const [pending, setPending] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
+  // Inputs signature of the last successful generation: when the current
+  // inputs diverge, the shown result is stale and the CTA flips to "Ricalcola".
+  const [generatedKey, setGeneratedKey] = React.useState<string | null>(null);
+  // Country snapshot taken at generation time, so the result header keeps
+  // naming the register it was computed for even if the selection changes.
+  const [generatedCountry, setGeneratedCountry] = React.useState<ReportCountry | undefined>(undefined);
+  // Remount key for the result view so the card-enter micro-state replays.
+  const [generation, setGeneration] = React.useState(0);
 
   // Prefill volumes from what was saved for this country + period.
   React.useEffect(() => {
@@ -56,8 +71,12 @@ export function ReportClient({
     setUnitsBySku(prefill);
   }, [countryCode, period, volumes]);
 
-  const register = countries.find((c) => c.code === countryCode)?.registerName ?? countryCode;
+  const country = countries.find((c) => c.code === countryCode);
   const canGenerate = countryCode !== "" && period.trim() !== "" && !pending;
+  const stale =
+    result?.ok === true &&
+    generatedKey !== null &&
+    inputsKey(countryCode, period, unitsBySku, skus) !== generatedKey;
 
   async function onGenerate() {
     setPending(true);
@@ -68,6 +87,11 @@ export function ReportClient({
     }));
     const res = await generateReport({ countryCode, period: period.trim(), volumes: payload });
     setResult(res);
+    if (res.ok) {
+      setGeneratedKey(inputsKey(countryCode, period, unitsBySku, skus));
+      setGeneratedCountry(country);
+      setGeneration((g) => g + 1);
+    }
     setPending(false);
   }
 
@@ -151,15 +175,33 @@ export function ReportClient({
 
       <div>
         <Button onClick={onGenerate} disabled={!canGenerate}>
-          {pending ? t("app.common.saving") : t("app.report.generate")}
+          {pending
+            ? t("app.report.generating")
+            : stale
+              ? t("app.report.regenerate")
+              : t("app.report.generate")}
         </Button>
       </div>
+
+      {!result && (
+        <div className="rounded-lg border border-dashed border-line bg-surface/50 p-6 text-sm text-muted-foreground">
+          {t("app.report.selectPrompt")}
+        </div>
+      )}
+
+      {stale && (
+        <p role="status" className="rounded-md border border-line bg-paper px-4 py-2.5 text-2xs text-muted-foreground">
+          {t("app.report.stale")}
+        </p>
+      )}
 
       {result && !result.ok && <ReportErrors errors={result.errors} />}
       {result && result.ok && (
         <ReportResultView
+          key={generation}
           report={result.report}
-          register={register}
+          country={generatedCountry}
+          historyVisible={historyVisible}
           copied={copied}
           onCopy={async () => {
             await navigator.clipboard.writeText(buildTsv(result.report));
@@ -167,7 +209,10 @@ export function ReportClient({
             window.setTimeout(() => setCopied(false), 2000);
           }}
           onExport={() =>
-            downloadCsv(`report-${register}-${result.report.period}.csv`, buildCsv(result.report))
+            downloadCsv(
+              `report-${generatedCountry?.registerName ?? countryCode}-${result.report.period}.csv`,
+              buildCsv(result.report),
+            )
           }
         />
       )}
@@ -177,7 +222,7 @@ export function ReportClient({
 
 function ReportErrors({ errors }: { errors: { code: string; skuCode?: string }[] }) {
   return (
-    <div className="rounded-lg border border-risk/40 bg-risk/[0.04] p-6">
+    <div className="animate-card-enter rounded-lg border border-risk/40 bg-risk/[0.04] p-6">
       <p className="font-display text-base font-semibold text-risk">
         {t("app.report.errors.title")}
       </p>
@@ -195,30 +240,73 @@ function ReportErrors({ errors }: { errors: { code: string; skuCode?: string }[]
 
 function ReportResultView({
   report,
-  register,
+  country,
+  historyVisible,
   copied,
   onCopy,
   onExport,
 }: {
   report: MaterialBreakdown;
-  register: string;
+  country: ReportCountry | undefined;
+  historyVisible: boolean;
   copied: boolean;
   onCopy: () => void;
   onExport: () => void;
 }) {
+  const register = country?.registerName ?? "";
+  // The peak-end moment: land keyboard/screen-reader focus on the document
+  // header once per (re)generation (the parent remounts this view via key).
+  const headingRef = React.useRef<HTMLHeadingElement>(null);
+  React.useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
+
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-display text-lg font-semibold text-ink">
-          {t("app.report.result.title", { register, period: report.period })}
-        </h2>
-        <div className="flex items-center gap-2">
+    <div className="animate-card-enter flex flex-col gap-5">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div className="min-w-0">
+          <p className="eyebrow text-muted-foreground">{t("app.report.result.eyebrow")}</p>
+          <h2
+            ref={headingRef}
+            tabIndex={-1}
+            className="mt-1 font-display text-xl font-semibold text-ink focus-visible:outline-none"
+          >
+            {t("app.report.result.title", { register })}{" "}
+            <span className="tabular text-base font-normal text-muted-foreground">
+              · {report.period}
+            </span>
+          </h2>
+          {country && (
+            <p className="mt-1.5 text-2xs text-muted-foreground">
+              {t("app.report.result.sourceMeta", {
+                register,
+                date: new Date(country.sourceAccessed).toLocaleDateString("it-IT"),
+              })}
+              {country.ruleStatus === "draft" && (
+                <span className="ml-1.5 inline-block whitespace-nowrap rounded-sm border border-line bg-paper px-1.5 py-px align-middle font-mono text-[11px] leading-relaxed text-muted-foreground">
+                  {t("app.report.result.draftBadge")}
+                </span>
+              )}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <span role="status" className="text-2xs text-muted-foreground">
+            {copied ? t("app.report.result.copied") : ""}
+          </span>
           <Button variant="outline" size="sm" onClick={onCopy}>
-            {copied ? t("app.report.result.copied") : t("app.report.result.copy")}
+            {t("app.report.result.copy")}
           </Button>
           <Button variant="ghost" size="sm" onClick={onExport}>
             {t("app.report.result.exportCsv")}
           </Button>
+          {country && (
+            <Button asChild variant="ghost" size="sm">
+              <a href={country.portalUrl} target="_blank" rel="noopener noreferrer">
+                {t("app.report.result.openPortal", { register })}
+              </a>
+            </Button>
+          )}
         </div>
       </div>
 
@@ -230,9 +318,12 @@ function ReportResultView({
 
       {/* Per-material (canonical) view — what users always see (§5) */}
       <div className="rounded-lg border border-line bg-surface">
-        <p className="eyebrow border-b border-line px-5 py-3 text-muted-foreground">
-          {t("app.report.result.materialView")}
-        </p>
+        <div className="border-b border-line px-5 py-3">
+          <p className="eyebrow text-muted-foreground">{t("app.report.result.materialView")}</p>
+          <p className="mt-1 text-2xs text-muted-foreground">
+            {t("app.report.result.materialViewHint")}
+          </p>
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
@@ -259,9 +350,12 @@ function ReportResultView({
 
       {/* Portal-paste view — merged by local register category */}
       <div className="rounded-lg border border-line bg-surface">
-        <p className="eyebrow border-b border-line px-5 py-3 text-muted-foreground">
-          {t("app.report.result.portalView")}
-        </p>
+        <div className="border-b border-line px-5 py-3">
+          <p className="eyebrow text-muted-foreground">{t("app.report.result.portalView")}</p>
+          <p className="mt-1 text-2xs text-muted-foreground">
+            {t("app.report.result.portalViewHint", { register })}
+          </p>
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
@@ -287,13 +381,29 @@ function ReportResultView({
       </div>
 
       <p role="status" className="text-2xs text-muted-foreground">
-        {t("app.report.result.saved")}
+        {t(historyVisible ? "app.report.result.saved" : "app.report.result.savedNoHistory")}
       </p>
     </div>
   );
 }
 
 // --- helpers ---------------------------------------------------------------
+
+/**
+ * Signature of the inputs a generation runs on. Units are normalised exactly
+ * like onGenerate's payload, so "" vs "0" vs "05" never reads as a change.
+ */
+function inputsKey(
+  countryCode: string,
+  period: string,
+  unitsBySku: Record<string, string>,
+  skus: ReportSku[],
+): string {
+  const units = skus
+    .map((sku) => `${sku.id}:${Math.trunc(Number(unitsBySku[sku.id] ?? "0")) || 0}`)
+    .join(",");
+  return `${countryCode}|${period.trim()}|${units}`;
+}
 
 function translateError(code: string, skuCode?: string): string {
   const key = `app.report.errors.${code}`;

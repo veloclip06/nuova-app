@@ -42,6 +42,13 @@ export default async function ReportPage() {
       code: rule.country_code,
       name: rule.country_name,
       registerName: rule.register.name,
+      // Mirrors of sourced rule fields, shown on the result (source + date rule).
+      portalUrl: rule.register.portal_url,
+      sourceAccessed: rule.sources.reduce(
+        (max, source) => (source.accessed > max ? source.accessed : max),
+        rule.sources[0]?.accessed ?? "",
+      ),
+      ruleStatus: rule.status,
     }));
 
   const supabase = await createClient();
@@ -74,7 +81,12 @@ export default async function ReportPage() {
         title={t("app.report.title")}
         subtitle={t("app.report.subtitle")}
       />
-      <ReportClient countries={countries} skus={skuList} volumes={volumes} />
+      <ReportClient
+        countries={countries}
+        skus={skuList}
+        volumes={volumes}
+        historyVisible={history}
+      />
       {history ? (
         <ReportHistory
           entries={((reportData ?? []) as {

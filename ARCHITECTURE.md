@@ -26,6 +26,9 @@ APP (autenticata, /app/*)
 /app/report          Genera report per paese/periodo
 /app/impostazioni    Azienda, abbonamento (link a Stripe Portal)
 
+POST-SIGNUP (autenticata)
+/onboarding          Wizard 3 step (azienda → paesi di vendita → stato per paese) → /app; salta a /app se l'azienda esiste già
+
 AUTH: /login /registrati /reset-password (Supabase Auth, email+password e Google)
 ```
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { t } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
 import { TOTAL_STEPS } from "@/lib/checker/options";
+import { StepProgress } from "@/components/ui/step-progress";
 
 /**
  * Wizard header + endowed progress bar (DESIGN_SYSTEM.md §8.2, design export
@@ -25,21 +25,7 @@ export function ProgressHeader({ step }: { step: number }) {
           </span>
         </div>
       </div>
-      <div
-        aria-hidden="true"
-        className="grid h-1 w-full gap-px"
-        style={{ gridTemplateColumns: `repeat(${TOTAL_STEPS}, 1fr)` }}
-      >
-        {Array.from({ length: TOTAL_STEPS }, (_, i) => (
-          <div
-            key={i}
-            className={cn(
-              "h-full transition-colors duration-150",
-              i < step ? "bg-brand" : "bg-line",
-            )}
-          />
-        ))}
-      </div>
+      <StepProgress step={step} total={TOTAL_STEPS} className="h-1 w-full" />
     </header>
   );
 }

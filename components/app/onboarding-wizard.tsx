@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
-import { OptionCard } from "@/components/checker/option-card";
+import { StepProgress } from "@/components/ui/step-progress";
+import { CountryGrid } from "@/components/checker/country-grid";
 import { Flag } from "@/components/checker/flag";
 import { completeOnboarding } from "@/app/onboarding/actions";
 import type { CompanyCountryStatus } from "@/lib/app/types";
@@ -154,13 +155,7 @@ export function OnboardingWizard({ covered }: { covered: string[] }) {
       <header className="mx-auto w-full max-w-[640px] px-4 pt-8 sm:px-8">
         <p className="eyebrow text-muted-foreground">{t("app.onboarding.eyebrow")}</p>
         <div className="mt-3 flex items-center gap-3">
-          {/* Decorative — the visible mono "Passo n di 3" carries the semantics. */}
-          <div aria-hidden="true" className="h-1.5 flex-1 overflow-hidden rounded-full bg-line">
-            <div
-              className="h-full rounded-full bg-brand transition-[width] duration-300"
-              style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
-            />
-          </div>
+          <StepProgress step={step} total={TOTAL_STEPS} className="h-1.5 flex-1" />
           <span className="font-mono text-2xs text-muted-foreground">
             {t("app.onboarding.stepOf", { n: step, total: TOTAL_STEPS })}
           </span>
@@ -233,21 +228,11 @@ export function OnboardingWizard({ covered }: { covered: string[] }) {
 
             {step === 2 && (
               <fieldset className="mt-8 border-0 p-0" aria-labelledby="onboarding-question">
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2.5">
-                  {euOptions.map((code) => (
-                    <OptionCard
-                      key={code}
-                      type="checkbox"
-                      name="selling-countries"
-                      value={code}
-                      checked={selected.includes(code)}
-                      onChange={() => toggleCountry(code)}
-                      label={t(`countries.${code}`)}
-                      flagCode={code}
-                      compact
-                    />
-                  ))}
-                </div>
+                <CountryGrid
+                  name="selling-countries"
+                  selected={selected}
+                  onToggle={toggleCountry}
+                />
                 {limitHit && (
                   <p role="status" className="mt-5 rounded-lg border border-warn/40 bg-warn/[0.06] p-4 text-2xs text-ink">
                     {t("app.onboarding.countries.limitNotice")}

@@ -9,7 +9,7 @@ export default function OnboardingLoading() {
         <header className="mx-auto w-full max-w-[640px] px-4 pt-8 sm:px-8">
           <Skeleton className="h-3 w-24" />
           <div className="mt-3 flex items-center gap-3">
-            <Skeleton className="h-1.5 flex-1 rounded-full" />
+            <Skeleton className="h-1.5 flex-1" />
             <Skeleton className="h-3 w-12" />
           </div>
         </header>

@@ -18,6 +18,7 @@ import {
 } from "@/lib/checker/options";
 import { encodeAnswers } from "@/lib/checker/params";
 import { Button } from "@/components/ui/button";
+import { CountryGrid } from "./country-grid";
 import { Flag } from "./flag";
 import { OptionCard } from "./option-card";
 import { ProgressHeader } from "./progress-header";
@@ -201,23 +202,13 @@ export function CheckerWizard({ coveredNames }: CheckerWizardProps) {
 
               {step === 2 && (
                 <>
-                  <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-2.5">
-                    {euSorted.map((code) => (
-                      <OptionCard
-                        key={code}
-                        type="checkbox"
-                        name="selling"
-                        value={code}
-                        checked={answers.selling.includes(code)}
-                        onChange={() =>
-                          setAnswers({ ...answers, selling: toggle(answers.selling, code) })
-                        }
-                        label={t(optionKeys.country(code))}
-                        flagCode={code}
-                        compact
-                      />
-                    ))}
-                  </div>
+                  <CountryGrid
+                    name="selling"
+                    selected={answers.selling}
+                    onToggle={(code) =>
+                      setAnswers({ ...answers, selling: toggle(answers.selling, code) })
+                    }
+                  />
                   <p className="mt-5 text-2xs text-muted-foreground">
                     {coveredNames.length > 0 && (
                       <>

@@ -79,6 +79,7 @@ Lavoro su main, nessun branch, NESSUN commit da parte degli agenti: modifiche un
 - PROMPT 5 — flusso interattivo signup→onboarding→dashboard→prodotti→report non guidato E2E da qui (richiede sessione browser + conferma email/Google): da validare manualmente da Ion
 - Onboarding ora accetta anche aziende che vendono solo in paesi non coperti (company senza company_countries, dashboard vuota; selezione tracciata come interesse in PostHog) — verificare che l'empty state della dashboard sia accettabile in quel caso
 - ARCHITECTURE.md §6 punto 2 aggiornato alla decisione ratificata 10/07 (griglia uniforme 27, copertura = dato): unica riga toccata
+- ARCHITECTURE.md non documenta la route /onboarding (la mappa route §2 elenca solo /app/*; il flusso esiste solo implicitamente nello schema companies/company_countries §3) — gap documentale scoperto durante la rifinitura UI, da colmare su istruzione di Ion
 
 ## 8. Prossimi step (in ordine)
 1. Giro rifinitura UI: restanti 12 prompt di PROMPTS_RIFINITURA_UI.md, una pagina per chat — Fable 5 finché disponibile, altrimenti Opus

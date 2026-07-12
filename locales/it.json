@@ -563,32 +563,33 @@
     "onboarding": {
       "eyebrow": "Configurazione",
       "stepOf": "Passo {{n}} di {{total}}",
+      "back": "Indietro",
+      "continue": "Continua",
       "company": {
         "title": "Crea la tua azienda",
-        "subtitle": "Bastano pochi dati per iniziare.",
+        "subtitle": "Chi è la tua azienda e dove è stabilita: da qui parte il tuo quadro degli obblighi.",
         "nameLabel": "Ragione sociale",
         "namePlaceholder": "Rossi Commerce Srl",
         "countryLabel": "Paese di stabilimento",
-        "countryHelp": "La sede legale determina gli obblighi come paese domestico.",
+        "countryHelp": "La sede legale determina quali obblighi si applicano come paese domestico.",
         "countryPlaceholder": "Seleziona un paese",
         "vatLabel": "Partita IVA (facoltativa)",
-        "vatPlaceholder": "IT01234567890",
-        "submit": "Continua"
+        "vatHelp": "Puoi aggiungerla anche dopo, dalle impostazioni.",
+        "vatPlaceholder": "IT01234567890"
       },
       "countries": {
-        "title": "In quali paesi vendi?",
-        "subtitle": "Seleziona tutti i paesi UE in cui vendi. Potrai modificarli in seguito.",
+        "title": "In quali paesi UE vendi?",
+        "subtitle": "Ogni paese ha registri e regole propri: la selezione costruisce il tuo quadro paese per paese. Puoi cambiarla in ogni momento.",
         "counterOne": "1 paese selezionato",
         "counterMany": "{{count}} paesi selezionati",
-        "limitNotice": "Puoi seguire fino a 3 paesi coperti dall'analisi. Il piano Completo li sblocca tutti, anche quelli che aggiungeremo.",
-        "back": "Indietro",
-        "submit": "Continua"
+        "limitNotice": "Puoi seguire fino a 3 paesi tra quelli coperti dall'analisi. Gli altri restano registrati come interesse; il piano Completo li segue tutti, anche i prossimi che copriremo."
       },
       "status": {
         "title": "A che punto sei in ogni paese?",
-        "subtitle": "Imposta lo stato attuale. Potrai aggiornarlo quando cambia.",
-        "noneCovered": "Nessuno dei paesi selezionati è già coperto dall'analisi dettagliata: li abbiamo registrati come interesse. Puoi comunque completare la configurazione.",
-        "back": "Indietro",
+        "subtitle": "Lo stato determina il sigillo di ogni paese nel cruscotto. Non serve che sia definitivo: puoi aggiornarlo in ogni momento.",
+        "noneCoveredTitle": "Ultimo passo: il tuo cruscotto",
+        "noneCoveredSubtitle": "Nessuno dei paesi che hai scelto è già coperto dall'analisi dettagliata. Ecco cosa succede ora.",
+        "noneCovered": "La tua selezione è registrata come interesse: è il segnale che decide i prossimi paesi da coprire, a partire dai più richiesti. Nel cruscotto trovi intanto la tua azienda, già configurata.",
         "submit": "Vai al cruscotto",
         "options": {
           "not_registered": "Non registrato",
@@ -596,8 +597,8 @@
           "registered": "Registrato"
         }
       },
-      "error": "Non è stato possibile salvare. Riprova.",
-      "errorLimit": "Puoi selezionare al massimo 3 paesi coperti. Il piano Completo li sblocca tutti."
+      "error": "Non siamo riusciti a salvare la configurazione. I dati inseriti sono ancora qui: riprova.",
+      "errorLimit": "Puoi seguire fino a 3 paesi tra quelli coperti dall'analisi. Togli un paese coperto oppure passa al piano Completo, che li segue tutti."
     },
     "dashboard": {
       "eyebrow": "Quadro generale",

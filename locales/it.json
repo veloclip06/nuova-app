@@ -106,7 +106,7 @@
       "subtitle": "Paghi una volta l'anno, come le scadenze che gestisci. Nessuna mensilità, nessuna sorpresa.",
       "period": "/anno",
       "annualNote": "IVA esclusa. Rimborso completo entro 30 giorni.",
-      "reassurance": "Nessuna telefonata, nessun contatto commerciale.",
+      "reassurance": "Si compra e si disdice in autonomia: nessuna telefonata, nessun contatto commerciale.",
       "recommended": "Consigliato",
       "featuresLabel": "Cosa include",
       "tiers": [
@@ -116,10 +116,10 @@
           "price": "149€",
           "tagline": "Se vendi in due o tre paesi, basta questo.",
           "features": [
-            "Fino a 3 paesi",
+            "Fino a 3 paesi, li scegli tu",
             "SKU illimitati",
-            "Report pronti da incollare",
-            "Promemoria scadenze via email"
+            "Report pronti da incollare nei portali dei registri",
+            "Promemoria via email a 30, 7 e 1 giorno da ogni scadenza"
           ],
           "cta": "Inizia con Essenziale",
           "href": "/registrati"
@@ -131,17 +131,34 @@
           "tagline": "Se vendi in più di tre paesi — o non vuoi più contarli.",
           "features": [
             "Tutto ciò che c'è in Essenziale",
-            "Tutti i paesi coperti, inclusi quelli che aggiungeremo",
-            "Import CSV degli imballaggi",
-            "Storico dei report"
+            "Tutti i paesi coperti, anche quelli futuri, senza costi extra",
+            "Import CSV: SKU e imballaggi caricati in un colpo solo",
+            "Storico dei report, per paese e periodo"
           ],
           "cta": "Inizia con Completo",
           "href": "/registrati"
         }
       ],
       "checkerStrip": {
-        "text": "Non sei sicuro di quali obblighi hai?",
-        "cta": "Fai il check gratuito — 2 minuti, senza registrazione"
+        "text": "Prima di decidere, scopri gratis quali obblighi hai davvero.",
+        "cta": "Fai il check — 2 minuti, senza registrazione"
+      },
+      "objections": {
+        "eyebrow": "Condizioni, in chiaro",
+        "items": [
+          {
+            "label": "Rimborso 30 giorni",
+            "body": "Se il servizio non fa per te, chiedi il rimborso completo entro 30 giorni dal primo acquisto. Senza motivazione."
+          },
+          {
+            "label": "Disdetta dal portale",
+            "body": "Cambi piano o disdici quando vuoi dal portale di gestione abbonamento; la disdetta ha effetto alla fine del periodo già pagato."
+          },
+          {
+            "label": "Nessuna telefonata",
+            "body": "Niente demo, niente preventivi: ti registri, scegli il piano dall'app e inizi subito."
+          }
+        ]
       }
     },
     "faq": {
@@ -478,7 +495,7 @@
     },
     "prezzi": {
       "title": "Prezzi",
-      "description": "Due piani annuali, nessuna telefonata: Essenziale 149€/anno, Completo 249€/anno. Inizia dal check EPR gratuito e passa a un piano quando ti serve."
+      "description": "Due piani annuali: Essenziale 149€ (fino a 3 paesi) o Completo 249€ (tutti i paesi). IVA esclusa, rimborso 30 giorni, nessuna telefonata. Inizia dal check gratuito."
     },
     "result": {
       "title": "Il tuo quadro EPR"

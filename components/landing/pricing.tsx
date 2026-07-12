@@ -10,7 +10,9 @@ import { cn } from "@/lib/utils";
  * button; the other is outline, so a single primary shows per screen (§6).
  * The free checker is deliberately NOT a tier — it renders as a strip below
  * the grid (ratified 10/07/2026). Prices render in mono — "i numeri sono il
- * prodotto" (§4). Reused on the landing and the /prezzi page.
+ * prodotto" (§4). Reused on the landing and the /prezzi page; /prezzi passes
+ * titleAs="h1" (proper document heading) and showObjections (refund/cancel/
+ * self-serve answers that the landing already covers via its FAQ).
  */
 interface Tier {
   id: string;
@@ -20,6 +22,11 @@ interface Tier {
   features: string[];
   cta: string;
   href: string;
+}
+
+interface Objection {
+  label: string;
+  body: string;
 }
 
 const HIGHLIGHTED = "completo";
@@ -43,16 +50,22 @@ function Check() {
   );
 }
 
-export function PricingSection() {
+export function PricingSection({
+  titleAs: Title = "h2",
+  showObjections = false,
+}: {
+  titleAs?: "h1" | "h2";
+  showObjections?: boolean;
+}) {
   const tiers = tList<Tier>("landing.pricing.tiers");
 
   return (
     <section id="prezzi" className="scroll-mt-8 px-4 py-20 sm:px-8">
       <div className="mx-auto max-w-[1080px]">
         <p className="eyebrow text-muted-foreground">{t("landing.pricing.eyebrow")}</p>
-        <h2 className="mt-3 font-display text-2xl font-bold tracking-tightDisplay sm:text-3xl">
+        <Title className="mt-3 font-display text-2xl font-bold tracking-tightDisplay sm:text-3xl">
           {t("landing.pricing.title")}
-        </h2>
+        </Title>
         <p className="mt-3 max-w-[52ch] text-base text-muted-foreground">
           {t("landing.pricing.subtitle")}
         </p>
@@ -88,7 +101,10 @@ export function PricingSection() {
                   </span>
                 </p>
 
-                <ul className="mt-6 flex flex-1 flex-col gap-2.5 text-xs text-ink">
+                <p className="eyebrow mt-6 border-t border-line pt-4 text-[10px] text-muted-foreground">
+                  {t("landing.pricing.featuresLabel")}
+                </p>
+                <ul className="mt-3 flex flex-1 flex-col gap-2.5 text-xs text-ink">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex gap-2.5">
                       <Check />
@@ -113,6 +129,24 @@ export function PricingSection() {
           <span>{t("landing.pricing.annualNote")}</span>
           <span>{t("landing.pricing.reassurance")}</span>
         </div>
+
+        {showObjections && (
+          <div className="mx-auto mt-10 max-w-[760px] border-t border-line pt-8">
+            <p className="eyebrow text-muted-foreground">
+              {t("landing.pricing.objections.eyebrow")}
+            </p>
+            <dl className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-3">
+              {tList<Objection>("landing.pricing.objections.items").map((item) => (
+                <div key={item.label}>
+                  <dt className="font-display text-xs font-semibold text-ink">{item.label}</dt>
+                  <dd className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                    {item.body}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
 
         <div className="mx-auto mt-10 flex max-w-[760px] flex-col items-start gap-2 rounded-lg border border-line bg-surface px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           <p className="text-sm text-ink">{t("landing.pricing.checkerStrip.text")}</p>

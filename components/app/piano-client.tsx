@@ -142,7 +142,10 @@ export function PianoClient({
                 </span>
               </p>
 
-              <ul className="mt-6 flex flex-1 flex-col gap-2.5 text-xs text-ink">
+              <p className="eyebrow mt-6 border-t border-line pt-4 text-[10px] text-muted-foreground">
+                {t("landing.pricing.featuresLabel")}
+              </p>
+              <ul className="mt-3 flex flex-1 flex-col gap-2.5 text-xs text-ink">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex gap-2.5">
                     <Check />

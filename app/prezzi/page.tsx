@@ -22,7 +22,7 @@ export default function PricingPage() {
     <div className="flex min-h-screen flex-col bg-paper">
       <SiteHeader />
       <main className="flex-1">
-        <PricingSection />
+        <PricingSection titleAs="h1" showObjections />
       </main>
       <SiteFooter />
     </div>

@@ -6,17 +6,15 @@ import { PainSection } from "@/components/landing/pain";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { PricingSection } from "@/components/landing/pricing";
 import { FaqSection } from "@/components/landing/faq";
-import { getCoveredCountries } from "@/lib/rules/coverage";
+import { FinalCta } from "@/components/landing/final-cta";
 import { t } from "@/lib/i18n";
 
-// Landing (PROMPT 4) — hero, pain, how-it-works, pricing, FAQ. The single
-// primary CTA lives in the hero; every path leads to the free checker.
-// The register list in the description comes from /rules, never from copy.
-const description = t("meta.home.description", {
-  registers: getCoveredCountries()
-    .map((c) => c.registerName)
-    .join(", "),
-});
+// Landing (PROMPT 4) — hero, pain, how-it-works, pricing, FAQ, closing CTA.
+// The primary CTA lives in the hero and repeats once at the page end (same
+// action, ratified 11/07/2026); every path leads to the free checker.
+// EU-neutral copy (decision ratified 2026-07-10): no country or register is
+// named here — detailed coverage is disclosed in the FAQ from /rules data.
+const description = t("meta.home.description");
 
 export const metadata: Metadata = {
   title: { absolute: t("meta.home.title") },
@@ -39,6 +37,7 @@ export default function LandingPage() {
         <HowItWorks />
         <PricingSection />
         <FaqSection />
+        <FinalCta />
       </main>
       <SiteFooter />
     </div>

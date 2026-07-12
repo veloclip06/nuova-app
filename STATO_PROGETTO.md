@@ -1,5 +1,5 @@
 # STATO_PROGETTO.md — EPR Cockpit
-Documento di handoff. Aggiornato: 10/07/2026, dopo l'esecuzione del PROMPT 6 (Stripe + gating + legali, Fable 5).
+Documento di handoff. Aggiornato: 11/07/2026, dopo la rifinitura della landing `/` (prompt 1/13 del giro UI, Fable 5).
 Va tenuto nel repo e aggiornato a ogni milestone. In una nuova chat, allegare questo file + ARCHITECTURE.md + DESIGN_SYSTEM.md + CLAUDE_CODE_KICKOFF.md.
 
 ## 1. Cos'è il prodotto
@@ -27,7 +27,9 @@ Stato servizi: Supabase COLLEGATO (migration 0001 applicata, seed fatto: countri
 - ✅ Pricing ratificato (10/07/2026): solo fatturazione annuale, 2 piani — Essenziale 149€/anno (fino a 3 paesi) e Completo 249€/anno (tutti i paesi anche futuri, CSV, storico; piano evidenziato); checker gratuito fuori dai piani (striscia sotto la griglia, link /check). Aggiornati ARCHITECTURE §8, it.json, PricingSection (griglia a 2 + striscia); nota "IVA esclusa · rimborso 30 giorni" al posto del -20% annuale
 - ✅ Prompt 6 riscritto nel kickoff (10/07/2026) e allineato al pricing ratificato, con 3 decisioni ratificate in chat (enum rinominato, gating free, checkout post-registrazione) — dettaglio in §7
 - ✅ PROMPT 6 (Fable, 10/07/2026): Stripe + gating + legali — migration 0002 applicata (plan free|essenziale|completo + CHECK); lib/plans.ts fonte unica del gating (puro, testato) con enforcement server+UI (report/promemoria solo paganti, CSV+storico solo Completo, cap 3 paesi coperti in onboarding — ratificato in chat: vale anche per free; paesi-interesse illimitati); lib/stripe/ lazy su env mock (chiavi reali = solo swap env); /app/piano (checkout post-registrazione, Customer Portal se abbonato, eventi upgrade_viewed/checkout_started/checkout_completed); webhook /api/stripe/webhook firmato, idempotente (state-convergent), unico writer di companies.plan via service role; storico report UI minimale (ratificato in chat) su /app/report per Completo; /privacy completa + /termini nuova (dati societari [DA COMPLETARE]); cookie banner con PostHog consent-gated; STRIPE_SETUP.md checklist manuale. Build+lint+typecheck+145 test verdi (22 nuovi); smoke test prod OK (pagine 200, guard 307, webhook 500 keyless atteso)
-- ⬜ giro di rifinitura UI · ⬜ deploy Vercel · ⬜ verifica umana delle restanti incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
+- ✅ Prompt per il giro di rifinitura UI preparati (11/07/2026, Fable 5): PROMPTS_RIFINITURA_UI.md — blocco comune + 13 prompt (uno per pagina, ordine funnel), con vincoli espliciti su neutralità paesi, copy §9, solo front-end; da eseguire una pagina per chat
+- ✅ Rifinitura UI 1/13 — landing / (11/07/2026, Fable 5): neutralità paesi completata (hero-preview anonimizzata + fascia uniforme 27 bandiere, FAQ con copertura interpolata a runtime da /rules, meta/OG senza nomi di registri), copy affilati (pain e FAQ in chiave UE con DE/FR/IT come esempi, tagline tier decisionali), numeri/date in Plex Mono nei body (nuovo components/mono-digits.tsx), CTA di chiusura dopo la FAQ (ripete l'azione primaria del hero — deviazione ratificata in chat 11/07); DESIGN_SYSTEM.md ripristinato nella root con addendum §7 micro-stati e nota palette §3 (decisione 8). Build+lint+typecheck+145 test verdi
+- ⬜ giro di rifinitura UI (restanti 12 prompt) · ⬜ deploy Vercel · ⬜ verifica umana delle restanti incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
 
 ## 4. Decisioni chiave ratificate (fanno fede sul mockup dove confliggono)
 1. SIGILLO = stato legale; CLAIM di rischio = enforcement confermato. Estero obbligato non coperto → ESPOSTO sempre (indipendente dal canale). Domestico → AZIONE RICHIESTA con copy CONAI dedicato. riskLevel modula le righe di rischio nella card, non il sigillo: high (marketplace+blocco confermato) → riga delisting; medium → solo sanzioni con fonte; dato incerto → badge "in verifica", mai claim di blocco.
@@ -48,15 +50,16 @@ Lavoro su main, nessun branch, NESSUN commit da parte degli agenti: modifiche un
 ## 6. Mappa file del repo
 - CLAUDE.md — regole di lavoro per Claude Code
 - ARCHITECTURE.md — stack, route, schema DB, spec motore/checker/pricing
-- DESIGN_SYSTEM.md — palette, font (Archivo/Instrument Sans/IBM Plex Mono), sigillo, 14 principi UX
-- CLAUDE_CODE_KICKOFF.md — prompt 4/5/6 ancora da eseguire, con modello assegnato
+- DESIGN_SYSTEM.md — palette (+ neutri ratificati), font (Archivo/Instrument Sans/IBM Plex Mono), sigillo, 14 principi UX, addendum §7 micro-stati (nella root del repo)
+- CLAUDE_CODE_KICKOFF.md — prompt storici del kickoff (4/5/6 eseguiti, v. §3)
+- PROMPTS_RIFINITURA_UI.md — blocco comune + 13 prompt del giro di rifinitura, con stato di esecuzione
 - STATO_PROGETTO.md — questo file
 - docs/ricerca-regole-epr.md — ricerca normativa con fonti + le 10 incertezze
 - rules/de.yaml, fr.yaml, it.yaml — regole normative, status: draft, TODO-VERIFY intatti
 - lib/engine/ — motore puro + test · lib/checker/ — logica checker + test · lib/email/checker-report.ts — email report · lib/analytics/capture.ts — PostHog safe no-op
-- components/checker/* , components/seal.tsx , components/site-footer.tsx
-- app/check , app/check/risultato , app/api/leads , app/privacy — fatti; app/(landing) e app/app/* — placeholder
-- supabase/migrations/0001_init.sql — applicata · scripts/validate-rules.ts — validazione+seed
+- components/checker/* , components/landing/* , components/app/* , components/seal.tsx , components/mono-digits.tsx , components/site-header.tsx , components/site-footer.tsx
+- app/ — landing, checker, guide, prezzi, auth, app autenticata, legali: tutti implementati (v. §3)
+- supabase/migrations/0001_init.sql + 0002 — applicate · scripts/validate-rules.ts — validazione+seed
 - export Claude Design (4 schermate .dc.html) — riferimento visivo
 
 ## 7. Problemi aperti / backlog
@@ -78,14 +81,10 @@ Lavoro su main, nessun branch, NESSUN commit da parte degli agenti: modifiche un
 - ARCHITECTURE.md §6 punto 2 aggiornato alla decisione ratificata 10/07 (griglia uniforme 27, copertura = dato): unica riga toccata
 
 ## 8. Prossimi step (in ordine)
-1. Commit del lavoro PROMPT 3 (se non già fatto)
-2. PROMPT 4 landing — Opus 4.8 (testo nel kickoff; riferimento: mockup hero)
-3. PROMPT 5 app autenticata — Opus 4.8 (riferimento: mockup dashboard)
-4. Giro rifinitura UI (lista di Ion) — Fable 5 se ancora disponibile (finestra: ~5 giorni dal 08/07), altrimenti Opus
-5. PROMPT 6 Stripe + legali — Opus 4.8 (riassegnato 10/07: pagamenti = logica critica, non meccanica; Fable 5 ok se ancora disponibile)
-6. Deploy Vercel + dominio + Resend verificato
-7. Verifiche umane 10 incertezze → YAML a status: verified
-8. Post checker nei gruppi FBA Italia → validazione reale (soglia: 20+ email qualificate in 2 settimane)
+1. Giro rifinitura UI: restanti 12 prompt di PROMPTS_RIFINITURA_UI.md, una pagina per chat — Fable 5 finché disponibile, altrimenti Opus
+2. Deploy Vercel + dominio + Resend verificato (+ env di §7: CRON_SECRET, NEXT_PUBLIC_SITE_URL, chiavi Stripe reali)
+3. Verifiche umane 10 incertezze → YAML a status: verified
+4. Post checker nei gruppi FBA Italia → validazione reale (soglia: 20+ email qualificate in 2 settimane)
 
 ## 9. Contesto modelli
 Fable 5 disponibile ancora ~5 giorni (dal 08/07/2026). Già usato per: fondamenta, motore, checker. Da riservare a: giro di rifinitura UI e qualsiasi decisione normativa/di prodotto complessa. Opus 4.8 per lavoro strutturale (landing, app, Stripe — riassegnato 10/07), Sonnet 4.6 per meccanica minore (fix, ritocchi).

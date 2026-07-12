@@ -14,12 +14,22 @@ import { UncertainBadge } from "./uncertain-badge";
  * - seal = legal status (sealStatusFor), date = check date;
  * - risk lines = engine riskFactors verbatim (max 2: penalties + marketplace),
  *   figures in mono, uncertain items badged;
- * - AR gets its own line so its uncertainty is never hidden by the cap;
+ * - AR gets its own inset block so its uncertainty is never hidden by the cap
+ *   and the long sourced paragraph stays scannable (copy stays verbatim);
  * - footer cites sources[0] with "consultata il {accessed}"; "verificato il"
  *   only with a human sign-off date, drafts carry the verification notice.
  */
 
 const TILTS = [-2, -1.2, -1.6];
+
+/** Register-style row label ("intestazione di registro", DESIGN_SYSTEM.md §4). */
+function MetaLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="font-display text-[11px] font-semibold uppercase leading-relaxed tracking-register text-muted-foreground">
+      {children}
+    </span>
+  );
+}
 
 function RiskLine({ text, uncertain }: { text: string; uncertain?: boolean }) {
   return (
@@ -92,9 +102,9 @@ export function ResultCard({ obligation, index, referenceDate }: ResultCardProps
         )}
       </div>
 
-      <div className="flex flex-col gap-1.5 text-2xs text-muted-foreground">
+      <div className="flex flex-col gap-2 text-2xs">
         <p className="line-clamp-2" title={obligation.register.name}>
-          {t("check.result.registerLabel")}:{" "}
+          <MetaLabel>{t("check.result.registerLabel")}</MetaLabel>{" "}
           <a
             href={obligation.register.portalUrl}
             target="_blank"
@@ -104,16 +114,9 @@ export function ResultCard({ obligation, index, referenceDate }: ResultCardProps
             {obligation.register.name}
           </a>
         </p>
-        {obligation.authorisedRepresentative && (
-          <p>
-            {t("check.result.arLabel")}:{" "}
-            <span className="text-ink">{arCopyFor(obligation)}</span>
-            {obligation.authorisedRepresentative.uncertain && <UncertainBadge />}
-          </p>
-        )}
         {deadline && (
           <p>
-            {t("check.result.nextDeadlineLabel")}:{" "}
+            <MetaLabel>{t("check.result.nextDeadlineLabel")}</MetaLabel>{" "}
             {deadline.dueDate ? (
               <span className="font-mono text-ink">{formatDateIt(deadline.dueDate)}</span>
             ) : (
@@ -121,6 +124,15 @@ export function ResultCard({ obligation, index, referenceDate }: ResultCardProps
             )}
             {deadline.uncertain && <UncertainBadge />}
           </p>
+        )}
+        {obligation.authorisedRepresentative && (
+          <div className="rounded-md border border-line bg-paper p-3">
+            <p>
+              <MetaLabel>{t("check.result.arLabel")}</MetaLabel>
+              {obligation.authorisedRepresentative.uncertain && <UncertainBadge />}
+            </p>
+            <p className="mt-1.5 leading-relaxed text-ink">{arCopyFor(obligation)}</p>
+          </div>
         )}
       </div>
 

@@ -1,41 +1,31 @@
 import { Seal, type SealStatus } from "@/components/seal";
 import { Flag } from "@/components/checker/flag";
-import { getCoveredCountries } from "@/lib/rules/coverage";
+import { MonoDigits } from "@/components/mono-digits";
+import { FLAG_GRADIENTS } from "@/lib/checker/flags";
 import { t } from "@/lib/i18n";
 
 /**
  * Decorative product preview from the Claude Design export ("Landing hero"):
- * a browser window framing a checker result with status seals. Reuses the
- * real Seal + Flag so what visitors see is the actual product signature (§5),
- * not a throwaway mock. Purely presentational, hidden from assistive tech.
+ * a browser window framing a checker result with status seals. Purely
+ * presentational, hidden from assistive tech.
  *
- * The countries and registers shown come from /rules (server component):
- * coverage is data, never hardcoded in the UI. Statuses and tilts stay
- * decorative, cycling over the export's original pattern.
+ * EU-neutral by design (decision ratified 2026-07-10): the result cards are
+ * anonymised — skeleton flag and register, real Seal (§5) — so no country
+ * reads as the product's perimeter. The uniform strip of all 27 EU flags
+ * under the window carries the actual message: the check starts from
+ * wherever you sell. Statuses and tilts mirror the export's pattern.
  */
-const PREVIEW_STATUSES: SealStatus[] = ["esposto", "esposto", "non_obbligato"];
-const PREVIEW_TILTS = [-2, -1.2, -1.6];
+const PREVIEW_CARDS: { status: SealStatus; tilt: number }[] = [
+  { status: "esposto", tilt: -2 },
+  { status: "esposto", tilt: -1.2 },
+  { status: "non_obbligato", tilt: -1.6 },
+];
 
-/** Render digits in mono — "i numeri sono il prodotto" (DESIGN_SYSTEM.md §4). */
-function MonoDigits({ text }: { text: string }) {
-  return (
-    <>
-      {text.split(/(\d+)/).map((part, i) =>
-        /^\d+$/.test(part) ? (
-          <span key={i} className="font-mono">
-            {part}
-          </span>
-        ) : (
-          part
-        ),
-      )}
-    </>
-  );
-}
+/** All 27 EU flags, uniform and alphabetical — no country stands out. */
+const EU_CODES = Object.keys(FLAG_GRADIENTS);
 
 export function HeroPreview() {
-  // First three covered countries — the export's layout shows three cards.
-  const previewCountries = getCoveredCountries().slice(0, 3);
+  const exposed = PREVIEW_CARDS.filter((c) => c.status === "esposto").length;
   return (
     <div aria-hidden="true" className="mx-auto mt-14 w-full max-w-[880px]">
       <div className="overflow-hidden rounded-xl border border-line bg-surface shadow-[0_32px_64px_-48px_rgba(23,36,47,0.45)]">
@@ -61,32 +51,25 @@ export function HeroPreview() {
           <p className="mt-0.5 text-2xs text-paper/80">
             <MonoDigits
               text={t("landing.preview.summary", {
-                n: previewCountries.filter(
-                  (_, index) => PREVIEW_STATUSES[index % PREVIEW_STATUSES.length] === "esposto",
-                ).length,
-                total: previewCountries.length,
+                n: exposed,
+                total: PREVIEW_CARDS.length,
               })}
             />
           </p>
         </div>
 
-        {/* Country cards */}
+        {/* Anonymised country cards — the seal is the only "real" element */}
         <div className="grid grid-cols-1 gap-3 bg-paper p-5 sm:grid-cols-3">
-          {previewCountries.map(({ code, registerName }, index) => (
+          {PREVIEW_CARDS.map(({ status, tilt }, index) => (
             <div
-              key={code}
+              key={index}
               className="flex flex-col gap-2.5 rounded-md border border-line bg-surface p-3.5"
             >
               <div className="flex items-center gap-1.5">
-                <Flag code={code} size="sm" />
-                <span className="font-display text-[9px] font-semibold uppercase tracking-register">
-                  {registerName}
-                </span>
+                <span className="h-[15px] w-[22px] shrink-0 rounded-[3px] border border-ink/10 bg-line" />
+                <span className="h-1.5 w-16 rounded-full bg-line" />
               </div>
-              <Seal
-                status={PREVIEW_STATUSES[index % PREVIEW_STATUSES.length]}
-                tilt={PREVIEW_TILTS[index % PREVIEW_TILTS.length]}
-              />
+              <Seal status={status} tilt={tilt} />
               <div className="mt-1 flex flex-col gap-1.5">
                 <span className="h-1 w-[92%] rounded-full bg-line/70" />
                 <span className="h-1 w-[68%] rounded-full bg-line/70" />
@@ -96,7 +79,14 @@ export function HeroPreview() {
           ))}
         </div>
       </div>
-      <p className="mt-3.5 text-center text-2xs text-muted-foreground">
+
+      {/* The whole EU, uniformly — coverage details live in the check + FAQ */}
+      <div className="mx-auto mt-6 flex max-w-[720px] flex-wrap items-center justify-center gap-1.5">
+        {EU_CODES.map((code) => (
+          <Flag key={code} code={code} className="h-[11px] w-4 rounded-[2px]" />
+        ))}
+      </div>
+      <p className="mt-2.5 text-center text-2xs text-muted-foreground">
         {t("landing.preview.caption")}
       </p>
     </div>

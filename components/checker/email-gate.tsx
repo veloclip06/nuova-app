@@ -45,10 +45,24 @@ export function EmailGate({ answers }: { answers: CheckerAnswers }) {
       </h2>
       <p className="mt-1 text-base text-muted-foreground">{t("check.emailGateSubtitle")}</p>
 
+      {/* What the report actually contains (mirrors lib/email/checker-report.ts
+          sections) — mono indices, registry style, no decorative icons */}
+      <ul className="mt-4 flex flex-col gap-1.5">
+        {(["1", "2", "3"] as const).map((n) => (
+          <li key={n} className="flex gap-2.5 text-2xs text-ink">
+            <span aria-hidden="true" className="font-mono text-muted-foreground">
+              0{n}
+            </span>
+            {t(`check.email.contents.${n}`)}
+          </li>
+        ))}
+      </ul>
+
       {status === "success" ? (
-        <p role="status" className="mt-5 text-base font-medium text-ok">
-          {t("check.email.success", { email })}
-        </p>
+        <div role="status" className="mt-5">
+          <p className="text-base font-medium text-ok">{t("check.email.success", { email })}</p>
+          <p className="mt-1 text-2xs text-muted-foreground">{t("check.email.successHint")}</p>
+        </div>
       ) : (
         <form onSubmit={onSubmit} noValidate={false} className="mt-5">
           <div className="flex flex-col gap-3 sm:flex-row">

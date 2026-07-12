@@ -1,11 +1,17 @@
 import { tList, t } from "@/lib/i18n";
+import { MonoDigits } from "@/components/mono-digits";
+import { getCoveredCountries } from "@/lib/rules/coverage";
 
 /**
- * FAQ — six real EPR questions, answers coherent with /rules (facts + official
+ * FAQ — real EPR questions, answers coherent with /rules (facts + official
  * sources, rules still `status: draft` so the note says "consultata", never
  * "verificato": STATO_PROGETTO decision #3). The authorised-representative
  * answer stays explicitly uncertain (memory: [[seal-semantics-ruling]] /
  * decision #1, never present an evolving obligation as settled).
+ *
+ * Questions are EU-framed (neutrality decision ratified 2026-07-10): named
+ * countries appear only as sourced examples. The coverage answer interpolates
+ * {{countries}} from /rules at render time — coverage is data, never copy.
  *
  * Uses native <details> so the accordion is keyboard/AT-accessible with no JS.
  * Emits schema.org FAQPage JSON-LD from the same data for rich results.
@@ -39,8 +45,18 @@ function Chevron() {
   );
 }
 
+/** Italian-style list join: "Francia, Germania e Italia". */
+function joinIt(names: string[]): string {
+  if (names.length <= 1) return names.join("");
+  return `${names.slice(0, -1).join(", ")} e ${names[names.length - 1]}`;
+}
+
 export function FaqSection() {
-  const items = tList<FaqItem>("landing.faq.items");
+  const countries = joinIt(getCoveredCountries().map((c) => c.name));
+  const items = tList<FaqItem>("landing.faq.items").map((item) => ({
+    ...item,
+    a: item.a.replace("{{countries}}", countries),
+  }));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -63,14 +79,16 @@ export function FaqSection() {
         <div className="mt-8 divide-y divide-line border-y border-line">
           {items.map((item) => (
             <details key={item.q} className="group">
-              <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-5 [&::-webkit-details-marker]:hidden">
-                <span className="font-display text-base font-semibold text-ink">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-5 text-ink transition-colors hover:text-brand [&::-webkit-details-marker]:hidden">
+                <span className="font-display text-base font-semibold">
                   {item.q}
                 </span>
                 <Chevron />
               </summary>
               <div className="pb-5">
-                <p className="text-xs text-muted-foreground">{item.a}</p>
+                <p className="max-w-[64ch] text-xs text-muted-foreground">
+                  <MonoDigits text={item.a} />
+                </p>
                 {item.sources.length > 0 && (
                   <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-2xs">
                     <span className="text-muted-foreground">

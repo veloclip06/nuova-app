@@ -1,12 +1,12 @@
 import { ImageResponse } from "next/og";
-import { getCoveredCountries } from "@/lib/rules/coverage";
 
 /**
  * Social preview card (og:image + twitter:image via the file convention).
  * "Torre di controllo" look: ink surface, register wordmark, one status stamp —
  * no external assets, no fetched fonts (DESIGN_SYSTEM.md §2). Colours are the
  * raw tokens from §3; satori needs explicit display:flex on multi-child nodes.
- * The register list comes from /rules — coverage is data, not copy.
+ * EU-neutral (decision ratified 2026-07-10): no register or country named —
+ * the texts mirror the landing hero.
  */
 export const alt = "Cockpit EPR — obblighi imballaggi UE, chiari";
 export const size = { width: 1200, height: 630 };
@@ -19,9 +19,6 @@ const RISK = "#B3261E";
 const MUTED = "#5A6B76";
 
 export default function OpenGraphImage() {
-  const registers = getCoveredCountries()
-    .map((c) => c.registerName)
-    .join(" · ");
   return new ImageResponse(
     (
       <div
@@ -49,7 +46,8 @@ export default function OpenGraphImage() {
             Vendi in più paesi UE? Hai obblighi EPR in ognuno.
           </div>
           <div style={{ fontSize: 30, color: "#C6CDD2", maxWidth: 820 }}>
-            Scopri in due minuti dove sei esposto e cosa fare, paese per paese.
+            Registri, scadenze e contributi cambiano da paese a paese. Il check
+            ti dice in due minuti dove sei esposto e cosa fare.
           </div>
         </div>
 
@@ -71,7 +69,7 @@ export default function OpenGraphImage() {
             </div>
           </div>
           <div style={{ fontSize: 22, color: MUTED }}>
-            {`${registers} — con fonti ufficiali`}
+            Check gratuito · 2 minuti · fonti ufficiali
           </div>
         </div>
       </div>

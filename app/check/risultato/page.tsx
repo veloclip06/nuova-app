@@ -30,13 +30,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/check" },
 };
 
-/** Digits in mono — "i numeri sono il prodotto" (DESIGN_SYSTEM.md §4). */
+/**
+ * Digits in mono, semibold and full paper on the dimmed sentence — as in the
+ * design export, the counts punch through ("i numeri sono il prodotto", §4).
+ */
 function MonoNumbers({ text }: { text: string }) {
   return (
     <>
       {text.split(/(\d+)/).map((part, i) =>
         /^\d+$/.test(part) ? (
-          <span key={i} className="font-mono">
+          <span key={i} className="font-mono font-semibold text-paper">
             {part}
           </span>
         ) : (
@@ -86,7 +89,7 @@ export default async function CheckResultPage({
     <div className="flex min-h-screen flex-col bg-paper">
       <header className="bg-ink pb-24 text-paper">
         <div className="mx-auto w-full max-w-[1080px] px-4 pt-5 sm:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-paper/15 pb-5">
             <Link href="/" className="flex items-center gap-2.5 rounded-sm">
               <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px] bg-brand" />
               <span className="font-display text-2xs font-bold uppercase tracking-[0.1em]">
@@ -103,7 +106,7 @@ export default async function CheckResultPage({
             <h1 className="mt-2 font-display text-2xl font-bold tracking-tightDisplay sm:text-3xl">
               {t("check.resultTitle")}
             </h1>
-            <p className="mt-3 text-lg">
+            <p className="mt-3 text-lg text-paper/85">
               <MonoNumbers text={summary} />
             </p>
             <p className="mt-2 text-2xs text-paper/60">{t("check.result.assumptionNote")}</p>

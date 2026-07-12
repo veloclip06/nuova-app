@@ -34,6 +34,7 @@ export default function CheckResultLoading() {
                 <Skeleton className="h-4 w-full" />
                 <Skeleton className="h-4 w-3/4" />
                 <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-16 w-full rounded-md" />
               </div>
             ))}
           </div>

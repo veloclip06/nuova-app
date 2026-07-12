@@ -40,14 +40,13 @@
   "landing": {
     "nav": {
       "prezzi": "Prezzi",
-      "faq": "Domande frequenti",
       "login": "Accedi"
     },
     "hero": {
       "eyebrow": "Conformità EPR per chi vende online",
       "titleLine1": "Vendi in più paesi UE?",
       "titleLine2": "Hai obblighi EPR in ognuno.",
-      "subtitle": "Scopri in due minuti dove sei esposto e cosa fare, paese per paese.",
+      "subtitle": "Registri, scadenze e contributi cambiano da paese a paese. Il check ti dice in due minuti dove sei esposto e cosa fare.",
       "cta": "Fai il check gratuito",
       "microcopy": "5 domande · risultato immediato · nessuna registrazione"
     },
@@ -56,26 +55,26 @@
       "kicker": "Risultato del check",
       "title": "Il tuo quadro EPR",
       "summary": "Sei esposto in {{n}} paesi su {{total}}.",
-      "caption": "Anteprima del risultato del check gratuito."
+      "caption": "Anteprima del risultato del check gratuito — su qualunque paese UE tu venda."
     },
     "pain": {
       "eyebrow": "Perché è un problema",
-      "title": "Tre modi in cui l'EPR ti si ritorce contro",
+      "title": "L'obbligo è europeo, la burocrazia è nazionale",
       "note": "Fonti ufficiali consultate il 6 luglio 2026 · dati normativi in verifica.",
       "items": [
         {
-          "title": "Il portale è in tedesco, e non perdona",
-          "body": "Per vendere in Germania devi registrarti su LUCID e firmare a parte un contratto con un sistema duale — due passaggi distinti, categorie di materiale da dichiarare in tedesco, nessuna soglia minima: l'obbligo scatta dalla prima confezione.",
+          "title": "Ogni registro parla la sua lingua",
+          "body": "Ogni paese UE ha il suo registro, con moduli e categorie nella lingua locale. In Germania, per esempio, ti registri su LUCID e firmi a parte un contratto con un sistema duale — due passaggi distinti, tutto in tedesco, nessuna soglia minima: l'obbligo scatta dalla prima confezione.",
           "source": { "label": "Zentrale Stelle Verpackungsregister", "url": "https://www.verpackungsregister.org/en/registration/find-out-about-registrations" }
         },
         {
-          "title": "Amazon ti blocca le inserzioni",
-          "body": "Dal 15 giugno 2022 Amazon blocca le inserzioni sul marketplace tedesco senza un numero LUCID valido, e richiede l'IDU per la Francia. Niente numero valido, niente vendite: il delisting è automatico.",
+          "title": "Niente numero, niente inserzioni",
+          "body": "L'obbligo è tuo, ma a farlo rispettare sono i marketplace. Dal 15 giugno 2022 Amazon blocca le inserzioni sul marketplace tedesco senza un numero LUCID valido, e per la Francia richiede l'IDU. Niente numero valido, niente vendite: il delisting è automatico.",
           "source": { "label": "Amazon Seller Central — EPR", "url": "https://sell.amazon.de/en/einhaltung-der-erweiterten-herstellerverantwortung" }
         },
         {
           "title": "Ogni paese ha il suo calendario",
-          "body": "Germania: dichiarazione di fine anno entro il 15 maggio. Francia: finestra dal 1° gennaio al 28 febbraio. Italia: dichiarazioni CONAI mensili, trimestrali o annuali secondo il contributo. Tre paesi, tre scadenzari da non sbagliare.",
+          "body": "Non esiste una scadenza unica europea: ogni paese fissa le sue. Germania: dichiarazione di fine anno entro il 15 maggio. Francia: finestra dal 1° gennaio al 28 febbraio. Italia: dichiarazioni CONAI mensili, trimestrali o annuali secondo il contributo. E ogni nuovo paese in cui vendi ne aggiunge una.",
           "source": { "label": "CONAI — dichiarazione e pagamento", "url": "https://www.conai.org/en/companies/services-for-managing-consortium-obligations-and-business-opportunities/epr-fee/declaration-and-payment/" }
         }
       ]
@@ -115,7 +114,7 @@
           "id": "essenziale",
           "name": "Essenziale",
           "price": "149€",
-          "tagline": "Per chi vende in pochi mercati.",
+          "tagline": "Se vendi in due o tre paesi, basta questo.",
           "features": [
             "Fino a 3 paesi",
             "SKU illimitati",
@@ -129,12 +128,12 @@
           "id": "completo",
           "name": "Completo",
           "price": "249€",
-          "tagline": "Il meglio che possiamo offrire.",
+          "tagline": "Se vendi in più di tre paesi — o non vuoi più contarli.",
           "features": [
+            "Tutto ciò che c'è in Essenziale",
             "Tutti i paesi coperti, inclusi quelli che aggiungeremo",
             "Import CSV degli imballaggi",
-            "Storico dei report",
-            "Tutto ciò che c'è in Essenziale"
+            "Storico dei report"
           ],
           "cta": "Inizia con Completo",
           "href": "/registrati"
@@ -153,7 +152,7 @@
       "items": [
         {
           "q": "Cos'è l'EPR sugli imballaggi e a chi si applica?",
-          "a": "EPR sta per responsabilità estesa del produttore. Chi immette per primo imballaggi sul mercato di un paese UE — anche vendendo a distanza dall'estero — deve registrarsi, aderire a un sistema o consorzio, dichiarare i volumi e pagare un contributo. In Germania e Francia l'obbligo vale dalla prima confezione, senza soglie minime; in Italia l'adesione a CONAI è dovuta entro 30 giorni dall'inizio dell'attività.",
+          "a": "EPR sta per responsabilità estesa del produttore. Chi immette per primo imballaggi sul mercato di un paese UE — anche vendendo a distanza dall'estero — deve registrarsi, aderire a un sistema o consorzio, dichiarare i volumi e pagare un contributo, in ogni paese in cui vende. Le regole d'ingresso cambiano da paese a paese: in Germania e Francia, per esempio, l'obbligo vale dalla prima confezione, senza soglie minime; in Italia l'adesione a CONAI è dovuta entro 30 giorni dall'inizio dell'attività.",
           "sources": [
             { "label": "VerpackG (DE)", "url": "https://www.gesetze-im-internet.de/verpackg/__36.html" },
             { "label": "CONAI — soggetti obbligati", "url": "https://www.conai.org/imprese/servizi-gestione-adempimenti-consortili-e-opportunita-imprese/soggetti-obbligati-e-modalita-di-adesione/" }
@@ -161,14 +160,19 @@
         },
         {
           "q": "Devo registrarmi anche se vendo solo su Amazon?",
-          "a": "Sì. L'obbligo è del venditore, non del marketplace — e sono proprio i marketplace a farlo rispettare. Amazon blocca le inserzioni sul marketplace tedesco senza un numero LUCID valido (dal 15 giugno 2022) e richiede l'IDU per la Francia. Senza un numero valido rischi il delisting.",
+          "a": "Sì. L'obbligo è del venditore, non del marketplace — e sono proprio i marketplace a farlo rispettare. Amazon, per esempio, blocca le inserzioni sul marketplace tedesco senza un numero LUCID valido (dal 15 giugno 2022) e richiede l'IDU per la Francia. Senza un numero valido rischi il delisting.",
           "sources": [
             { "label": "Amazon Seller Central — EPR (DE)", "url": "https://sell.amazon.de/en/einhaltung-der-erweiterten-herstellerverantwortung" }
           ]
         },
         {
-          "q": "Quanto costa registrarsi in Germania, Francia e Italia?",
-          "a": "La registrazione al registro LUCID in Germania è gratuita, ma paghi a parte il contratto con un sistema duale. In Francia l'adesione a un éco-organisme come Citeo prevede un contributo minimo di 80 € HT, e i piccoli produttori sotto le 10.000 unità l'anno pagano un forfait di 80 € HT. In Italia l'adesione a CONAI ha una quota fissa una tantum di 5,16 €, più il contributo ambientale (CAC) calcolato sui materiali immessi.",
+          "q": "Il check copre tutti i paesi UE?",
+          "a": "Il check lo fai qualunque siano i paesi UE in cui vendi. L'analisi dettagliata con fonti ufficiali copre oggi {{countries}}; gli altri paesi vengono registrati come interesse e aggiunti in base alla domanda. La copertura è sempre dichiarata nel check, mai sottintesa.",
+          "sources": []
+        },
+        {
+          "q": "Quanto costa registrarsi?",
+          "a": "Dipende dal paese: ogni registro ha i suoi costi di ingresso e i suoi contributi. Tre esempi con fonte. In Germania la registrazione al registro LUCID è gratuita, ma paghi a parte il contratto con un sistema duale. In Francia l'adesione a un éco-organisme come Citeo prevede un contributo minimo di 80 € HT, e i piccoli produttori sotto le 10.000 unità l'anno pagano un forfait di 80 € HT. In Italia l'adesione a CONAI ha una quota fissa una tantum di 5,16 €, più il contributo ambientale (CAC) calcolato sui materiali immessi.",
           "sources": [
             { "label": "ZSVR — registrazione LUCID", "url": "https://www.verpackungsregister.org/en/registration/find-out-about-registrations" },
             { "label": "Citeo — adhérer", "url": "https://www.citeo.com/en/why-join-citeo/" },
@@ -177,7 +181,7 @@
         },
         {
           "q": "Quali sono le scadenze principali?",
-          "a": "Cambiano da paese a paese. Germania: dichiarazione di fine anno entro il 15 maggio dell'anno successivo, oltre alla dichiarazione iniziale dei volumi pianificati. Francia: dichiarazione annuale a Citeo dal 1° gennaio al 28 febbraio. Italia: dichiarazioni a CONAI con periodicità annuale, trimestrale o mensile a seconda del contributo dell'anno precedente, con scadenza il giorno 20.",
+          "a": "Non esiste una scadenza unica europea: ogni paese fissa le sue. Tre esempi con fonte. Germania: dichiarazione di fine anno entro il 15 maggio dell'anno successivo, oltre alla dichiarazione iniziale dei volumi pianificati. Francia: dichiarazione annuale a Citeo dal 1° gennaio al 28 febbraio. Italia: dichiarazioni a CONAI con periodicità annuale, trimestrale o mensile a seconda del contributo dell'anno precedente, con scadenza il giorno 20.",
           "sources": [
             { "label": "ZSVR — Datenmeldung", "url": "https://www.verpackungsregister.org/en/system-participation-data-reporting/data-reporting" },
             { "label": "Citeo — my membership", "url": "https://www.citeo.com/en/my-membership/" },
@@ -186,7 +190,7 @@
         },
         {
           "q": "Cosa rischio se non sono in regola?",
-          "a": "Sanzioni concrete e il blocco delle vendite. In Germania le multe arrivano fino a 200.000 € (§36 VerpackG), con divieto di vendita e recupero dei profitti. In Francia fino a 30.000 € (Code de l'environnement). In Italia 5.000 € per la mancata adesione a CONAI, oltre ai contributi arretrati dovuti. A questo si aggiunge il delisting dai marketplace.",
+          "a": "Sanzioni concrete e il blocco delle vendite; gli importi li fissa ogni paese. In Germania, per esempio, le multe arrivano fino a 200.000 € (§36 VerpackG), con divieto di vendita e recupero dei profitti. In Francia fino a 30.000 € (Code de l'environnement). In Italia 5.000 € per la mancata adesione a CONAI, oltre ai contributi arretrati dovuti. A questo si aggiunge il delisting dai marketplace.",
           "sources": [
             { "label": "VerpackG §36", "url": "https://www.gesetze-im-internet.de/verpackg/__36.html" },
             { "label": "Code de l'environnement", "url": "https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006159421/" },
@@ -202,6 +206,9 @@
           ]
         }
       ]
+    },
+    "finalCta": {
+      "title": "Il quadro dei tuoi obblighi, in due minuti"
     }
   },
   "countries": {
@@ -299,7 +306,7 @@
       "summaryExposedOne": "Sei esposto in 1 paese su {{total}}.",
       "summaryAction": "Azione richiesta in {{n}} paesi su {{total}}.",
       "summaryActionOne": "Azione richiesta in 1 paese su {{total}}.",
-      "summaryNoneCovered": "Nessuno dei paesi selezionati è ancora coperto dalle nostre regole.",
+      "summaryNoneCovered": "L'analisi dettagliata non copre ancora i paesi che hai selezionato.",
       "assumptionNote": "Risultato calcolato assumendo che tu non sia ancora registrato nei paesi indicati.",
       "domestic": {
         "IT": "Sei stabilito in Italia: l'adesione CONAI è comunque dovuta — verifica la tua posizione.",
@@ -325,10 +332,10 @@
           "non_eu": "Italia: se la tua azienda ha sede fuori dall'UE e vende in Italia, devi designare un rappresentante in Italia e adempiere agli obblighi CONAI. La proposta di sospensione UE non si applica ai produttori di paesi terzi: l'obbligo è confermato."
         }
       },
-      "notCoveredNote": "Per {{countries}} la copertura è in arrivo — la tua selezione ci aiuta a dare priorità."
+      "notCoveredNote": "Per {{countries}} l'analisi dettagliata è in arrivo: la tua selezione è registrata e dà priorità ai prossimi paesi da coprire. Se richiedi il report, ti avvisiamo quando saranno disponibili."
     },
     "emailGateTitle": "Ricevi il report dettagliato",
-    "emailGateSubtitle": "Con la checklist completa delle cose da fare, paese per paese.",
+    "emailGateSubtitle": "Cosa fare, in che ordine e con quali fonti: il tuo quadro per iscritto, paese per paese.",
     "emailPlaceholder": "nome@azienda.it",
     "emailSubmit": "Ricevi il report",
     "emailReassurance": "Riceverai solo il report. Niente spam.",
@@ -337,8 +344,14 @@
       "label": "Email",
       "sending": "Invio in corso…",
       "success": "Report inviato a {{email}}.",
-      "error": "Non siamo riusciti a inviare il report. Riprova.",
+      "successHint": "Se non arriva entro qualche minuto, controlla la posta indesiderata.",
+      "error": "Non siamo riusciti a inviare il report. Riprova: le tue risposte restano valide.",
       "invalid": "Inserisci un indirizzo email valido.",
+      "contents": {
+        "1": "La checklist degli adempimenti per ogni paese, nell'ordine in cui affrontarli",
+        "2": "Soglie, sanzioni e prossime scadenze dei paesi selezionati",
+        "3": "La fonte ufficiale e la data di consultazione per ogni dato"
+      },
       "report": {
         "subject": "Il tuo report EPR — {{countries}}",
         "intro": "Ecco il tuo quadro EPR calcolato il {{date}}, con la checklist delle cose da fare paese per paese.",
@@ -457,7 +470,7 @@
   "meta": {
     "home": {
       "title": "Cockpit EPR — Obblighi imballaggi UE, chiari",
-      "description": "Vendi in più paesi UE? Scopri in due minuti dove sei esposto sugli obblighi EPR imballaggi ({{registers}}) e cosa fare, con fonti ufficiali. Check gratuito, nessuna registrazione."
+      "description": "Ogni paese UE ha il suo registro EPR imballaggi, le sue scadenze, la sua lingua. Scopri in due minuti dove sei esposto e cosa fare, con fonti ufficiali. Check gratuito, senza registrazione."
     },
     "check": {
       "title": "Verifica EPR gratuita",

@@ -1,10 +1,13 @@
 import { tList, t } from "@/lib/i18n";
+import { MonoDigits } from "@/components/mono-digits";
 
 /**
  * "Il dolore" — three concrete situations sellers hit (DESIGN_SYSTEM.md §8.3,
  * loss aversion used honestly: real facts, official sources, never inflated).
- * Rules are still `status: draft`, so the note says "consultate", never
- * "verificato" (STATO_PROGETTO decision #3).
+ * EU-neutral frame (decision ratified 2026-07-10): every EU country has its
+ * own register/language/calendar; named countries read as sourced examples,
+ * never as the product's perimeter. Rules are still `status: draft`, so the
+ * note says "consultate", never "verificato" (STATO_PROGETTO decision #3).
  */
 interface PainItem {
   title: string;
@@ -35,7 +38,9 @@ export function PainSection() {
               <h3 className="mt-3 font-display text-lg font-semibold text-ink">
                 {item.title}
               </h3>
-              <p className="mt-2 flex-1 text-xs text-muted-foreground">{item.body}</p>
+              <p className="mt-2 flex-1 text-xs text-muted-foreground">
+                <MonoDigits text={item.body} />
+              </p>
               <a
                 href={item.source.url}
                 target="_blank"

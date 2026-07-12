@@ -29,6 +29,8 @@ Esplicitamente vietato:
 
 Regola: `risk` e `warn` sono semantici. Se tutto è urgente, niente è urgente.
 
+Neutri di supporto ratificati (v. STATO_PROGETTO decisione 8): `muted-ink` #5A6B76 (testo secondario su superfici chiare), `placeholder` #8A97A0.
+
 ## 4. Tipografia
 - **Display (titoli):** `Archivo` — pesi 600–700, tracking leggermente negativo sui titoli grandi. Nei label di sezione/eyebrow: Archivo 600, maiuscoletto, letter-spacing +0.08em (effetto "intestazione di registro").
 - **Body:** `Instrument Sans` — 400/500, 16px base, line-height 1.6.
@@ -46,6 +48,15 @@ Regola: `risk` e `warn` sono semantici. Se tutto è urgente, niente è urgente.
 
 ## 7. Motion
 Minimale. Un solo momento orchestrato: la rivelazione del risultato del checker (le card-paese entrano in sequenza, 80ms di stagger). Micro-feedback su azioni (i sigilli, i salvataggi). Nient'altro. Troppa animazione = look AI-generato.
+
+### Micro-stati hover/active (addendum ratificato 10/07/2026)
+Feedback immediato al passaggio e al click, senza animazioni: solo transizioni brevi di colore/bordo/ombra (`transition-colors`, ~150ms), sempre soggette a `prefers-reduced-motion`.
+- **Bottoni** — primario: hover → `brand-hover`; outline/ghost: hover → velo `brand` al 6%; tutti: active → discesa di 1px (`translate-y-px`).
+- **Card selezionabili** (opzioni checker, onboarding, cambio stato): hover → bordo `brand`.
+- **Card interattive** (card-paese): hover → bordo `ink` al 20% + ombra leggera.
+- **Input e select**: hover → bordo `ink` al 25%.
+- **Righe di tabella**: hover → sfondo `paper`.
+- **Link testuali e voci di menu**: hover → scurimento del colore (`muted-ink` → `ink`, `brand` → `brand-hover`) o velo `ink` al 5%.
 
 ## 8. Principi UX applicati (con dove si applicano)
 1. **Carico cognitivo minimo** — checker: una domanda per schermata, mai form lunghi. Nell'app: una decisione per vista.

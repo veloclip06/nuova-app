@@ -84,9 +84,33 @@ export default async function DashboardPage() {
       Boolean(card.obligation),
     );
 
+  // One-line answer to "am I in the clear?" — worst seal state first.
+  const cardSeals = cards.map((card) => sealByCode.get(card.obligation.countryCode));
+  const assessed = cards.length;
+  const exposedCount = cardSeals.filter((seal) => seal === "esposto").length;
+  const actionCount = cardSeals.filter((seal) => seal === "azione_richiesta").length;
+  const subtitleText =
+    assessed === 0
+      ? null
+      : exposedCount === 1
+        ? t("app.dashboard.subtitle.exposedOne", { total: assessed })
+        : exposedCount > 1
+          ? t("app.dashboard.subtitle.exposedMany", { count: exposedCount, total: assessed })
+          : actionCount === 1
+            ? t("app.dashboard.subtitle.actionOne")
+            : actionCount > 1
+              ? t("app.dashboard.subtitle.actionMany", { count: actionCount })
+              : cardSeals.includes("conforme")
+                ? t("app.dashboard.subtitle.allOk")
+                : t("app.dashboard.subtitle.noneObligated");
+
   return (
     <AppMain>
-      <PageHeader eyebrow={company.name} title={t("app.dashboard.title")} />
+      <PageHeader
+        eyebrow={company.name}
+        title={t("app.dashboard.title")}
+        subtitle={subtitleText ? <MonoNumbers text={subtitleText} /> : undefined}
+      />
 
       {total > 0 && (
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-line bg-surface px-5 py-4">
@@ -96,9 +120,22 @@ export default async function DashboardPage() {
                 text={t("app.dashboard.banner.progress", { done: configuredCount, total })}
               />
             </p>
-            <div className="mt-2 h-1.5 max-w-[320px] overflow-hidden rounded-full bg-line">
-              <div className="h-full rounded-full bg-brand" style={{ width: `${progressPct}%` }} />
-            </div>
+            {total <= 8 ? (
+              // One segment per country: the missing piece is visible at a glance.
+              <div className="mt-2 flex max-w-[320px] gap-[3px]" aria-hidden="true">
+                {Array.from({ length: total }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={`h-1.5 flex-1 rounded-full ${i < configuredCount ? "bg-brand" : "bg-line"}`}
+                  />
+                ))}
+              </div>
+            ) : (
+              // Segments narrower than ~36px read as noise: fall back to a continuous track.
+              <div className="mt-2 h-1.5 max-w-[320px] overflow-hidden rounded-full bg-line">
+                <div className="h-full rounded-full bg-brand" style={{ width: `${progressPct}%` }} />
+              </div>
+            )}
           </div>
           {firstUnconfigured && firstUnconfiguredName ? (
             <Link
@@ -114,7 +151,7 @@ export default async function DashboardPage() {
       )}
 
       {cards.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))] gap-5">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-5">
           {cards.map((card, index) => (
             <CountryCard
               key={card.obligation.countryCode}
@@ -124,7 +161,17 @@ export default async function DashboardPage() {
             />
           ))}
         </div>
+      ) : total > 0 ? (
+        // Covered countries always come with a rule, so countries without cards
+        // means their rules failed to load — not that they are uncovered.
+        <div className="rounded-lg border border-line bg-surface p-8">
+          <p className="max-w-prose text-base text-muted-foreground">
+            {t("app.dashboard.empty.noRules")}
+          </p>
+        </div>
       ) : (
+        // No company_countries rows: onboarding requires picking >=1 country but
+        // only covered ones are persisted, so this is the "interest only" case.
         <div className="flex flex-col items-start gap-3 rounded-lg border border-line bg-surface p-8">
           <h2 className="font-display text-lg font-semibold text-ink">
             {t("app.dashboard.empty.title")}

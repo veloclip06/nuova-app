@@ -611,11 +611,18 @@
       "errorLimit": "Puoi seguire fino a 3 paesi tra quelli coperti dall'analisi. Togli un paese coperto oppure passa al piano Completo, che li segue tutti."
     },
     "dashboard": {
-      "eyebrow": "Quadro generale",
       "title": "Quadro generale",
+      "subtitle": {
+        "exposedOne": "Sei esposto in 1 paese su {{total}}.",
+        "exposedMany": "Sei esposto in {{count}} paesi su {{total}}.",
+        "actionOne": "Nessuna esposizione: 1 paese richiede ancora un'azione.",
+        "actionMany": "Nessuna esposizione: {{count}} paesi richiedono ancora un'azione.",
+        "allOk": "Tutto in regola: nessuna azione richiesta.",
+        "noneObligated": "Nessun obbligo attivo nei paesi in cui vendi."
+      },
       "banner": {
-        "progress": "Configurazione: {{done}} paesi su {{total}} completati",
-        "complete": "Completa {{country}}",
+        "progress": "Paesi configurati: {{done}} su {{total}}",
+        "complete": "Completa la configurazione: {{country}}",
         "allDone": "Tutti i paesi sono configurati."
       },
       "card": {
@@ -626,25 +633,26 @@
         "details": "Vedi dettagli"
       },
       "status": {
-        "not_registered": "Registrazione da avviare.",
-        "in_progress": "Registrazione in corso.",
-        "registered": "Conforme e registrato.",
+        "not_registered": "Obbligo attivo: registrazione da avviare.",
+        "in_progress": "Registrazione avviata, da completare.",
+        "registered": "Registrazione completata.",
         "not_obligated": "Nessun obbligo in questo paese."
       },
       "deadlines": {
         "title": "Prossime scadenze",
-        "empty": "Nessuna scadenza. Configura i tuoi paesi per generarle.",
+        "empty": "Nessuna scadenza in calendario.",
         "undated": "Data da definire",
-        "esposto": "Scoperto",
+        "esposto": "Esposto",
         "azione_richiesta": "Da preparare",
         "conforme": "In regola",
         "non_obbligato": "Informativo"
       },
       "draftNotice": "Dati normativi in verifica",
       "empty": {
-        "title": "Configura il tuo primo paese",
-        "body": "Aggiungi i paesi in cui vendi per vedere obblighi e scadenze.",
-        "cta": "Vai alla configurazione"
+        "title": "Nessun paese attivo",
+        "body": "I paesi che hai indicato non sono ancora coperti dall'analisi. La tua selezione è registrata come interesse e decide i prossimi paesi da coprire: obblighi e scadenze compariranno qui appena la copertura li raggiunge.",
+        "noRules": "I dati normativi dei tuoi paesi sono in aggiornamento: obblighi e scadenze non sono al momento visibili.",
+        "cta": "Controlla i dati aziendali"
       }
     },
     "paesi": {

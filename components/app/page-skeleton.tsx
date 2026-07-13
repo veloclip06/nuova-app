@@ -31,7 +31,7 @@ export function PageHeaderSkeleton({ subtitle = false }: { subtitle?: boolean })
 /** Mirrors the country card grid (dashboard / paesi). */
 export function CardGridSkeleton({ cards = 3 }: { cards?: number }) {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))] gap-5">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-5">
       {Array.from({ length: cards }).map((_, i) => (
         <div key={i} className="flex flex-col gap-3.5 rounded-lg border border-line bg-surface p-6">
           <div className="flex items-center gap-2">

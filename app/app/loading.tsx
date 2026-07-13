@@ -12,10 +12,17 @@ export default function DashboardLoading() {
   return (
     <AppMain>
       <LoadingRegion>
-        <PageHeaderSkeleton />
-        <div className="mb-8 rounded-lg border border-line bg-surface px-5 py-4">
-          <Skeleton className="h-3 w-48" />
-          <Skeleton className="mt-3 h-1.5 max-w-[320px] rounded-full" />
+        <PageHeaderSkeleton subtitle />
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-line bg-surface px-5 py-4">
+          <div className="min-w-[240px] flex-1">
+            <Skeleton className="h-3 w-48" />
+            <div className="mt-3 flex max-w-[320px] gap-[3px]">
+              <Skeleton className="h-1.5 flex-1 rounded-full" />
+              <Skeleton className="h-1.5 flex-1 rounded-full" />
+              <Skeleton className="h-1.5 flex-1 rounded-full" />
+            </div>
+          </div>
+          <Skeleton className="h-3 w-44" />
         </div>
         <CardGridSkeleton />
         <div className="mt-9">

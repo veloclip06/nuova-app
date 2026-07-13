@@ -61,7 +61,14 @@ export function CountryCard({
         <span className="ml-auto text-2xs text-muted-foreground">{obligation.countryName}</span>
       </div>
 
-      <Seal status={seal} tilt={tilt} className="self-start" />
+      <Seal
+        status={seal}
+        tilt={tilt}
+        date={
+          obligation.lastVerifiedByHuman ? formatDateIt(obligation.lastVerifiedByHuman) : undefined
+        }
+        className="self-start"
+      />
 
       <p className="text-xs leading-[1.55] text-ink">{sentence}</p>
 

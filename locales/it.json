@@ -875,24 +875,29 @@
     "plan": {
       "eyebrow": "Abbonamento",
       "title": "Piano",
-      "subtitle": "Due piani annuali, IVA esclusa. Cambi o disdici quando vuoi, rimborso completo entro 30 giorni.",
+      "subtitle": "Due piani annuali, IVA esclusa. Nessuna mensilità, nessuna sorpresa.",
       "names": {
         "free": "Gratuito",
         "essenziale": "Essenziale",
         "completo": "Completo"
       },
       "currentBadge": "Piano attuale",
-      "currentBanner": "Il tuo piano attuale è {{plan}}.",
+      "currentBanner": "Il tuo piano {{plan}} è attivo: rinnovo, fatture e disdetta li gestisci qui sotto.",
       "freeBanner": "Sei sul piano gratuito: cruscotto, sigilli e prodotti sono inclusi. Report, promemoria, import CSV e storico si sbloccano con un piano.",
-      "portalTitle": "Gestisci il tuo abbonamento",
+      "assurances": [
+        "Rimborso completo entro 30 giorni",
+        "Disdetta dal portale, quando vuoi",
+        "Nessuna telefonata, nessun commerciale"
+      ],
+      "portalTitle": "Abbonamento e fatturazione",
       "portalBody": "Cambio piano, disdetta e fatture passano dal portale sicuro di Stripe.",
       "portalCta": "Gestisci abbonamento",
       "checkoutNote": "Pagamento sicuro via Stripe. Prezzi IVA esclusa: in fase di acquisto ti chiederemo indirizzo di fatturazione e partita IVA.",
       "success": {
-        "title": "Pagamento riuscito",
-        "body": "Grazie! Stiamo attivando il tuo piano: se qui vedi ancora quello precedente, ricarica tra qualche istante."
+        "title": "Pagamento completato",
+        "body": "Stiamo attivando il tuo piano. Se qui vedi ancora quello precedente, ricarica la pagina tra qualche istante."
       },
-      "cancelled": "Acquisto annullato. Nessun addebito effettuato.",
+      "cancelled": "Acquisto annullato, nessun addebito. Puoi completarlo quando vuoi.",
       "error": {
         "config": "Il pagamento non è ancora configurato. Riprova più tardi.",
         "stripe": "Non è stato possibile aprire il pagamento. Riprova."
@@ -900,18 +905,18 @@
       "gate": {
         "unlockWith": "Si sblocca con {{plan}}",
         "report": {
-          "title": "I report si sbloccano con un piano",
-          "body": "Con Essenziale o Completo generi i numeri pronti da incollare nei portali ufficiali, per paese e periodo, con i promemoria delle scadenze via email.",
+          "title": "Numeri pronti da incollare nei portali dei registri",
+          "body": "Il breakdown per materiale, paese e periodo, pronto da copiare nel registro — più i promemoria via email a 30, 7 e 1 giorno da ogni scadenza.",
           "cta": "Vedi i piani"
         },
         "csvImport": {
-          "title": "L'import CSV si sblocca con Completo",
-          "body": "Carica in un colpo solo tutti i tuoi SKU e componenti di imballaggio da un file CSV, con mappatura colonne e anteprima.",
+          "title": "Carica tutto il catalogo in un colpo solo",
+          "body": "SKU e componenti di imballaggio da un file CSV, con mappatura colonne e anteprima prima di importare. Niente inserimento a mano, riga per riga.",
           "cta": "Passa a Completo"
         },
         "history": {
-          "title": "Lo storico report si sblocca con Completo",
-          "body": "Ritrova ogni report generato, per paese e periodo, pronto da riaprire quando il registro te lo chiede.",
+          "title": "Ritrova ogni report quando il registro te lo chiede",
+          "body": "Ogni report generato resta archiviato per paese e periodo, pronto da riaprire per un controllo o una dichiarazione futura.",
           "cta": "Passa a Completo"
         }
       }

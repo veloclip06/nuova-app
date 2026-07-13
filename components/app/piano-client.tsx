@@ -53,6 +53,7 @@ export function PianoClient({
   checkoutStatus: "success" | "cancelled" | null;
 }) {
   const tiers = tList<Tier>("landing.pricing.tiers");
+  const assurances = tList<string>("app.plan.assurances");
   const paid = isPaidPlan(plan);
   const [pending, startTransition] = React.useTransition();
   const [error, setError] = React.useState<"config" | "stripe" | null>(null);
@@ -191,7 +192,20 @@ export function PianoClient({
           </Button>
         </div>
       ) : (
-        <p className="font-mono text-2xs text-muted-foreground">{t("app.plan.checkoutNote")}</p>
+        <div className="flex flex-col gap-2.5">
+          {/* Trust arguments at the decision point, not fine print (§8.3/§8.14). */}
+          <ul className="flex flex-wrap items-center text-xs text-muted-foreground">
+            {assurances.map((item) => (
+              <li
+                key={item}
+                className="before:mx-2.5 before:text-line before:content-['·'] first:before:hidden"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="font-mono text-2xs text-muted-foreground">{t("app.plan.checkoutNote")}</p>
+        </div>
       )}
     </div>
   );

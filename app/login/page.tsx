@@ -16,6 +16,7 @@ export default async function LoginPage({
 
   return (
     <AuthShell
+      eyebrow={t("app.auth.login.eyebrow")}
       title={t("app.auth.login.title")}
       subtitle={t("app.auth.login.subtitle")}
       footer={

@@ -8,11 +8,13 @@ import { SiteFooter } from "@/components/site-footer";
  * legal footer (§8.13).
  */
 export function AuthShell({
+  eyebrow,
   title,
   subtitle,
   children,
   footer,
 }: {
+  eyebrow?: string;
   title: string;
   subtitle?: string;
   children: React.ReactNode;
@@ -29,7 +31,14 @@ export function AuthShell({
         </Link>
       </header>
       <main className="mx-auto flex w-full max-w-[420px] flex-1 flex-col justify-center px-4 py-12 sm:px-8">
-        <h1 className="font-display text-2xl font-bold tracking-tightDisplay text-ink">{title}</h1>
+        {eyebrow && <p className="eyebrow text-muted-foreground">{eyebrow}</p>}
+        <h1
+          className={`font-display text-2xl font-bold tracking-tightDisplay text-ink${
+            eyebrow ? " mt-2" : ""
+          }`}
+        >
+          {title}
+        </h1>
         {subtitle && <p className="mt-2 text-base text-muted-foreground">{subtitle}</p>}
         <div className="mt-8">{children}</div>
         {footer && <div className="mt-6 text-2xs text-muted-foreground">{footer}</div>}

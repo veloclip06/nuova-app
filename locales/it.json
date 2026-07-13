@@ -530,42 +530,48 @@
     "auth": {
       "google": "Continua con Google",
       "or": "oppure",
+      "backToLogin": "Torna all'accesso",
+      "spamHint": "Non la trovi? Controlla anche la posta indesiderata.",
       "fields": {
         "email": "Email",
         "password": "Password",
         "newPassword": "Nuova password"
       },
       "login": {
+        "eyebrow": "Area riservata",
         "title": "Accedi",
-        "subtitle": "Entra nel tuo cruscotto EPR.",
+        "subtitle": "Rientra nel tuo quadro: stato di ogni paese e prossime scadenze.",
         "submit": "Accedi",
         "forgot": "Password dimenticata?",
         "noAccount": "Non hai un account?",
         "signupLink": "Registrati"
       },
       "signup": {
+        "eyebrow": "Nuovo account",
         "title": "Crea il tuo account",
-        "subtitle": "Gestisci gli obblighi EPR paese per paese.",
+        "subtitle": "Il passo dopo il check: scadenze, registri e report in un unico quadro, paese per paese.",
         "submit": "Crea account",
         "terms": "Creando un account accetti l'informativa privacy.",
         "haveAccount": "Hai già un account?",
         "loginLink": "Accedi",
         "confirmTitle": "Controlla la tua email",
-        "confirmBody": "Ti abbiamo inviato un link a {{email}} per confermare l'account e continuare."
+        "confirmLead": "Ti abbiamo inviato un link di conferma a",
+        "confirmAction": "Aprilo per confermare l'account: da lì configuri il tuo quadro."
       },
       "reset": {
+        "requestEyebrow": "Recupero accesso",
+        "updateEyebrow": "Nuova password",
         "requestTitle": "Reimposta la password",
         "requestSubtitle": "Ti invieremo un link per reimpostarla.",
         "requestSubmit": "Invia il link",
         "requestSent": "Se esiste un account per {{email}}, riceverai un link per reimpostare la password.",
         "updateTitle": "Scegli una nuova password",
         "updateSubtitle": "Imposta la nuova password del tuo account.",
-        "updateSubmit": "Aggiorna la password",
-        "backToLogin": "Torna all'accesso"
+        "updateSubmit": "Aggiorna la password"
       },
       "errors": {
-        "invalidCredentials": "Email o password non corretti.",
-        "emailInUse": "Esiste già un account con questa email.",
+        "invalidCredentials": "Email o password non corretti. Controlla i dati e riprova.",
+        "emailInUse": "Esiste già un account con questa email. Prova ad accedere.",
         "weakPassword": "La password deve avere almeno 8 caratteri.",
         "generic": "Qualcosa non ha funzionato. Riprova."
       }

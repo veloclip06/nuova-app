@@ -9,6 +9,7 @@ export const metadata: Metadata = { title: t("app.auth.signup.title") };
 export default function SignupPage() {
   return (
     <AuthShell
+      eyebrow={t("app.auth.signup.eyebrow")}
       title={t("app.auth.signup.title")}
       subtitle={t("app.auth.signup.subtitle")}
       footer={

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -59,9 +60,18 @@ export function SignupForm() {
         <p className="font-display text-base font-semibold text-ink">
           {t("app.auth.signup.confirmTitle")}
         </p>
-        <p className="mt-2 text-2xs text-muted-foreground">
-          {t("app.auth.signup.confirmBody", { email })}
+        <p className="mt-2 text-2xs text-muted-foreground">{t("app.auth.signup.confirmLead")}</p>
+        <p className="mt-1 break-all font-mono text-2xs text-ink">{email}</p>
+        <p className="mt-3 text-2xs text-muted-foreground">
+          {t("app.auth.signup.confirmAction")}
         </p>
+        <p className="mt-3 text-2xs text-muted-foreground">{t("app.auth.spamHint")}</p>
+        <Link
+          href="/login"
+          className="mt-4 inline-block rounded-sm text-2xs text-brand hover:underline"
+        >
+          {t("app.auth.backToLogin")}
+        </Link>
       </div>
     );
   }

@@ -86,11 +86,12 @@ export function ResetPasswordForm({ mode }: { mode: "request" | "update" }) {
         <p className="text-2xs text-muted-foreground">
           {t("app.auth.reset.requestSent", { email })}
         </p>
+        <p className="mt-3 text-2xs text-muted-foreground">{t("app.auth.spamHint")}</p>
         <Link
           href="/login"
-          className="mt-3 inline-block rounded-sm text-2xs text-brand hover:underline"
+          className="mt-4 inline-block rounded-sm text-2xs text-brand hover:underline"
         >
-          {t("app.auth.reset.backToLogin")}
+          {t("app.auth.backToLogin")}
         </Link>
       </div>
     );

@@ -707,7 +707,7 @@
     "products": {
       "eyebrow": "Prodotti",
       "title": "Prodotti e imballaggi",
-      "subtitle": "SKU e componenti di imballaggio usati per calcolare i report.",
+      "subtitle": "Registra ogni SKU con i materiali e i pesi del suo imballaggio: sono i dati che ogni report trasforma nei numeri da dichiarare.",
       "addButton": "Aggiungi prodotto",
       "importButton": "Importa CSV",
       "table": {
@@ -718,10 +718,14 @@
         "source": "Origine",
         "actions": "Azioni",
         "delete": "Elimina",
-        "deleteConfirm": "Eliminare lo SKU {{sku}}?"
+        "deleteConfirm": "Eliminare lo SKU {{sku}}?",
+        "cancel": "Annulla",
+        "count": "{{count}} SKU"
       },
       "componentSummary": "{{count}} materiali",
-      "empty": "Nessun prodotto ancora. Aggiungi il primo SKU per iniziare a calcolare i report.",
+      "emptyTitle": "Ancora nessun prodotto",
+      "empty": "Aggiungi il primo SKU con i suoi imballaggi: da qui nascono i numeri di ogni report.",
+      "emptyCta": "Aggiungi il primo prodotto",
       "sourceManual": "manuale",
       "sourceCsv": "CSV",
       "form": {
@@ -758,11 +762,12 @@
         "previewValid": "{{count}} righe valide",
         "previewErrors": "{{count}} righe con errori",
         "previewSkus": "{{count}} SKU pronti all'import",
+        "previewErrorsTitle": "Righe da correggere",
         "rowLabel": "Riga {{n}}",
         "confirm": "Importa {{count}} SKU",
         "cancel": "Annulla",
         "back": "Indietro",
-        "done": "{{count}} SKU importati.",
+        "done": "{{count}} SKU aggiunti al registro.",
         "errorParse": "Non è stato possibile leggere il file. Verifica che sia un CSV valido.",
         "errorMapping": "Mappa i campi obbligatori: SKU, materiale e peso.",
         "errorNoValid": "Nessuna riga valida da importare.",

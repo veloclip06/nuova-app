@@ -11,6 +11,7 @@ import {
 } from "@/lib/csv/parse";
 import { cn } from "@/lib/utils";
 import { t } from "@/lib/i18n";
+import { MonoDigits } from "@/components/mono-digits";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
@@ -136,7 +137,10 @@ export function CsvImport({
 
       {step === "map" && (
         <div className="flex flex-col gap-4">
-          <p className="text-2xs text-muted-foreground">{t("app.products.import.mapHelp")}</p>
+          <div>
+            <p className="eyebrow text-muted-foreground">{t("app.products.import.mapTitle")}</p>
+            <p className="mt-1 text-2xs text-muted-foreground">{t("app.products.import.mapHelp")}</p>
+          </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <ColumnSelect
               header={header}
@@ -177,31 +181,42 @@ export function CsvImport({
 
       {step === "preview" && (
         <div className="flex flex-col gap-4">
-          <div className="flex flex-wrap gap-4 text-2xs">
-            <span className="text-ok">
-              {t("app.products.import.previewValid", { count: validCount })}
-            </span>
-            {errorRows.length > 0 && (
-              <span className="text-risk">
-                {t("app.products.import.previewErrors", { count: errorRows.length })}
+          <div>
+            <p className="eyebrow text-muted-foreground">{t("app.products.import.previewTitle")}</p>
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-2xs">
+              <span className="text-ok">
+                <MonoDigits text={t("app.products.import.previewValid", { count: validCount })} />
               </span>
-            )}
-            <span className="font-mono text-muted-foreground">
-              {t("app.products.import.previewSkus", { count: skus.length })}
-            </span>
+              {errorRows.length > 0 && (
+                <span className="text-risk">
+                  <MonoDigits
+                    text={t("app.products.import.previewErrors", { count: errorRows.length })}
+                  />
+                </span>
+              )}
+              <span className="text-muted-foreground">
+                <MonoDigits text={t("app.products.import.previewSkus", { count: skus.length })} />
+              </span>
+            </div>
           </div>
 
           <PreviewTable rows={parsed.slice(0, 10)} />
 
           {errorRows.length > 0 && (
-            <ul className="flex flex-col gap-1 text-2xs text-risk">
-              {errorRows.slice(0, 5).map((row) => (
-                <li key={row.rowNumber}>
-                  {t("app.products.import.rowLabel", { n: row.rowNumber })}:{" "}
-                  {row.errors.map((code) => t(`app.products.rowErrors.${code}`)).join(", ")}
-                </li>
-              ))}
-            </ul>
+            <div className="flex flex-col gap-1.5">
+              <p className="eyebrow text-muted-foreground">
+                {t("app.products.import.previewErrorsTitle")}
+              </p>
+              <ul className="flex flex-col gap-1 text-2xs text-risk">
+                {errorRows.slice(0, 5).map((row) => (
+                  <li key={row.rowNumber}>
+                    <MonoDigits text={t("app.products.import.rowLabel", { n: row.rowNumber })} />
+                    {": "}
+                    {row.errors.map((code) => t(`app.products.rowErrors.${code}`)).join(", ")}
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
 
           <div className="flex items-center gap-3">

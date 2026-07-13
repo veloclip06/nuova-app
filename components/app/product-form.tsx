@@ -28,9 +28,25 @@ export function ProductForm({ onSaved, onCancel }: { onSaved: () => void; onCanc
   const [error, setError] = React.useState<string | null>(null);
   // The action revalidates /app/prodotti itself — no router.refresh() needed.
   const [pending, startTransition] = React.useTransition();
+  // Keep component entry fluid: move focus to the new row's material select as
+  // soon as it mounts (DESIGN_SYSTEM.md §8.12 — system state stays visible).
+  const componentsRef = React.useRef<HTMLDivElement>(null);
+  const focusLastOnAdd = React.useRef(false);
+
+  React.useEffect(() => {
+    if (!focusLastOnAdd.current) return;
+    focusLastOnAdd.current = false;
+    const selects = componentsRef.current?.querySelectorAll("select");
+    selects?.[selects.length - 1]?.focus();
+  }, [components.length]);
 
   function updateComponent(index: number, patch: Partial<ComponentRow>) {
     setComponents((prev) => prev.map((c, i) => (i === index ? { ...c, ...patch } : c)));
+  }
+
+  function addComponent() {
+    focusLastOnAdd.current = true;
+    setComponents((prev) => [...prev, { material: "", weight: "" }]);
   }
 
   function onSubmit(event: React.FormEvent) {
@@ -80,7 +96,7 @@ export function ProductForm({ onSaved, onCancel }: { onSaved: () => void; onCanc
         </div>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div ref={componentsRef} className="flex flex-col gap-3">
         <Label>{t("app.products.form.componentsLabel")}</Label>
         {components.map((component, index) => (
           <div key={index} className="flex flex-wrap items-end gap-2">
@@ -100,7 +116,7 @@ export function ProductForm({ onSaved, onCancel }: { onSaved: () => void; onCanc
                 ))}
               </Select>
             </div>
-            <div className="w-28">
+            <div className="w-36">
               <Input
                 type="number"
                 min="0"
@@ -126,7 +142,7 @@ export function ProductForm({ onSaved, onCancel }: { onSaved: () => void; onCanc
         ))}
         <button
           type="button"
-          onClick={() => setComponents((prev) => [...prev, { material: "", weight: "" }])}
+          onClick={addComponent}
           className="self-start rounded-sm text-2xs font-medium text-brand hover:underline"
         >
           + {t("app.products.form.addComponent")}

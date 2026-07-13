@@ -658,7 +658,15 @@
     "paesi": {
       "eyebrow": "Paesi",
       "title": "I tuoi paesi",
-      "subtitle": "Stato e obblighi per ogni paese in cui vendi."
+      "subtitle": "L'elenco completo dei paesi in cui vendi. Per ognuno: stato, obblighi e prossima scadenza.",
+      "tally": {
+        "total": "{{count}} paesi",
+        "totalOne": "1 paese",
+        "conforme": "in regola",
+        "azione_richiesta": "da completare",
+        "esposto": "esposto",
+        "non_obbligato": "senza obblighi"
+      }
     },
     "country": {
       "back": "Torna al cruscotto",
@@ -671,9 +679,13 @@
       "languagesLabel": "Lingue",
       "requirementsTitle": "Cosa serve",
       "deadlinesTitle": "Scadenze",
-      "noDeadlines": "Nessuna scadenza datata al momento.",
+      "noDeadlines": "Nessuna scadenza con data fissa. Gli obblighi di questo paese non seguono un calendario a date: quelli attivi restano quelli elencati in \"Cosa serve\".",
       "penaltiesTitle": "Sanzioni",
       "penaltiesDetail": "Dettagli",
+      "penaltiesStanding": {
+        "esposto": "Rischio presente: non sei ancora registrato dove è obbligatorio.",
+        "azione_richiesta": "Azione aperta: la registrazione non è ancora completata."
+      },
       "arTitle": "Rappresentante autorizzato",
       "sourcesTitle": "Fonti",
       "sourceAccessed": "consultata il",
@@ -681,14 +693,15 @@
       "statusTitle": "Stato in questo paese",
       "statusHelp": "Aggiornalo man mano che avanzi. Quando registrato, il sigillo diventa Conforme.",
       "statusSaved": "Stato aggiornato.",
+      "statusSavedConforme": "Registrazione completata: ora sei conforme in questo paese.",
       "statusOptions": {
         "not_registered": "Non registrato",
         "in_progress": "Registrazione in corso",
         "registered": "Registrato"
       },
       "notObligatedTitle": "Nessun obbligo",
-      "notObligatedBody": "In base ai dati attuali non risultano obblighi EPR in questo paese.",
-      "notCovered": "Questo paese non è ancora coperto dalle nostre regole.",
+      "notObligatedBody": "Con i dati di oggi non risultano obblighi EPR sugli imballaggi qui. Se cambi cosa o dove vendi, lo stato si aggiorna: ricontrolla dopo ogni modifica.",
+      "notCovered": "Questo paese non è ancora tra quelli con analisi dettagliata. La copertura cresce sui paesi più richiesti: stato, obblighi, scadenze e fonti compaiono qui appena lo raggiunge.",
       "inVerifica": "in verifica"
     },
     "products": {

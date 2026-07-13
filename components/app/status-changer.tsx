@@ -93,7 +93,7 @@ export function StatusChanger({
       )}
       {saved && !pending && (
         <p role="status" className="text-2xs text-ok">
-          {t("app.country.statusSaved")}
+          {t(status === "registered" ? "app.country.statusSavedConforme" : "app.country.statusSaved")}
         </p>
       )}
     </div>

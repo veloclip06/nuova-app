@@ -14,6 +14,7 @@ export default function CountryDetailLoading() {
             <Skeleton className="h-3 w-40" />
             <Skeleton className="mt-2 h-7 w-52" />
           </div>
+          <Skeleton className="ml-auto h-6 w-10" />
         </div>
         <div className="flex flex-col gap-5">
           <SectionSkeleton lines={2} />

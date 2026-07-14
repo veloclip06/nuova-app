@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import { t } from "@/lib/i18n";
 import { SiteFooter } from "@/components/site-footer";
+import { Wordmark } from "@/components/wordmark";
 
 /**
  * Authenticated app shell (/app/*) — familiar sidebar pattern (DESIGN_SYSTEM.md
@@ -74,14 +75,7 @@ export function AppShell({
     </nav>
   );
 
-  const brand = (
-    <div className="flex items-center gap-2">
-      <span aria-hidden="true" className="block h-3 w-3 rounded-[3px] bg-brand" />
-      <span className="font-display text-2xs font-bold uppercase tracking-[0.1em] text-ink">
-        {t("common.appName")}
-      </span>
-    </div>
-  );
+  const brand = <Wordmark />;
 
   return (
     <div className="flex min-h-screen bg-paper">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFooter } from "@/components/site-footer";
+import { Wordmark } from "@/components/wordmark";
 import { t, tList } from "@/lib/i18n";
 
 export const metadata: Metadata = {
@@ -18,11 +19,8 @@ export default function TerminiPage() {
     <div className="flex min-h-screen flex-col bg-paper">
       <header className="border-b border-line bg-surface">
         <div className="mx-auto flex w-full max-w-[720px] items-center px-4 py-4 sm:px-8">
-          <Link href="/" className="flex items-center gap-2.5 rounded-sm">
-            <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px] bg-brand" />
-            <span className="font-display text-2xs font-bold uppercase tracking-[0.1em] text-ink">
-              {t("common.appName")}
-            </span>
+          <Link href="/" className="rounded-sm">
+            <Wordmark />
           </Link>
         </div>
       </header>
@@ -35,21 +33,21 @@ export default function TerminiPage() {
         <p className="mt-2 text-2xs text-muted-foreground">{t("termini.updated")}</p>
 
         {sections.map((section) => (
-          <section key={section.title} className="mt-8">
+          <section key={section.title} className="mt-8 border-t border-line pt-8">
             <h2 className="font-display text-lg font-semibold text-ink">{section.title}</h2>
-            <p className="mt-2 text-base text-ink">{section.body}</p>
+            <p className="mt-3 max-w-[68ch] text-base text-ink">{section.body}</p>
           </section>
         ))}
 
-        <section className="mt-8">
+        <section className="mt-8 border-t border-line pt-8">
           <h2 className="font-display text-lg font-semibold text-ink">
             {t("termini.contactTitle")}
           </h2>
-          <p className="mt-2 text-base text-ink">
+          <p className="mt-3 max-w-[68ch] text-base text-ink">
             {t("termini.contactBody")}{" "}
             <a
               href={`mailto:${contactEmail}`}
-              className="rounded-sm text-brand hover:underline"
+              className="rounded-sm text-brand underline underline-offset-2 transition-colors hover:text-brand-hover"
             >
               {contactEmail}
             </a>

@@ -14,7 +14,7 @@
   },
   "notFound": {
     "title": "Pagina non trovata",
-    "body": "La pagina che cerchi non esiste o è stata spostata.",
+    "body": "Il link potrebbe essere sbagliato o la pagina è stata spostata.",
     "cta": "Torna alla home"
   },
   "seal": {
@@ -925,8 +925,8 @@
     },
     "common": {
       "saving": "Salvataggio…",
-      "errorTitle": "Qualcosa è andato storto",
-      "loadingError": "Impossibile caricare i dati. Riprova."
+      "errorTitle": "Non siamo riusciti a caricare questa vista",
+      "loadingError": "È un problema di caricamento, non dei tuoi dati. Riprova tra un momento."
     },
     "email": {
       "reminder": {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { t } from "@/lib/i18n";
+import { Wordmark } from "@/components/wordmark";
 
 /**
  * Public site header (Claude Design export "Landing hero"): the register-stamp
@@ -10,14 +11,8 @@ export function SiteHeader() {
   return (
     <header className="border-b border-line bg-paper">
       <div className="mx-auto flex w-full max-w-[1080px] items-center justify-between gap-4 px-4 py-4 sm:px-8">
-        <Link href="/" className="flex items-center gap-2.5 rounded-sm">
-          <span
-            aria-hidden="true"
-            className="inline-block h-3 w-3 rounded-[3px] bg-brand"
-          />
-          <span className="font-display text-2xs font-bold uppercase tracking-[0.1em] text-ink">
-            {t("common.appName")}
-          </span>
+        <Link href="/" className="rounded-sm">
+          <Wordmark />
         </Link>
         <nav className="flex items-center gap-5 text-2xs">
           <Link

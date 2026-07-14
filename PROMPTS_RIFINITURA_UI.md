@@ -512,7 +512,7 @@ NON TOCCARE: actions.ts, la logica di aggiornamento company, l'auth.
 
 ---
 
-## 13. Giro trasversale di coerenza (ULTIMO, dopo tutte le pagine)
+## 13. Giro trasversale di coerenza — ✅ eseguito (14/07/2026, Opus 4.8)
 
 ```
 PAGINA TARGET: gli elementi condivisi e le pagine minori — components/site-header.tsx,

@@ -1,5 +1,5 @@
 # STATO_PROGETTO.md — EPR Cockpit
-Documento di handoff. Aggiornato: 11/07/2026, dopo la rifinitura della landing `/` (prompt 1/13 del giro UI, Fable 5).
+Documento di handoff. Aggiornato: 14/07/2026, a chiusura del giro di rifinitura UI (13/13 prompt completati).
 Va tenuto nel repo e aggiornato a ogni milestone. In una nuova chat, allegare questo file + ARCHITECTURE.md + DESIGN_SYSTEM.md + CLAUDE_CODE_KICKOFF.md.
 
 ## 1. Cos'è il prodotto
@@ -29,7 +29,8 @@ Stato servizi: Supabase COLLEGATO (migration 0001 applicata, seed fatto: countri
 - ✅ PROMPT 6 (Fable, 10/07/2026): Stripe + gating + legali — migration 0002 applicata (plan free|essenziale|completo + CHECK); lib/plans.ts fonte unica del gating (puro, testato) con enforcement server+UI (report/promemoria solo paganti, CSV+storico solo Completo, cap 3 paesi coperti in onboarding — ratificato in chat: vale anche per free; paesi-interesse illimitati); lib/stripe/ lazy su env mock (chiavi reali = solo swap env); /app/piano (checkout post-registrazione, Customer Portal se abbonato, eventi upgrade_viewed/checkout_started/checkout_completed); webhook /api/stripe/webhook firmato, idempotente (state-convergent), unico writer di companies.plan via service role; storico report UI minimale (ratificato in chat) su /app/report per Completo; /privacy completa + /termini nuova (dati societari [DA COMPLETARE]); cookie banner con PostHog consent-gated; STRIPE_SETUP.md checklist manuale. Build+lint+typecheck+145 test verdi (22 nuovi); smoke test prod OK (pagine 200, guard 307, webhook 500 keyless atteso)
 - ✅ Prompt per il giro di rifinitura UI preparati (11/07/2026, Fable 5): PROMPTS_RIFINITURA_UI.md — blocco comune + 13 prompt (uno per pagina, ordine funnel), con vincoli espliciti su neutralità paesi, copy §9, solo front-end; da eseguire una pagina per chat
 - ✅ Rifinitura UI 1/13 — landing / (11/07/2026, Fable 5): neutralità paesi completata (hero-preview anonimizzata + fascia uniforme 27 bandiere, FAQ con copertura interpolata a runtime da /rules, meta/OG senza nomi di registri), copy affilati (pain e FAQ in chiave UE con DE/FR/IT come esempi, tagline tier decisionali), numeri/date in Plex Mono nei body (nuovo components/mono-digits.tsx), CTA di chiusura dopo la FAQ (ripete l'azione primaria del hero — deviazione ratificata in chat 11/07); DESIGN_SYSTEM.md ripristinato nella root con addendum §7 micro-stati e nota palette §3 (decisione 8). Build+lint+typecheck+145 test verdi
-- ⬜ giro di rifinitura UI (restanti 12 prompt) · ⬜ deploy Vercel · ⬜ verifica umana delle restanti incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
+- ✅ Giro di rifinitura UI completato 2–13/13 (11–14/07/2026): /prezzi, /check, /check/risultato, auth, /onboarding, /app, /app/paesi(+dettaglio), /app/prodotti, /app/report, /app/piano, /app/impostazioni, e prompt 13 trasversale di chiusura (elementi condivisi + pagine minori). Costanti del giro: neutralità paesi verificata, voce/copy §9, mono per numeri/codici, stati empty/error/loading uniformi, max 1 CTA primaria. Prompt 13 (Opus 4.8): nuovo components/wordmark.tsx condiviso (header/app-shell/auth/legali), fix classe morta text-muted-ink in cookie-banner, hover link allineati a §7, divisori tipografici su privacy/termini (testo legale intatto). lint+typecheck+145 test+build verdi
+- ⬜ deploy Vercel · ⬜ verifica umana delle restanti incertezze → status: verified nei YAML · ⬜ nome+dominio · ⬜ post nei gruppi FBA Italia (inizio validazione)
 
 ## 4. Decisioni chiave ratificate (fanno fede sul mockup dove confliggono)
 1. SIGILLO = stato legale; CLAIM di rischio = enforcement confermato. Estero obbligato non coperto → ESPOSTO sempre (indipendente dal canale). Domestico → AZIONE RICHIESTA con copy CONAI dedicato. riskLevel modula le righe di rischio nella card, non il sigillo: high (marketplace+blocco confermato) → riga delisting; medium → solo sanzioni con fonte; dato incerto → badge "in verifica", mai claim di blocco.
@@ -63,7 +64,6 @@ Lavoro su main, nessun branch, NESSUN commit da parte degli agenti: modifiche un
 - export Claude Design (4 schermate .dc.html) — riferimento visivo
 
 ## 7. Problemi aperti / backlog
-- Rifiniture UI checker: piccoli errori di posizionamento notati da Ion nel primo test (lista dettagliata da compilare) → giro di polish dedicato dopo PROMPT 5
 - Script seed non carica .env.local da solo (workaround: passare le env inline) → fix futuro
 - Middleware: valutare getClaims() + migrazione del progetto Supabase a JWT signing keys asimmetriche (verifica sessione locale senza round-trip di rete) + bump @supabase/ssr — follow-up del giro performance 10/07
 - 7 vulnerabilità npm preesistenti segnalate da npm audit → da rivedere prima del deploy
@@ -77,9 +77,10 @@ Lavoro su main, nessun branch, NESSUN commit da parte degli agenti: modifiche un
 - PROMPT 5 — env da valorizzare prima del deploy: CRON_SECRET (guardia cron 30/7/1gg) e NEXT_PUBLIC_SITE_URL non sono in .env.local; per "Continua con Google" serve configurare il provider Google su Supabase + redirect URL /auth/callback. Google/reset non verificati a runtime (richiedono config esterna); testati a runtime: guard /app, rendering pagine auth, cron su DB reale
 - PROMPT 5 — volumi del report inseriti inline nella schermata /app/report (salvati in sales_volumes e precompilati al ritorno); nessuna schermata volumi separata (scelta UX ratificata in chat 09/07)
 - PROMPT 5 — flusso interattivo signup→onboarding→dashboard→prodotti→report non guidato E2E da qui (richiede sessione browser + conferma email/Google): da validare manualmente da Ion
-- Onboarding ora accetta anche aziende che vendono solo in paesi non coperti (company senza company_countries, dashboard vuota; selezione tracciata come interesse in PostHog) — verificare che l'empty state della dashboard sia accettabile in quel caso
 - ARCHITECTURE.md §6 punto 2 aggiornato alla decisione ratificata 10/07 (griglia uniforme 27, copertura = dato): unica riga toccata
 - Onboarding: limitNotice/errorLimit (cap 3 paesi coperti) oggi NON raggiungibili in prod — i paesi coperti sono esattamente 3 (DE/FR/IT) e il cap è 3, quindi non è selezionabile un 4° paese coperto. Logica corretta (latente): scatterà quando la copertura arriverà a 4+ paesi. Copy verificato per formulazione, non a runtime.
+- Token `muted-ink` (DESIGN_SYSTEM §3) definito come CSS var ma mai cablato come utility Tailwind → `text-muted-ink` era classe morta (scoperto in cookie-banner, ora `text-muted-foreground`). Da decidere: registrare la utility in tailwind.config o standardizzare su `muted-foreground` (oggi convenzione di fatto).
+- Nessun error boundary sul lato pubblico: esistono solo `app/app/error.tsx` (app autenticata) e la 404. Valutare un `error.tsx`/`global-error.tsx` di root per le pagine pubbliche.
 
 ## 8. Prossimi step (in ordine)
 1. Giro rifinitura UI: restanti 12 prompt di PROMPTS_RIFINITURA_UI.md, una pagina per chat — Fable 5 finché disponibile, altrimenti Opus

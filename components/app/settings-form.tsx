@@ -75,6 +75,7 @@ export function SettingsForm({
           <Label htmlFor="establishment">{t("app.settings.countryLabel")}</Label>
           <Select
             id="establishment"
+            aria-describedby="establishment-help"
             value={establishment}
             onChange={(e) => setEstablishment(e.target.value)}
           >
@@ -85,6 +86,9 @@ export function SettingsForm({
             ))}
             <option value={EXTRA_EU}>{t(`countries.${EXTRA_EU}`)}</option>
           </Select>
+          <p id="establishment-help" className="text-2xs text-muted-foreground">
+            {t("app.settings.countryHelp")}
+          </p>
         </div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="vat">{t("app.settings.vatLabel")}</Label>

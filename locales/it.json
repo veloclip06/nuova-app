@@ -857,10 +857,12 @@
     },
     "settings": {
       "eyebrow": "Impostazioni",
-      "title": "Impostazioni",
+      "title": "Azienda e account",
+      "subtitle": "I dati dell'azienda che determinano i tuoi obblighi, e il tuo account.",
       "companyTitle": "Azienda",
       "nameLabel": "Ragione sociale",
       "countryLabel": "Paese di stabilimento",
+      "countryHelp": "La sede legale determina quali obblighi valgono come paese domestico. Se la cambi, aggiorniamo obblighi e scadenze.",
       "vatLabel": "Partita IVA",
       "save": "Salva",
       "saved": "Modifiche salvate.",
